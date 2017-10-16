@@ -1,2 +1,2 @@
 # bms
-Beauty Management System
+Beauty Management System.
