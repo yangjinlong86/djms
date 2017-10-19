@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Spring Boot and Thymeleaf with Maven
 ====================================
 
@@ -42,3 +43,7 @@ Referenced articles:
 - [Spring Boot and Thymeleaf: Reload templates and static resources without restarting the application](http://blog.codeleak.pl/2016/12/thymeleaf-reload-templates-and-static-resources.html)
 - [Getting started with Thymeleaf Text Templates](http://blog.codeleak.pl/2017/03/getting-started-with-thymeleaf-3-text.html)
 - [Spring Boot and Security Events with Actuator](http://blog.codeleak.pl/2017/03/spring-boot-and-security-events-with-actuator.html)
+=======
+# bms
+Beauty Management System.
+>>>>>>> 1e2994acef0741a5a2cf3c63079e339ccc8965db
