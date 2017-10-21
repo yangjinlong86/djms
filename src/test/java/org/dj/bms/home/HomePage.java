@@ -1,4 +1,4 @@
-package pl.codeleak.demos.sbt.home;
+package org.dj.bms.home;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

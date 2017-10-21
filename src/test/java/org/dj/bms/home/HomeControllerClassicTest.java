@@ -1,4 +1,4 @@
-package pl.codeleak.demos.sbt.home;
+package org.dj.bms.home;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

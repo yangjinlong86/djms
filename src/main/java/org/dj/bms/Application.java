@@ -1,4 +1,4 @@
-package pl.codeleak.demos.sbt;
+package org.dj.bms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

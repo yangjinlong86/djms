@@ -1,4 +1,4 @@
-package pl.codeleak.demos.sbt.home;
+package org.dj.bms.home;
 
 import org.assertj.core.api.AbstractAssert;
 import org.openqa.selenium.WebElement;
