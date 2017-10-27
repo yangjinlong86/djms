@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/layout}">
 
 <head>
-    <title>Hello Spring Boot!</title>
+    <title>BMS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
@@ -38,7 +38,7 @@
 <!-- Insert content into the layouts/layout.html -->
 <th:block layout:fragment="content">
     <div class="hero-unit">
-        <h1>Test</h1>
+        <h1>Beauty Management System</h1>
         <p>
             Welcome to the Spring Boot Thymeleaf Application! The time is: <strong th:text="${#temporals.format(now, 'dd/MMM/yyyy HH:mm')}">31/12/2015 15:00</strong>
         </p>
