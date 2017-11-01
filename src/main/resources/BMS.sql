@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 50719
  Source Host           : 127.0.0.1
- Source Database       : DB_BMS
+ Source Database       : BMS
 
  Target Server Type    : MySQL
  Target Server Version : 50719
