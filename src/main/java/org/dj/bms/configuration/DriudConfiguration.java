@@ -1,4 +1,4 @@
-package org.dj.bms.config;
+package org.dj.bms.configuration;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Created by jason on 17/10/29.
  */
 @Configuration
-public class DriudConfigurer {
+public class DriudConfiguration {
     @Bean
     public ServletRegistrationBean druidServlet() {
         return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");

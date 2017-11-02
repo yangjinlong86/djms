@@ -1,11 +1,8 @@
 package org.dj.bms.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
-@Entity
+
 public class RoleResource implements Serializable {
-    @Id
     private String roleId;
 
     private String resourceId;
