@@ -38,15 +38,11 @@ public class ShiroRealm extends AuthorizingRealm {
 
         System.out.println("开始身份验证");
         String username = (String) token.getPrincipal(); //获取用户名，默认和login.html中的username对应。
-        // TODO User user = userService.findByUsername(username);
-        // FIXME 模拟用户信息
-        User user = new User();
-        user.setId("1001");
-        user.setName("jason");
-        user.setPassword("123");
+        User user = userService.findByUsername(username);
 
         if (user == null) {
-            //没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常
+            // 没有返回登录用户名对应的SimpleAuthenticationInfo对象时,
+            // 就会在LoginController中抛出UnknownAccountException异常
             return null;
         }
 
@@ -61,7 +57,9 @@ public class ShiroRealm extends AuthorizingRealm {
         return authenticationInfo;
     }
 
-    //当访问到页面的时候，链接配置了相应的权限或者shiro标签才会执行此方法否则不会执行
+    /**
+     * 当访问到页面的时候，链接配置了相应的权限或者shiro标签才会执行此方法否则不会执行
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
@@ -69,9 +67,10 @@ public class ShiroRealm extends AuthorizingRealm {
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User user = (User) principals.getPrimaryPrincipal();
-
+        // 查询当前用户拥有的角色
         for (Role role: userService.findCurrentUserRoles(user)) {
             authorizationInfo.addRole(role.getId());
+            // 查询每个角色拥有的权限
             for (Resource resource: resourceService.findResourcesByRoleId(role.getId())){
                 authorizationInfo.addStringPermission(resource.getId());
             }

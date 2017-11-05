@@ -18,8 +18,8 @@ public class BmsApplication {
 		SpringApplication.run(BmsApplication.class, args);
 	}
 
-    @ModelAttribute(name = "subject")
-    public Subject subject() {
-        return SecurityUtils.getSubject();
-    }
+//    @ModelAttribute(name = "subject")
+//    public Subject subject() {
+//        return SecurityUtils.getSubject();
+//    }
 }

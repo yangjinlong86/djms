@@ -1,12 +1,9 @@
 package org.dj.bms.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
-@Entity
+
 public class User implements Serializable {
-    @Id
     private String id;
 
     private String name;
@@ -16,6 +13,16 @@ public class User implements Serializable {
     private String lastLoginIp;
 
     private Date lastLoginTime;
+
+    private String corpId;
+
+    private String deptId;
+
+    private String realName;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +66,46 @@ public class User implements Serializable {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public String getCorpId() {
+        return corpId;
+    }
+
+    public void setCorpId(String corpId) {
+        this.corpId = corpId == null ? null : corpId.trim();
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId == null ? null : deptId.trim();
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName == null ? null : realName.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -70,6 +117,11 @@ public class User implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", lastLoginIp=").append(lastLoginIp);
         sb.append(", lastLoginTime=").append(lastLoginTime);
+        sb.append(", corpId=").append(corpId);
+        sb.append(", deptId=").append(deptId);
+        sb.append(", realName=").append(realName);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

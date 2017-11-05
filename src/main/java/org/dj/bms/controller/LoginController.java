@@ -1,27 +1,27 @@
 package org.dj.bms.controller;
 
-/**
- * Created by jason on 17/11/2.
- */
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-
+/**
+ * @author Created by jason on 17/11/2.
+ */
 @Controller
 public class LoginController {
 
-    @RequestMapping("/login")
+    @RequestMapping(value="/login")
     public String login(HttpServletRequest request, Map<String, Object> map) {
         System.out.println("LoginController.login()");
 
         // 登录失败从request中获取shiro处理的异常信息。
         // shiroLoginFailure:就是shiro异常类的全类名.
-        Object exception = request.getAttribute("shiroLoginFailure");
+        // Object exception = request.getAttribute("shiroLoginFailure");
+        Object exception = request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         String msg = "";
         if (exception != null) {
             if (UnknownAccountException.class.isInstance(exception)) {
@@ -32,7 +32,7 @@ public class LoginController {
                 msg = "账户不存在或密码不正确";
             } else {
                 System.out.println("其他异常");
-                msg = "其他异常";
+                msg = "账户不存在或密码不正确";
             }
         }
 

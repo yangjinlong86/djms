@@ -1,7 +1,9 @@
 package org.dj.bms.service;
 
+import com.github.pagehelper.PageInfo;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.User;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -10,11 +12,18 @@ import java.util.List;
  */
 public interface UserService {
 
-    int save(User user);
+    User selectByUserId(String id);
+
+    int saveOrUpdate(User user);
 
     List<Role> findCurrentUserRoles(User user);
 
     User findByUsername(String name);
 
     String getUserPassword(String id);
+
+    int deleteByUserId(String id);
+
+    PageInfo<User> selectAllUsers(Integer pageNum,Integer pageSize);
+
 }
