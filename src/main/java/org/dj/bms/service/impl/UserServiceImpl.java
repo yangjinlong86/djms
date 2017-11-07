@@ -81,8 +81,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> selectAllUsers(@RequestParam(value = "pageNum", required = false, defaultValue="1") Integer pageNum,
-                                   @RequestParam(value = "pageSize", required = false, defaultValue="10") Integer pageSize) {
+    public PageInfo<User> selectAllUsers(
+            @RequestParam(value = "pageNum", required = false, defaultValue="1") Integer pageNum,
+            @RequestParam(value = "pageSize", required = false, defaultValue="10") Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize).setOrderBy("create_time desc");
         List<User> list = userMapper.selectAllUsers();
         PageInfo<User> pageInfo = new PageInfo<User>(list);

@@ -14,28 +14,20 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-3">
-                    <!--<h3 class="page-header">用户管理</h3>-->
-                    <form role="form">
-                        单位:<input class="form-control"/>
-                    </form>
-                </div>
-                <div class="col-lg-3">
-                    <!--<h3 class="page-header">用户管理</h3>-->
-                    <form role="form">
-                        部门:<input class="form-control"/>
-                    </form>
-                </div>
-                <div class="col-lg-3">
-                    <!--<h3 class="page-header">用户管理</h3>-->
-                    <form role="form">
-                        用户名:<input class="form-control"/>
-                    </form>
-                </div>
-                <div class="col-lg-3">
-
-                    <button class="btn btn-success">查询</button>
-                </div>
+                <form role="form">
+                    <div class="col-lg-3">
+                        <label>单位</label><input class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>部门</label><input class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>用户名</label><input class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-success">查询</button>
+                    </div>
+                </form>
                 <!-- /.col-lg-12 -->
             </div>
             <hr/>
@@ -65,6 +57,7 @@
                                                 <div class="form-group">
                                                     <label>所在单位</label> 
                                                     <select class="form-control" name="corpId" >
+                                                        <option value=""></option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -75,6 +68,7 @@
                                                 <div class="form-group">
                                                     <label>所在部门</label> 
                                                     <select class="form-control" name="deptId">
+                                                        <option value=""></option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -109,7 +103,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>验证密码</label> 
-                                                    <input class="form-control" type="password" name="validatePassword"/>
+                                                    <input class="form-control" type="password" name="confirmPassword"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,6 +113,7 @@
                                                 <div class="form-group">
                                                     <label>角色</label> 
                                                     <select class="form-control" name="roleId" >
+                                                        <option value=""></option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -157,7 +152,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="user-list">
-
+                                    <!-- 动态加载数据-->
                                 </tbody>
                             </table>
                             <div class="container">
@@ -216,45 +211,78 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
+                    corpId: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择单位'
+                            }
+                        }
+                    },
+                    deptId: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择部门'
+                            }
+                        }
+                    },
                     name: {
                         validators: {
                             notEmpty: {
-                                message: '用户名不能为空!'
+                                message: '请填写用户名'
                             }
                         }
                     },
                     realName: {
                         validators: {
                             notEmpty: {
-                                message: '昵称不能为空!'
+                                message: '请填写昵称'
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: '密码不能为空!'
+                                message: '密码不能为空'
+                            },
+                            different: {
+                                field: 'name',
+                                message: '密码不能与用户名相同'
                             }
                         }
                     },
-                    validatePassword: {
+                    confirmPassword: {
                         validators: {
                             notEmpty: {
-                                message: '密码不能为空!'
+                                message: '请再次填写确认密码'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: '两次密码输入不一致'
+                            },
+                            different: {
+                                field: 'name',
+                                message: '密码不能与用户名相同'
                             }
                         }
                     },
+                    roleId:{
+                        validators:{
+                            notEmpty: {
+                                message: '请为用户分配角色'
+                            }
+                        }
+                    }
 
                 }
             });
 
-            // Validate the form manually
+            // 表单验证
             $('#btnSaveUser').click(function() {
                 $('#saveUserForm').bootstrapValidator('validate');
-            });
-
-            $('#resetBtn').click(function() {
-                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+                //验证通过提交表单
+                if($('#saveUserForm').data("bootstrapValidator").isValid()){
+                    document.getElementById("saveUserForm").submit();
+                }
             });
         });
 
