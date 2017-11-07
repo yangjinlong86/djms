@@ -63,14 +63,22 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>所在单位</label>
-                                                    <input class="form-control" id="corpId" name="corpId" th:value="${corpId}"/>
+                                                    <label>所在单位</label> 
+                                                    <select class="form-control" name="corpId" >
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>所在部门</label>
-                                                    <input class="form-control" id="deptId" name="deptId" th:value="${deptId}"/>
+                                                    <label>所在部门</label> 
+                                                    <select class="form-control" name="deptId">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -79,13 +87,13 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>用户名</label>
+                                                    <label>用户名</label> 
                                                     <input class="form-control" id="name" name="name" th:value="${name}"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>姓名</label>
+                                                    <label>姓名</label> 
                                                     <input class="form-control" id="realName" name="realName" th:value="${realName}"/>
                                                 </div>
                                             </div>
@@ -94,14 +102,14 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>设置密码</label>
-                                                    <input class="form-control" type="password"/>
+                                                    <label>设置密码</label> 
+                                                    <input class="form-control" type="password" name="password"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>验证密码</label>
-                                                    <input class="form-control" type="password"/>
+                                                    <label>验证密码</label> 
+                                                    <input class="form-control" type="password" name="validatePassword"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,8 +117,12 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label>角色</label>
-                                                    <input class="form-control"/>
+                                                    <label>角色</label> 
+                                                    <select class="form-control" name="roleId" >
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,30 +162,21 @@
                             </table>
                             <div class="container">
                                 <div class="row clearfix">
-                                    <div class="col-md-12 column">
-                                        <ul class="pagination">
-                                            <li>
-                                                <a href="#">Prev</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">2</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">3</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">4</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">5</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Next</a>
-                                            </li>
-                                        </ul>
+                                    <div class="col-md-12 column  col-md-offset-2">
+                                        <form class="form-inline">
+                                        每页条数:
+                                        <select  class="form-control">
+                                            <option>5</option>
+                                            <option>10</option>
+                                            <option>20</option>
+                                        </select>
+                                        <a class="btn btn-default">第一页</a>
+                                        <a class="btn btn-default">上一页</a>
+                                        <input class="form-control" type="text" size="5"/>
+                                        <a class="btn btn-default">下一页</a>
+                                        <a class="btn btn-default">最后一页</a>
+                                        总记录数:xx条
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -199,14 +202,71 @@
     <!-- Custom Theme JavaScript -->
     <script th:src="@{dist/js/sb-admin-2.js}"></script>
 
+    <script th:src="@{dist/js/bootstrapValidator.min.js}"></script>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
-        $(function(){
-            queryUser();
+        $(document).ready(function(){
+            $('#saveUserForm').bootstrapValidator({
+//        live: 'disabled',
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: '用户名不能为空!'
+                            }
+                        }
+                    },
+                    realName: {
+                        validators: {
+                            notEmpty: {
+                                message: '昵称不能为空!'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空!'
+                            }
+                        }
+                    },
+                    validatePassword: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空!'
+                            }
+                        }
+                    },
+
+                }
+            });
+
+            // Validate the form manually
+            $('#btnSaveUser').click(function() {
+                $('#saveUserForm').bootstrapValidator('validate');
+            });
+
+            $('#resetBtn').click(function() {
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+            });
         });
 
-        function queryUser(){
-            $.post("userlist/1/10",
+
+        $(function(){
+            var pageNum = 1;
+            var pageSize = 10;
+            queryUser(pageNum, pageSize);
+        });
+
+        function queryUser(pageNum, pageSize){
+            $.post("userlist/" + pageNum + "/" + pageSize,
                 function(data){
                     var users = data.list;
                     console.log(data);
@@ -219,11 +279,10 @@
                                 '<td>'+ users[i].deptId+'</td>'+//部门
                                 '<td></td>'+//部门
                                 '<td class="center">'+
-                                    '<a>修改</a> '+
-                                    '<a>删除</a>'+
+                                    '<a href="javascrip:void(0);" data-toggle="modal" data-target="#myModal">修改</a> '+
+                                    '<a href="javascrip:void(0);">删除</a>'+
                                 '</td>'+
                                 '</tr>'
-
                         );
                     }
 
