@@ -2,3 +2,7 @@
 target
 build
 *.iml
+pom.xml
+.project
+.settings
+.classpath
