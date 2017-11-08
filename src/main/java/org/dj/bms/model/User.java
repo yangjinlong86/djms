@@ -2,7 +2,9 @@ package org.dj.bms.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * @author YANGJINLONG
+ */
 public class User implements Serializable {
     private String id;
 

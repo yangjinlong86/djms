@@ -1,7 +1,9 @@
 package org.dj.bms.model;
 
 import java.io.Serializable;
-
+/**
+ * @author YANGJINLONG
+ */
 public class UserRole implements Serializable {
     private String userId;
 
