@@ -30,7 +30,8 @@ public class ShiroConfiguration {
 
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/index");
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/403"); //这里设置403并不会起作用，参考http://www.jianshu.com/p/e03f5b54838c
+        //这里设置403并不会起作用，参考http://www.jianshu.com/p/e03f5b54838c
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -52,15 +53,15 @@ public class ShiroConfiguration {
         return shiroRealm;
     }
 
-    //因为我们的密码是加过密的，所以，如果要Shiro验证用户身份的话，
+    // 因为我们的密码是加过密的，所以，如果要Shiro验证用户身份的话，
     // 需要告诉它我们用的是md5加密的，并且是加密了两次。
     // 同时我们在自己的Realm中也通过SimpleAuthenticationInfo返回了加密时使用的盐。
     // 这样Shiro就能顺利的解密密码并验证用户名和密码是否正确了。
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");   //散列算法:这使用MD5算法;
+        hashedCredentialsMatcher.setHashIterations(2);          //散列的次数，比如散列两次，相当于 md5(md5(""));
         return hashedCredentialsMatcher;
     }
 }

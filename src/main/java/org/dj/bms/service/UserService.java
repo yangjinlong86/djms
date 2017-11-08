@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * Created by jason on 17/10/29.
+ * @author Created by jason on 17/10/29.
  */
 public interface UserService {
 

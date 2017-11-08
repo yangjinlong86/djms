@@ -2,6 +2,9 @@ package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Role;
+/**
+ * @author YANGJINLONG
+ */
 @Mapper
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);

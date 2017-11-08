@@ -2,6 +2,10 @@ package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Resource;
+
+/**
+ * @author YANGJINLONG
+ */
 @Mapper
 public interface ResourceMapper {
     int deleteByPrimaryKey(String id);

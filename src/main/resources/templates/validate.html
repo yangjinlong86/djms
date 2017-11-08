@@ -2,16 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
-
     <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{dist/css/bootstrapValidator.min.css}" rel="stylesheet"/>
-
-    <!-- Include the FontAwesome CSS if you want to use feedback icons provided by FontAwesome -->
-    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />-->
-
 </head>
 <body>
-<div th:include="fragments/menu :: menu"></div>
+<div th:include="fragments/nav :: nav"></div>
 <div id="wrapper">
     <div id="page-wrapper">
         <div class="row">

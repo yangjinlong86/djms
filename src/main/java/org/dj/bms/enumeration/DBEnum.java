@@ -1,7 +1,7 @@
 package org.dj.bms.enumeration;
 
 /**
- * Created by jason on 17/11/5.
+ * @author Created by jason on 17/11/5.
  */
 public enum DBEnum {
     // 保存失败

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 
 /**
+ * PageHelperConfiguration
  * @author Created by jason on 17/11/5.
  */
 @Configuration

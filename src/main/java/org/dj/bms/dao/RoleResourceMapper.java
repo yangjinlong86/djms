@@ -5,6 +5,9 @@ import org.dj.bms.model.Resource;
 import org.dj.bms.model.RoleResource;
 
 import java.util.List;
+/**
+ * @author YANGJINLONG
+ */
 @Mapper
 public interface RoleResourceMapper {
     int insert(RoleResource record);
