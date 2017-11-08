@@ -135,7 +135,6 @@
 
 
                     <div class="panel panel-default">
-
                         <div class="panel-heading">
                             用户列表
                         </div>
@@ -280,6 +279,7 @@
                 }
             });
 
+            // 绑定重置表单时间
             $('#resetBtn').bind("click",function() {
                         $('#saveUserForm').data('bootstrapValidator').resetForm(true);
                     }
@@ -303,10 +303,10 @@
                         userArray.push(users[i]);
                         $("#user-list").append(
                                 '<tr>'+
-                                '<td>'+ users[i].name+'</td>' + //用户名
-                                '<td>'+ users[i].realName+'</td>'+//昵称
-                                '<td>'+ users[i].corpId+'</td>'+//单位
-                                '<td>'+ users[i].deptId+'</td>'+//部门
+                                '<td>'+ users[i].name+'</td>' +     // 用户名
+                                '<td>'+ users[i].realName+'</td>'+  // 昵称
+                                '<td>'+ users[i].corpId+'</td>'+    // 单位
+                                '<td>'+ users[i].deptId+'</td>'+    // 部门
                                 '<td></td>'+//部门
                                 '<td class="center">'+
                                     '<a href="javascript:void(0)" data-toggle="modal" onclick="editUser('+i+')">修改</a> '+
@@ -332,7 +332,7 @@
             // $("#deptId").get(0).value = user.deptId;
         }
 
-        //
+        // 隐藏模态框
         $(function () { $('#userModal').modal('hide')});
         // hidden.bs.modal	当模态框完全对用户隐藏时触发。
         $(function () { $('#userModal').on('hide.bs.modal', function () {
