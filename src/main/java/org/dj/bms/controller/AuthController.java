@@ -11,16 +11,16 @@ public class AuthController {
 
     @RequestMapping("/resource")
     public String resource(){
-        return "resource";
+        return "authorize/resource";
     }
 
     @RequestMapping("/role")
     public String role(){
-        return "role";
+        return "authorize/role";
     }
 
     @RequestMapping("/user")
     public String user(){
-        return "user";
+        return "authorize/user";
     }
 }
