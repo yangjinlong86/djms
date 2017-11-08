@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * DriudConfiguration
  * @author Created by jason on 17/10/29.
  */
 @Configuration

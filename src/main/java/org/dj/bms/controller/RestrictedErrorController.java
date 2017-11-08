@@ -1,8 +1,6 @@
 package org.dj.bms.controller;
 
-/**
- * Created by jason on 17/11/2.
- */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
+ *@author Created by jason on 17/11/2.
  */
 @Controller
 public class RestrictedErrorController implements ErrorController {

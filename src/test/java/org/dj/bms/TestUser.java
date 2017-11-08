@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 
 /**
- * Created by jason on 17/11/5.
+ * @author Created by jason on 17/11/5.
  */
 @RunWith(SpringJUnit4ClassRunner.class) // SpringJUnit支持，由此引入Spring-Test框架支持！
 @SpringBootTest(classes = BmsApplication.class) // 指定我们SpringBoot工程的Application启动类

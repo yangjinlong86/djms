@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
- * Created by jason on 17/11/2.
+ * @author  Created by jason on 17/11/2.
  */
 public class ShiroRealm extends AuthorizingRealm {
 

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 /**
- * Created by jason on 17/10/29.
+ * UserContrller
+ * @author Created by jason on 17/10/29.
  */
 @Controller
 public class UserController {
@@ -18,6 +19,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     */
     @PostMapping("/saveUser")
     public String save(@ModelAttribute User user){
         userService.saveOrUpdate(user);
@@ -25,7 +31,7 @@ public class UserController {
     }
 
     /**
-     *
+     * 分页查询用户
      * @param pageNum
      * @param pageSize
      * @return
