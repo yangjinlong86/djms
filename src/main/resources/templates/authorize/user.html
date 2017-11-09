@@ -146,6 +146,10 @@
                                     <!-- 动态加载数据-->
                                 </tbody>
                             </table>
+                            <div id="loadingDiv" style="text-align: center">
+                                <img th:src="@{images/loading.gif}" height="100em;"/>
+                            </div>
+
                             <div class="form-inline" style="float:right;">
                                 <span>每页条数:</span>
                                 <select id="pageSize" class="form-control">
@@ -174,7 +178,7 @@
     <script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
     <script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
-    <script th:src="@{vendor/bootstrap-validator/js/bootstrapValidator.min.js}"></script>
+    <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -274,8 +278,10 @@
         // 定义一个数组,用来存放用户信息
         var userArray = new Array();
         function queryUser(pageNum, pageSize){
+            $("#loadingDiv").show();
             $.post("userlist/" + pageNum + "/" + pageSize,
                 function(data){
+                    $("#loadingDiv").hide();
                     var users = data.list;
                     for(var i=0; i < users.length; i++){
                         userArray.push(users[i]);
