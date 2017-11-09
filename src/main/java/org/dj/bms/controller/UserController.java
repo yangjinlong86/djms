@@ -1,8 +1,11 @@
 package org.dj.bms.controller;
 
 import com.github.pagehelper.PageInfo;
+import org.dj.bms.enumeration.DBEnum;
+import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
 import org.dj.bms.service.UserService;
+import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +27,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/saveUser")
+    @PostMapping(value="/saveUser")
     public String save(@ModelAttribute User user){
         userService.saveOrUpdate(user);
         return "redirect:/user";
@@ -36,9 +39,18 @@ public class UserController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value="userlist/{pageNum}/{pageSize}")
+    @RequestMapping(value="/userList/{pageNum}/{pageSize}")
     @ResponseBody
     public PageInfo<User> selectAllUsers(@PathVariable Integer pageNum, @PathVariable Integer pageSize){
         return userService.selectAllUsers(pageNum, pageSize);
+    }
+
+    @RequestMapping(value="/deleteUser/{id}")
+    @ResponseBody
+    public String deleteUser(@PathVariable String id){
+        if(DBEnum.OPERATION_SUCCESS.getValue() == userService.deleteByUserId(id)){
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
     }
 }

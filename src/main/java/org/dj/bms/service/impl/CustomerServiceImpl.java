@@ -29,12 +29,12 @@ public class CustomerServiceImpl extends BmsService implements CustomerService {
 		} else {
 			res = customerMapper.updateByPrimaryKeySelective(customer);
 		}
-		return res == DBEnum.SAVE_SUCCESS.getValue();
+		return res == DBEnum.OPERATION_SUCCESS.getValue();
 	}
 
 	@Override
 	public boolean deleteByCustomerId(String id) {
-		return customerMapper.deleteByPrimaryKey(id) == DBEnum.SAVE_SUCCESS.getValue();
+		return customerMapper.deleteByPrimaryKey(id) == DBEnum.OPERATION_SUCCESS.getValue();
 	}
 
 }

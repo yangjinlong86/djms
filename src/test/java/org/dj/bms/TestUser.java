@@ -26,7 +26,7 @@ public class TestUser {
     @Test
     public void saveOrUpdate(){
 
-        for(int i=1; i<=10000000; i++){
+        for(int i=1; i<=100; i++){
             User user = new User();
             user.setName("测试用户-" + i);
             user.setPassword("123456");

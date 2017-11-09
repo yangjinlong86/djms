@@ -3,7 +3,6 @@ package org.dj.bms.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.dj.bms.dao.UserMapper;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.model.Role;
@@ -12,11 +11,9 @@ import org.dj.bms.service.UserService;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int saveOrUpdate(User user) {
         if(user == null){
-            return DBEnum.SAVE_FAILED.getValue();
+            return DBEnum.OPERATION_FAILED.getValue();
         }
 
         if(StringUtils.isNotBlank(user.getId())){
