@@ -2,11 +2,7 @@ package org.dj.bms.model;
 
 import java.io.Serializable;
 
-/**
- * @author YANGJINLONG
- */
 public class Resource implements Serializable {
-
     private String id;
 
     private String name;

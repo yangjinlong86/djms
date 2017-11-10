@@ -26,4 +26,6 @@ public interface UserService {
 
     PageInfo<User> selectAllUsers(Integer pageNum,Integer pageSize);
 
+    User selectByUserName(String name);
+
 }

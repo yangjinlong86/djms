@@ -79,32 +79,32 @@ $(document).ready(function(){
                     }
                 }
             },
-            password: {
-                validators: {
-                    notEmpty: {
-                        message: '密码不能为空'
-                    },
-                    different: {
-                        field: 'name',
-                        message: '密码不能与用户名相同'
-                    }
-                }
-            },
-            confirmPassword: {
-                validators: {
-                    notEmpty: {
-                        message: '请再次填写确认密码'
-                    },
-                    identical: {
-                        field: 'password',
-                        message: '两次密码输入不一致'
-                    },
-                    different: {
-                        field: 'name',
-                        message: '密码不能与用户名相同'
-                    }
-                }
-            },
+            //password: {
+            //    validators: {
+            //        notEmpty: {
+            //            message: '密码不能为空'
+            //        },
+            //        different: {
+            //            field: 'name',
+            //            message: '密码不能与用户名相同'
+            //        }
+            //    }
+            //},
+            //confirmPassword: {
+            //    validators: {
+            //        notEmpty: {
+            //            message: '请再次填写确认密码'
+            //        },
+            //        identical: {
+            //            field: 'password',
+            //            message: '两次密码输入不一致'
+            //        },
+            //        different: {
+            //            field: 'name',
+            //            message: '密码不能与用户名相同'
+            //        }
+            //    }
+            //},
             roleId:{
                 validators:{
                     notEmpty: {

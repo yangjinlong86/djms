@@ -8,6 +8,7 @@ import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.User;
 import org.dj.bms.service.UserService;
+import org.dj.bms.utils.EncryptUtil;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
             // 新建用户
             user.setId(IdGenerator.generateUUID());
             user.setCreateTime(Calendar.getInstance().getTime());
+            EncryptUtil.encryptPassword(user);
             return userMapper.insertSelective(user);
         }
     }
@@ -87,4 +89,8 @@ public class UserServiceImpl implements UserService {
         return  pageInfo;
     }
 
+    @Override
+    public User selectByUserName(String name) {
+        return userMapper.selectByUserName(name);
+    }
 }

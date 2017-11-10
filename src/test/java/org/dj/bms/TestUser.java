@@ -2,6 +2,7 @@ package org.dj.bms;
 
 import org.dj.bms.model.User;
 import org.dj.bms.service.UserService;
+import org.dj.bms.utils.EncryptUtil;
 import org.dj.bms.utils.IdGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,12 +29,13 @@ public class TestUser {
 
         for(int i=1; i<=100; i++){
             User user = new User();
-            user.setName("测试用户-" + i);
+            user.setName("user" + i);
             user.setPassword("123456");
             user.setRealName("测试用户-" + i);
             user.setCorpId("1");
             user.setDeptId("1");
             user.setCreateTime(Calendar.getInstance().getTime());
+            EncryptUtil.encryptPassword(user);
             userService.saveOrUpdate(user);
         }
 

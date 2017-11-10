@@ -3,8 +3,11 @@ package org.dj.bms.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Resource;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * @author YANGJINLONG
+ * @author jason
  */
 @Mapper
 public interface ResourceMapper {
@@ -19,4 +22,8 @@ public interface ResourceMapper {
     int updateByPrimaryKeySelective(Resource record);
 
     int updateByPrimaryKey(Resource record);
+
+    List<Resource> selectResources();
+
+    List<Resource> selectUserResources(Map<String, Object> paramMap);
 }
