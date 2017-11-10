@@ -5,19 +5,16 @@ import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
 import org.dj.bms.service.UserService;
-import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 /**
  * UserContrller
  * @author Created by jason on 17/10/29.
  */
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -30,6 +27,7 @@ public class UserController {
     @PostMapping(value="/saveUser")
     public String save(@ModelAttribute User user){
         userService.saveOrUpdate(user);
+        logger.debug("==========saveuser=======");
         return "redirect:/user";
     }
 

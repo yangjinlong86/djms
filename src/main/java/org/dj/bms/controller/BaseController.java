@@ -9,20 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
+import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
+import org.dj.bms.utils.ResponseMsg;
 
 /**
- * @ClassName: BmsController
+ * @ClassName: BaseController
  * @Description: 基类
  * @author pufangfei@163.com
  * @date 2017年11月8日 下午11:14:17
  */
 
-public class BmsController {
+public class BaseController {
 	/**
 	 * 日志
 	 */
 	protected final Log logger = LogFactory.getLog(getClass());
+
+   public ResponseMsg getRes(boolean status){
+    return new ResponseMsg(status);
+   }
 
 	public User getCurrentUser() {
 		return (User) SecurityUtils.getSubject().getPrincipal();
