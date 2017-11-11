@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dj.bms.dao.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="org.dj.bms.model.Resource" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, `NAME`, URL, `TYPE`, PARENT_ID, SORT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectResources" resultMap="BaseResultMap">
+        select
+          <include refid="Base_Column_List" />
+        from RESOURCE
+    </select>
+    <select id="selectUserResources" parameterType="map" resultType="org.dj.bms.model.Resource">
+        SELECT RE.ID,RE.NAME,RE.PARENT_ID,RE.URL
+        FROM RESOURCE RE LEFT JOIN ROLE_RESOURCE RR
+        ON RE.ID = RR.RESOURCE_ID
+        LEFT JOIN USER_ROLE UR
+        ON RR.ROLE_ID =UR.ROLE_ID
+        WHERE UR.USER_ID=#{userid}
+        <if test="type != null">
+            AND RE.TYPE= #{type}
+        </if>
+        GROUP BY RE.ID
+        ORDER BY RE.SORT ASC
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RESOURCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.dj.bms.model.Resource" >
+    insert into RESOURCE (ID, `NAME`, URL, 
+      `TYPE`, PARENT_ID, SORT
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.dj.bms.model.Resource" >
+    insert into RESOURCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        `NAME`,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="type != null" >
+        `TYPE`,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Resource" >
+    update RESOURCE
+    <set >
+      <if test="name != null" >
+        `NAME` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `TYPE` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Resource" >
+    update RESOURCE
+    set `NAME` = #{name,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      `TYPE` = #{type,jdbcType=INTEGER},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

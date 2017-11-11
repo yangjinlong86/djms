@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Created by jason on 17/11/2.
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
 
 	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request, User user, Model model) {
@@ -29,6 +29,7 @@ public class LoginController {
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());
 		try {
 			subject.login(token);
+            model.addAttribute("user",user);
 			return "redirect:/index";
 		} catch (LockedAccountException lae) {
 			token.clear();

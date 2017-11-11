@@ -13,11 +13,11 @@ public class QueryBean {
 	/**
 	 * 页数
 	 */
-	private long pageNum;
+	private Integer pageNum;
 	/**
 	 * 每页条数
 	 */
-	private long limitNum;
+	private Integer limitNum;
 	/**
 	 * 名称
 	 */
@@ -31,19 +31,22 @@ public class QueryBean {
 	 */
 	private Date endDate;
 
-	public long getPageNum() {
+    private String corpId;
+    private String deptId;
+
+	public Integer getPageNum() {
 		return pageNum;
 	}
 
-	public void setPageNum(long pageNum) {
+	public void setPageNum(Integer pageNum) {
 		this.pageNum = pageNum;
 	}
 
-	public long getLimitNum() {
+	public Integer getLimitNum() {
 		return limitNum;
 	}
 
-	public void setLimitNum(long limitNum) {
+	public void setLimitNum(Integer limitNum) {
 		this.limitNum = limitNum;
 	}
 
@@ -70,4 +73,20 @@ public class QueryBean {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
+    public String getCorpId() {
+        return corpId;
+    }
+
+    public void setCorpId(String corpId) {
+        this.corpId = corpId;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 }

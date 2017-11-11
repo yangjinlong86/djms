@@ -116,6 +116,13 @@ $(document).ready(function(){
         }
     });
 
+    // 为查询按钮绑定提交表单事件
+    $("#btnSelect").click(function(){
+        $("#queryBean_pageNum").val($("#pageNum").val());
+        $("#queryBean_limitNum").val($("#pageSize").val());
+        document.getElementById("queryUserForm").submit();
+    });
+
     // 表单验证
     $('#btnSaveUser').click(function() {
         $('#saveUserForm').bootstrapValidator('validate');
@@ -125,7 +132,13 @@ $(document).ready(function(){
         }
     });
 
-    // 绑定重置表单时间
+    // 绑定重置表单事件
+    $('#btnResetQueryUserForm').bind("click",function() {
+            $('#queryUserForm')[0].reset();
+        }
+    );
+
+    // 绑定重置表单事件
     $('#resetBtn').bind("click",function() {
             $('#saveUserForm').data('bootstrapValidator').resetForm(true);
         }
@@ -138,31 +151,37 @@ function queryUser(pageNum, pageSize){
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
-    $.post("userList/" + pageNum + "/" + pageSize,
-        function(data){
+    $.ajax({
+        url: "userList",
+        data:{
+            pageNum:pageNum,
+            limitNum:pageSize
+        },
+        success:function(data){
             var users = data.list;
-            for(var i=0; i < users.length; i++){
+            for (var i = 0; i < users.length; i++) {
                 userArray.push(users[i]);
                 $("#user-list").append(
-                    '<tr>'+
-                    '<td style="text-align: center">'+ users[i].name+'</td>' +      // 用户名
-                    '<td style="text-align: center">'+ users[i].realName+'</td>'+   // 昵称
-                    '<td>'+ users[i].corpId+'</td>'+                 // 单位
-                    '<td>'+ users[i].deptId+'</td>'+                 // 部门
-                    '<td></td>'+//部门
-                    '<td style="text-align: center">'+
+                    '<tr>' +
+                    '<td style="text-align: center"><input id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
+                    '<td style="text-align: center">' + users[i].name + '</td>' +      // 用户名
+                    '<td style="text-align: center">' + users[i].realName + '</td>' +   // 昵称
+                    '<td>' + users[i].corpId + '</td>' +                 // 单位
+                    '<td>' + users[i].deptId + '</td>' +                 // 部门
+                    '<td></td>' +//角色
+                    '<td style="text-align: center">' +
                         // 操作：编辑
-                    '<a href="javascript:void(0)" class="btn btn-primary btn-outline btn-sm" data-toggle="modal" onclick="editUser('+i+')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp; '+
+                    '<a href="javascript:void(0)" class="btn btn-primary btn-outline btn-sm" data-toggle="modal" onclick="editUser(' + i + ')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp; ' +
                         // 操作：删除
-                    '<a href="javascript:void(0)" class="btn btn-danger btn-outline btn-sm" onclick="deleteUser('+i+')"><i class="fa fa-times"></i></a>'+
-                    '</td>'+
+                    '<a href="javascript:void(0)" class="btn btn-danger btn-outline btn-sm" onclick="deleteUser(' + i + ')"><i class="fa fa-times"></i></a>' +
+                    '</td>' +
                     '</tr>'
                 );
             }
             // 隐藏loading.gif
             $("#loadingDiv").hide();
         }
-    );
+    });
 }
 
 // 修改用户信息
@@ -178,7 +197,7 @@ function editUser(index){
 function deleteUser(index){
     var user = userArray[index];
     $.ajax({
-        type:"get",
+        type:"post",
         url:"deleteUser/" +user.id,
         async: false,
         success:function(status){
