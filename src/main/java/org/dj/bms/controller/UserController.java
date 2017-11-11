@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * UserContrller
  * @author Created by jason on 17/10/29.
@@ -26,8 +28,8 @@ public class UserController extends BaseController {
      * @param user
      * @return
      */
-    @PostMapping(value="/saveUser")
-    public String save(@ModelAttribute User user){
+    @RequestMapping(value="/saveUser")
+    public String save(User user){
         userService.saveOrUpdate(user);
         return "redirect:/user";
     }
@@ -39,8 +41,10 @@ public class UserController extends BaseController {
     @RequestMapping(value="/userList")
     @ResponseBody
     public PageInfo<User> selectAllUsers(UserQueryBean queryBean, Model model){
+        // 总记录数
+        queryBean.setCount(userService.selectCountUser());
         model.addAttribute("queryBean",queryBean);
-        return userService.selectAllUsers(queryBean.getPageNum(), queryBean.getLimitNum());
+        return userService.selectUsers(queryBean);
     }
 
     @RequestMapping(value="/deleteUser/{id}")

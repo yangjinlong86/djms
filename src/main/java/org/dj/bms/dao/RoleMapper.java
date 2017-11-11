@@ -2,6 +2,9 @@ package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Role;
+
+import java.util.List;
+
 /**
  * @author YANGJINLONG
  */
@@ -18,4 +21,8 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    List<Role> findRoleListByUserId(String userId);
+
+    List<Role> findAllRoles();
 }

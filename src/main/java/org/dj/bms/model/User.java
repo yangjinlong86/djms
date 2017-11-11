@@ -2,6 +2,8 @@ package org.dj.bms.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 /**
  * @author YANGJINLONG
  */
@@ -25,6 +27,26 @@ public class User implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    private String roleValues;
+
+    private List<Role> roleList;
+
+    public String getRoleValues() {
+        return roleValues;
+    }
+
+    public void setRoleValues(String roleValues) {
+        this.roleValues = roleValues;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     private static final long serialVersionUID = 1L;
 

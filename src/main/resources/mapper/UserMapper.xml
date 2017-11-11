@@ -17,17 +17,31 @@
     ID, `NAME`, `PASSWORD`, LAST_LOGIN_IP, LAST_LOGIN_TIME, CORP_ID, DEPT_ID, REAL_NAME, 
     CREATE_TIME, UPDATE_TIME
   </sql>
-  <select id="selectAllUsers" resultType="org.dj.bms.model.User" resultMap="BaseResultMap">
+
+  <select id="selectUsers" resultMap="BaseResultMap" parameterType="map">
       select
       <include refid="Base_Column_List" />
-      from USER
+      FROM USER
+      <where>
+          <if test="name != null and name != ''">
+            AND NAME = #{name, jdbcType=VARCHAR}
+          </if>
+          <if test="corpId != null and corpId != ''">
+            AND CORP_ID = #{corpId, jdbcType=VARCHAR}
+          </if>
+          <if test="deptId != null and deptId != ''">
+            AND DEPT_ID = #{deptId, jdbcType=VARCHAR}
+          </if>
+      </where>
   </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from USER
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+
     <!-- 根据用户名查找用户 -->
     <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
@@ -35,6 +49,11 @@
         from USER
         where NAME = #{name,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectCountUser" resultType="int">
+        SELECT COUNT(1) FROM USER
+    </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from USER
     where ID = #{id,jdbcType=VARCHAR}

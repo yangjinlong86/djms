@@ -14,6 +14,19 @@
     from ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+    <select id="findAllRoles" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ROLE
+    </select>
+
+    <select id="findRoleListByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from ROLE R , USER_ROLE UR
+        WHERE R.ID = UR.ROLE_ID
+        AND UR.USER_ID= #{userId}
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from ROLE
     where ID = #{id,jdbcType=VARCHAR}

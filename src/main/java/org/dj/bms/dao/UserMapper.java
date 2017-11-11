@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *@author jason
@@ -25,6 +26,8 @@ public interface UserMapper {
 
     User selectByUserName(String name);
 
-    List<User> selectAllUsers();
+    List<User> selectUsers(Map<String,String> paramsMap);
+
+    int selectCountUser();
 
 }

@@ -5,6 +5,11 @@
     <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
     <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
   </resultMap>
+
+    <select id="selectUserRoleByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+      SELECT USER_ID,ROLE_ID FROM USER_ROLE
+      WHERE USER_ID=#{userId}
+    </select>
   <insert id="insert" parameterType="org.dj.bms.model.UserRole" >
     insert into USER_ROLE (USER_ID, ROLE_ID)
     values (#{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
@@ -28,4 +33,8 @@
       </if>
     </trim>
   </insert>
+    
+    <delete id="deleteUserRoleByUserId" parameterType="java.lang.String" >
+        DELETE FROM USER_ROLE WHERE USER_ID=#{userId}
+    </delete>
 </mapper>

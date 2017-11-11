@@ -22,7 +22,6 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request, User user, Model model) {
 		if (StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword())) {
-			request.setAttribute("msg", "用户名或密码不能为空！");
 			return "login";
 		}
 		Subject subject = SecurityUtils.getSubject();

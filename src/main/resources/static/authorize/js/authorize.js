@@ -1,43 +1,52 @@
 $(document).ready(function(){
-    // 加载用户数据列表
-    queryUser($("#pageNum").val(), $("#pageSize").val());
 
+    // 加载用户数据列表
+    queryUser(initQueryBean());
+    initRoleList();
     // 绑定第一页按钮事件
     $("#firstPage").bind("click",function(){
-        if($("#pageNum").val() != 1){
-            queryUser(1, $("#pageSize").val());
+        var qb = initQueryBean();
+        if(qb.pageNum != 1){
+            qb.pageNum = 1;
+            queryUser(qb);
             $("#pageNum").val(1);
         }
     });
 
     // 绑定上一页按钮事件
     $("#prevPage").bind("click",function(){
-        var currentPageNum = Number($("#pageNum").val());
+        var qb = initQueryBean();
+        var currentPageNum = Number(qb.pageNum);
         if(currentPageNum == 1){
             this.disabled;
             return;
         }
-        queryUser(currentPageNum - 1, $("#pageSize").val());
-        $("#pageNum").val(currentPageNum - 1);
+        qb.pageNum = currentPageNum - 1;
+        queryUser(qb);
+        $("#pageNum").val(qb.pageNum);
     });
 
     // 绑定下一页按钮事件
     $("#nextPage").bind("click",function(){
-        var currentPageNum = Number($("#pageNum").val());
+        var qb = initQueryBean();
+        var currentPageNum = Number(qb.pageNum);
         if(currentPageNum == 10){
             this.disabled;
             return;
         }
-        queryUser(currentPageNum + 1, $("#pageSize").val());
-        $("#pageNum").val(currentPageNum + 1);
+        qb.pageNum = currentPageNum + 1;
+        queryUser(qb);
+        $("#pageNum").val(qb.pageNum);
     });
 
     // 绑定最后一页按钮事件
     $("#lastPage").bind("click",function(){
+        var qb = initQueryBean();
         var totalPage = 10;
-        if($("#pageNum").val() != totalPage){
+        if(qb.pageNum != totalPage){
             // TODO 获取总页数
-            queryUser(totalPage, $("#pageSize").val());
+            qb.pageNum = totalPage;
+            queryUser(qb);
             $("#pageNum").val(totalPage);
         }
 
@@ -105,31 +114,45 @@ $(document).ready(function(){
             //        }
             //    }
             //},
-            roleId:{
-                validators:{
-                    notEmpty: {
-                        message: '请为用户分配角色'
-                    }
-                }
-            }
+            //roleList:{
+            //    validators:{
+            //        notEmpty: {
+            //            message: '请为用户分配角色'
+            //        }
+            //    }
+            //}
 
         }
     });
 
     // 为查询按钮绑定提交表单事件
     $("#btnSelect").click(function(){
-        $("#queryBean_pageNum").val($("#pageNum").val());
-        $("#queryBean_limitNum").val($("#pageSize").val());
-        document.getElementById("queryUserForm").submit();
+        var queryBean = initQueryBean();
+        queryUser(queryBean);
     });
 
     // 表单验证
     $('#btnSaveUser').click(function() {
-        $('#saveUserForm').bootstrapValidator('validate');
-        //验证通过提交表单
-        if($('#saveUserForm').data("bootstrapValidator").isValid()){
-            document.getElementById("saveUserForm").submit();
-        }
+        var roleList = $("input[name='role_checkbox']:checked");
+        var roleValues = "";
+        var checkBoxValue = "";
+        roleList.each(function(){
+            roleValues += $(this).val()+",";
+        })
+        roleValues = roleValues.substring(0,roleValues.length-1);
+        $.ajax({
+            type: "post",
+            url: "saveUser",
+            data: {
+                id: $('#id').val(),
+                name: $('#name').val(),
+                realName: $('#realName').val(),
+                corpId: $("#corpId").val(),
+                deptId: $("#deptId").val(),
+                roleValues:roleValues
+            }
+        });
+
     });
 
     // 绑定重置表单事件
@@ -147,16 +170,15 @@ $(document).ready(function(){
 
 // 定义一个数组,用来存放用户信息
 var userArray = new Array();
-function queryUser(pageNum, pageSize){
+function queryUser(queryBean){
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
     $.ajax({
+        type:"post",
         url: "userList",
-        data:{
-            pageNum:pageNum,
-            limitNum:pageSize
-        },
+        dataType:"json",
+        data:queryBean,
         success:function(data){
             var users = data.list;
             for (var i = 0; i < users.length; i++) {
@@ -168,7 +190,6 @@ function queryUser(pageNum, pageSize){
                     '<td style="text-align: center">' + users[i].realName + '</td>' +   // 昵称
                     '<td>' + users[i].corpId + '</td>' +                 // 单位
                     '<td>' + users[i].deptId + '</td>' +                 // 部门
-                    '<td></td>' +//角色
                     '<td style="text-align: center">' +
                         // 操作：编辑
                     '<a href="javascript:void(0)" class="btn btn-primary btn-outline btn-sm" data-toggle="modal" onclick="editUser(' + i + ')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp; ' +
@@ -191,6 +212,19 @@ function editUser(index){
     $("#userModalLabel").html("修改用户");
     $("#userModal").modal('show');
     $("#saveUserForm").autofill(user);
+    $.ajax({
+        type:"post",
+        url:"findRoleListByUserId/"+user.id,
+        success:function(roleList){
+            if(roleList == "" || roleList.length == 0){
+                return;
+            }
+            for (var i = 0; i < roleList.length; i++) {
+                $("#roleId").val(roleList[i].id);
+            }
+
+        }
+    });
 }
 
 // 删除用户
@@ -214,7 +248,45 @@ function deleteUser(index){
 $(function () { $('#userModal').modal('hide')});
 // hidden.bs.modal	当模态框完全对用户隐藏时触发。
 $(function () { $('#userModal').on('hide.bs.modal', function () {
-    // 重置表单
-    $("#resetBtn").click();
+        // 重置表单
+        $("#resetBtn").click();
+    });
 });
-});
+
+function queryBean(pageNum, limitNum, corpId, deptId, name){
+    this.pageNum = pageNum;
+    this.limitNum = limitNum;
+    this.corpId = corpId;
+    this.deptId = deptId;
+    this.name = name;
+}
+
+function initQueryBean(){
+    var user_querybean = new queryBean(
+        $("#pageNum").val(),
+        $("#pageSize").val(),
+        $("#queryBean_corpId").val(),
+        $("#queryBean_deptId").val(),
+        $("#queryBean_name").val()
+    );
+    return user_querybean;
+}
+
+function initRoleList(){
+    $("#roles_checkboxs").html("");
+    $.ajax({
+        type:"post",
+        url:"findAllRoles",
+        success:function(roles){
+            if(roles != "" && roles.length > 0){
+                for(var i=0; i<roles.length; i++){
+                    $("#roles_checkboxs").append(
+                        '<label>'+
+                        '<input type="checkbox" name="role_checkbox" value="'+roles[i].id+'">'+ roles[i].roleDesc +
+                        '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                    );
+                }
+            }
+        }
+    });
+}
