@@ -1,12 +1,6 @@
 package org.dj.bms.model;
 
-public class Dict extends Bms {
-
-	/**
-	 * @Fields serialVersionUID : TODO
-	 */
-
-	private static final long serialVersionUID = 7399473391256463640L;
+public class Dict {
 
 	private String pid;
 
@@ -16,6 +10,10 @@ public class Dict extends Bms {
 
 	public String getPid() {
 		return pid;
+	}
+
+	public String getLabel() {
+		return getName();
 	}
 
 	public void setPid(String pid) {

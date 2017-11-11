@@ -78,16 +78,10 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label>用户名</label>
-                                                    <input class="form-control" id="name" name="name"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>姓名</label>
-                                                    <input class="form-control" id="realName" name="realName" th:value="${realName}"/>
+                                                    <input class="form-control"  name="region" id="region" type="text"></input>
+                                                    <input class="form-control"  name="address"></input>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,9 +166,10 @@
     <script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
     <script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
+    <script th:src="@{vendor/jquery-ui/jquery-ui.min.js}"></script>
     <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
     <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
-    <script th:src="@{authorize/js/customer.js}"></script>
+    <script th:src="@{customer/js/customer.js}"></script>
 </body>
 
 </html>
