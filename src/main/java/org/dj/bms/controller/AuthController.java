@@ -9,18 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuthController {
 
-    @RequestMapping("/resource")
-    public String resource(){
-        return "authorize/resource";
-    }
+	@RequestMapping("/resource")
+	public String resource() {
+		return "authorize/resource";
+	}
 
-    @RequestMapping("/role")
-    public String role(){
-        return "authorize/role";
-    }
+	@RequestMapping("/role")
+	public String role() {
+		return "authorize/role";
+	}
 
-    @RequestMapping("/user")
-    public String user(){
-        return "authorize/user";
-    }
+	@RequestMapping("/user")
+	public String user() {
+		return "authorize/user";
+	}
+
+	@RequestMapping("/customer")
+	public String customer() {
+		return "customer/customer";
+	}
 }
