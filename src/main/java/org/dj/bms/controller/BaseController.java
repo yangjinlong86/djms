@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
-import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
 import org.dj.bms.utils.ResponseMsg;
 
@@ -26,9 +25,9 @@ public class BaseController {
 	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
-   public ResponseMsg getRes(boolean status){
-    return new ResponseMsg(status);
-   }
+	public ResponseMsg getRes(boolean status) {
+		return new ResponseMsg(status);
+	}
 
 	public User getCurrentUser() {
 		return (User) SecurityUtils.getSubject().getPrincipal();
