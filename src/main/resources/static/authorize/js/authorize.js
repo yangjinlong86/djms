@@ -169,8 +169,9 @@ $(document).ready(function(){
 });
 
 // 定义一个数组,用来存放用户信息
-var userArray = new Array();
+var userArray;
 function queryUser(queryBean){
+    userArray = new Array();
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
@@ -236,7 +237,7 @@ function deleteUser(index){
         async: false,
         success:function(status){
             if (status == "true") {
-                queryUser($("#pageNum").val(), $("#pageSize").val());
+                queryUser(initQueryBean());
             } else {
                 alert("delete failed");
             }
