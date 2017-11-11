@@ -1,11 +1,12 @@
 package org.dj.bms.cache;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dj.bms.dao.NodeMapper;
 import org.dj.bms.enumeration.ECacheEnum;
 import org.dj.bms.model.Node;
-import org.dj.bms.utils.TreeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import net.sf.ehcache.Element;
  * @author pufangfei@163.com
  * @date 2017年11月11日 上午9:54:45
  */
-@Component
+@Component("dictCache")
 public class DictCache implements CommandLineRunner {
 
 	@Autowired
@@ -31,18 +32,18 @@ public class DictCache implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		if (!cacheManager.cacheExists(ECacheEnum.DICTCACHE.getValue())) {
-			cacheManager.addCache(ECacheEnum.DICTCACHE.getValue());
+		String cacheName = ECacheEnum.DICTCACHE.getValue();
+		if (!cacheManager.cacheExists(cacheName)) {
+			cacheManager.addCache(cacheName);
 		}
-		Cache cache = cacheManager.getCache(ECacheEnum.DICTCACHE.getValue());
+		Map<String, Node> dictCache = new HashMap<>();
+		Cache cache = cacheManager.getCache(cacheName);
 		List<Node> nodes = nodeMapper.loadAllDictNode();
-		TreeBuilder builder = new TreeBuilder();
-		List<Node> treeNode = builder.buildListToTree(nodes);
-		for (Node node : treeNode) {
-			System.out.println(node);
+		for (Node node : nodes) {
+			dictCache.put(node.getKey(), node);
 		}
-		Element element = new Element("dict", treeNode);
-		cache.put(element);
+		cache.remove(cacheName);
+		cache.put(new Element(cacheName, dictCache));
 	}
 
 }
