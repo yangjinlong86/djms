@@ -3,7 +3,7 @@ package org.dj.bms.utils;
 import java.util.Map;
 
 import org.dj.bms.enumeration.ECacheEnum;
-import org.dj.bms.model.Node;
+import org.dj.bms.model.Dict;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -19,9 +19,9 @@ import net.sf.ehcache.Element;
 public class ECacheUtils {
 
 	@SuppressWarnings("unchecked")
-	public static Map<String, Node> getDictCache() {
+	public static Map<String, Dict> getDictCache() {
 		String dictCacheName = ECacheEnum.DICTCACHE.getValue();
-		return (Map<String, Node>) getCacheElement(dictCacheName).getObjectValue();
+		return (Map<String, Dict>) getCacheElement(dictCacheName).getObjectValue();
 	}
 
 	public static Element getCacheElement(String cacheName) {

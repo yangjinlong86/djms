@@ -2,8 +2,6 @@ package org.dj.bms.model;
 
 import java.util.List;
 
-import org.dj.bms.utils.PingyinUtils;
-
 public class Node implements java.io.Serializable {
 	private static final long serialVersionUID = -2721191232926604726L;
 
@@ -136,13 +134,6 @@ public class Node implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getKey() {
-		StringBuilder key = new StringBuilder();
-		key.append(parentId + "|").append(code + "|").append(PingyinUtils.convert2qp(name) + "|")
-				.append(PingyinUtils.convert2jp(name));
-		return key.toString();
 	}
 
 	@Override

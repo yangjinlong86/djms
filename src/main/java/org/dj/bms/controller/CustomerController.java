@@ -1,15 +1,14 @@
 package org.dj.bms.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Node;
-import org.dj.bms.utils.ECacheUtils;
+import org.dj.bms.model.Customer;
+import org.dj.bms.service.CustomerService;
 import org.dj.bms.utils.ResponseMsg;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,19 +20,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerController extends BaseController {
 
-	@RequestMapping("test/{pid}/{key}")
-	public Object testEache(@PathVariable("pid") String pid, @PathVariable("key") String key) {
-		Map<String, Node> dict = ECacheUtils.getDictCache();
-		List<Node> nodes = new ArrayList<>();
-		dict.forEach((k, v) -> {
-			if (StringUtils.startsWith(k, pid)) {
-				if (StringUtils.contains(k, key)) {
-					nodes.add(v);
-				}
-			}
-		});
-		ResponseMsg res = getRes(true);
-		res.setData(nodes);
-		return res;
+	@Autowired
+	@Qualifier("customerService")
+	private CustomerService customerService;
+
+	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
+	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
+		boolean status = false;
+		ResponseMsg resData = getRes(status);
+		try {
+			status = customerService.saveOrUpdate(cust);
+		} catch (Exception e) {
+			logger.error(e + "");
+			resData.setMsg(e.getMessage());
+		}
+		resData.setStatus(status);
+		return resData;
 	}
+
+	@RequestMapping(path = "delete/{id}", method = RequestMethod.GET)
+	public ResponseMsg deleteByCustomerId(@PathVariable("id") String id) {
+		boolean status = false;
+		ResponseMsg resData = getRes(status);
+		try {
+			status = customerService.deleteByCustomerId(id);
+		} catch (Exception e) {
+			logger.error(e + "");
+			resData.setMsg(e.getMessage());
+		}
+		resData.setStatus(status);
+		return resData;
+	}
+
 }

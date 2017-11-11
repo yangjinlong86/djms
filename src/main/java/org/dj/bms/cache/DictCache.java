@@ -6,7 +6,8 @@ import java.util.Map;
 
 import org.dj.bms.dao.NodeMapper;
 import org.dj.bms.enumeration.ECacheEnum;
-import org.dj.bms.model.Node;
+import org.dj.bms.model.Dict;
+import org.dj.bms.utils.PingyinUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -36,14 +37,22 @@ public class DictCache implements CommandLineRunner {
 		if (!cacheManager.cacheExists(cacheName)) {
 			cacheManager.addCache(cacheName);
 		}
-		Map<String, Node> dictCache = new HashMap<>();
+		Map<String, Dict> dictCache = new HashMap<>();
 		Cache cache = cacheManager.getCache(cacheName);
-		List<Node> nodes = nodeMapper.loadAllDictNode();
-		for (Node node : nodes) {
-			dictCache.put(node.getKey(), node);
+		List<Dict> nodes = nodeMapper.loadAllDict();
+		for (Dict dict : nodes) {
+			dictCache.put(getKey(dict), dict);
 		}
 		cache.remove(cacheName);
 		cache.put(new Element(cacheName, dictCache));
+	}
+
+	public String getKey(Dict dict) {
+		StringBuilder sb = new StringBuilder();
+		String name = dict.getName();
+		sb.append(dict.getPid() + "|").append(dict.getCode() + "|").append(PingyinUtils.convert2qp(name) + "|")
+				.append(PingyinUtils.convert2jp(name));
+		return sb.toString();
 	}
 
 }

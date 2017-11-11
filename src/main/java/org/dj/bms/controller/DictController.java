@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Node;
+import org.dj.bms.model.Dict;
 import org.dj.bms.utils.ECacheUtils;
-import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,16 +33,14 @@ public class DictController extends BaseController {
 	* @return Object    
 	* @throws
 	 */
-	@RequestMapping("dict/getValues/{pid}/{key}/{size}")
-	public Object dictEache(@PathVariable("pid") String pid,
-			@PathVariable("key") String key,
-			@PathVariable("size") int size) {
-		Map<String, Node> dict = ECacheUtils.getDictCache();
-		List<Node> nodes = new ArrayList<>();
+	@RequestMapping("dict/getValues/{pid}/{size}")
+	public Object dictEache(@PathVariable("pid") String pid,@PathVariable("size") int size,String term) {
+		Map<String, Dict> dict = ECacheUtils.getDictCache();
+		List<Dict> nodes = new ArrayList<>();
 		int sum = size == 0? limit :size;
 		dict.forEach((k, v) -> {
 			if (StringUtils.startsWith(k, pid)) {
-				if (StringUtils.contains(k, key)) {
+				if (StringUtils.contains(k, term)) {
 					if (sum == nodes.size()) {
 						return;
 					}
@@ -51,8 +48,6 @@ public class DictController extends BaseController {
 				}
 			}
 		});
-		ResponseMsg res = getRes(true);
-		res.setData(nodes);
-		return res;
+		return nodes;
 	}
 }

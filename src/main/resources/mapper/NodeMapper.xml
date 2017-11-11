@@ -8,6 +8,11 @@
     <result column="CODE" property="code" jdbcType="VARCHAR" />
     <result column="COMMENT" property="description" jdbcType="VARCHAR" />
   </resultMap>
+   <resultMap type="org.dj.bms.model.Dict" id="dictMap">
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+  </resultMap>
   
   <sql id="dict">
   		DICT.ID,
@@ -17,6 +22,13 @@
   		DICT.COMMENT
   </sql>
   <select id="loadAllDictNode" resultMap="nodeMap">
+  		SELECT
+  			<include refid="dict"/> 
+  		FROM
+  			bms.dict
+  </select>
+  
+    <select id="loadAllDict" resultMap="dictMap">
   		SELECT
   			<include refid="dict"/> 
   		FROM
