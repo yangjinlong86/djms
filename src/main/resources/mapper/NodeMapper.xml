@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dj.bms.dao.NodeMapper" >
+  <resultMap type="org.dj.bms.model.Node" id="nodeMap">
+  	<id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PID" property="parentId" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="COMMENT" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="dict">
+  		DICT.ID,
+  		DICT.PID,
+  		DICT.NAME,
+  		DICT.CODE,
+  		DICT.COMMENT
+  </sql>
+  <select id="loadAllDictNode" resultMap="nodeMap">
+  		SELECT
+  			<include refid="dict"/> 
+  		FROM
+  			bms.dict
+  </select>
+</mapper>
