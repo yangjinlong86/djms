@@ -7,7 +7,9 @@ public enum ResponseEnum {
     // success
     SUCCESS("true"),
     // failed
-    FAILED("false");
+    FAILED("false"),
+    // already exists
+    ALREADY_EXISTS("exist");
 
     private String status;
 
