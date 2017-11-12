@@ -17,3 +17,22 @@ function getCheckedIds(checkbox_name){
     checkedUserIds.values = values.substring(0,values.length-1);
     return checkedUserIds;
 }
+/**
+ * 序列化表单数据为json
+ * 用法 $("#saveCustForm").serializeObject(); 返回json
+ */
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var a = this.serializeArray();  
+    $.each(a, function() {  
+        if (o[this.name]) {  
+            if (!o[this.name].push) {  
+                o[this.name] = [ o[this.name] ];  
+            }  
+            o[this.name].push(this.value || '');  
+        } else {  
+            o[this.name] = this.value || '';  
+        }  
+    });  
+    return o;  
+} 
