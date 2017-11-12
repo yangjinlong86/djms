@@ -1,6 +1,9 @@
 package org.dj.bms.service;
 
 import org.dj.bms.model.Customer;
+import org.dj.bms.query.QueryBean;
+
+import com.github.pagehelper.PageInfo;
 
 /**
  * @ClassName: CustomerService
@@ -27,4 +30,17 @@ public interface CustomerService {
 	* @throws
 	 */
 	boolean deleteByCustomerId(String id);
+	/**
+	 * 
+	* @Title: selectCustomer
+	* @Description: TODO
+	* @param @param qb
+	* @param @return    
+	* @return Page<Customer>    
+	* @throws
+	 */
+	PageInfo<Customer> selectCustomer(QueryBean qb);
+	
+	boolean deleteByIds(String ids);
+	
 }
