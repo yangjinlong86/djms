@@ -100,12 +100,13 @@ $(document).ready(function () {
 
     // 保存用户信息
     $('#btnSaveUser').click(function () {
-        var roleList = $("input[name='role_checkbox']:checked");
+        var roleList = $("input[name='checkbox_role']:checked");
         var roleValues = "";
         roleList.each(function () {
             roleValues += $(this).val() + ",";
         })
         roleValues = roleValues.substring(0, roleValues.length - 1);
+        debugger
         $.ajax({
             type: "post",
             url: "saveUser",

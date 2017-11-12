@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             user.setId(IdGenerator.generateUUID());
             user.setCreateTime(Calendar.getInstance().getTime());
             EncryptUtil.encryptPassword(user);
-            userMapper.insertSelective(user);
+            resCount += userMapper.insertSelective(user);
             if (resCount != DBEnum.OPERATION_FAILED.getValue()) {
                 this.deleteUserRoleByUserId(user.getId());
                 this.saveUserRole(user);
