@@ -2,6 +2,8 @@ package org.dj.bms.utils;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.dj.bms.enumeration.DictEnum;
 import org.dj.bms.enumeration.ECacheEnum;
 import org.dj.bms.model.Dict;
 
@@ -22,6 +24,20 @@ public class ECacheUtils {
 	public static Map<String, Dict> getDictCache() {
 		String dictCacheName = ECacheEnum.DICTCACHE.getValue();
 		return (Map<String, Dict>) getCacheElement(dictCacheName).getObjectValue();
+	}
+
+	public static String getCodeName(DictEnum dict, String code) {
+		String key = dict.getCode() + "|" + code + "|";
+		String name = "";
+		Map<String, Dict> dictCache = getDictCache();
+		for (String k : dictCache.keySet()) {
+			if (StringUtils.startsWith(k, key)) {
+				name = dictCache.get(k).getName();
+				break;
+			}
+		}
+		return name;
+
 	}
 
 	public static Element getCacheElement(String cacheName) {

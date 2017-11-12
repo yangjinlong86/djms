@@ -13,11 +13,15 @@ public class QueryBean {
 	/**
 	 * 页数
 	 */
-	private Integer pageNum;
+	private Integer pageNum = 1;
 	/**
 	 * 每页条数
 	 */
-	private Integer limitNum;
+	private Integer limitNum = 10;
+	/**
+	 * 总条数
+	 */
+	private int count;
 	/**
 	 * 名称
 	 */
@@ -31,8 +35,8 @@ public class QueryBean {
 	 */
 	private Date endDate;
 
-    private String corpId;
-    private String deptId;
+	private String corpId;
+	private String deptId;
 
 	public Integer getPageNum() {
 		return pageNum;
@@ -74,19 +78,28 @@ public class QueryBean {
 		this.endDate = endDate;
 	}
 
-    public String getCorpId() {
-        return corpId;
-    }
+	public String getCorpId() {
+		return corpId;
+	}
 
-    public void setCorpId(String corpId) {
-        this.corpId = corpId;
-    }
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
 
-    public String getDeptId() {
-        return deptId;
-    }
+	public String getDeptId() {
+		return deptId;
+	}
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 }

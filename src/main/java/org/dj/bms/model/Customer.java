@@ -2,6 +2,11 @@ package org.dj.bms.model;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+import org.dj.bms.enumeration.DictEnum;
+import org.dj.bms.utils.DateUtils;
+import org.dj.bms.utils.ECacheUtils;
+
 public class Customer extends Bms {
 
 	/**
@@ -88,6 +93,19 @@ public class Customer extends Bms {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone == null ? null : telephone.trim();
+	}
+
+	public String getBirth() {
+		return DateUtils.date2Str(birthday, "yyyy-MM-dd");
+	}
+
+	public String getAddr() {
+		StringBuilder addr = new StringBuilder();
+		addr.append(ECacheUtils.getCodeName(DictEnum.AREA, region));
+		if (StringUtils.isNotBlank(address)) {
+			addr.append(address);
+		}
+		return addr.toString();
 	}
 
 	@Override

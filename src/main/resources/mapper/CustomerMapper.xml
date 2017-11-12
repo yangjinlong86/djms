@@ -21,6 +21,46 @@
     ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`, 
     CREATE_USER_ID, UPDATE_USER_ID, CREATE_TIME, UPDATE_TIME
   </sql>
+  <sql id="Column_List" >
+    ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`
+  </sql>
+  <select id="selectCustomer" resultMap="BaseResultMap" parameterType="org.dj.bms.query.QueryBean">
+  		select 
+  			<include refid="Column_List"/>
+  		from
+  			customer
+  		<where>
+  			<if test="name !=null and name != ''">
+  				and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
+  			</if>
+  			<if test="corpId != null and corpId != ''">
+  				and corpId = #{corpId,jdbcType=VARCHAR}
+  			</if>
+  		</where>
+  </select>
+  <select id="selectCustomerCount" resultType="int" parameterType="org.dj.bms.query.QueryBean">
+  		select 
+  			count(1)
+  		from
+  			customer
+  		<where>
+  			<if test="name !=null and name != ''">
+  				and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
+  			</if>
+  			<if test="corpId != null and corpId != ''">
+  				and corpId = #{corpId,jdbcType=VARCHAR}
+  			</if>
+  		</where>
+  </select>
+  
+  <delete id="deleteByIds">
+  	  delete from customer where id in
+        <foreach collection="ids" item="id" index="index"  
+            open="(" close=")" separator=",">  
+            #{id}  
+        </foreach>  
+  </delete>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
