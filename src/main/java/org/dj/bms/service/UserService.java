@@ -1,13 +1,12 @@
 package org.dj.bms.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.dj.bms.model.Role;
 import org.dj.bms.model.User;
+import org.dj.bms.query.UserQueryBean;
 
 import com.github.pagehelper.PageInfo;
-import org.dj.bms.query.UserQueryBean;
 
 /**
  * @author Created by jason on 17/10/29.
@@ -30,6 +29,6 @@ public interface UserService {
 
 	User selectByUserName(String name);
 
-    int selectCountUser();
+	int selectCountUser();
 
 }

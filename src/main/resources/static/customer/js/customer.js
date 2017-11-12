@@ -3,7 +3,7 @@
 //页面加载时完成
 $(document).ready(function(){
 	var codeType = '30101004';
-	$("#region").autocomplete({
+	$("#queryBean_corpId").autocomplete({
 	    // 静态的数据源
 	    source:'dict/getValues/30101004/10',
 	    dataType: 'json',
