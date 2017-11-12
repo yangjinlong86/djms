@@ -1,9 +1,8 @@
 
-
 //页面加载时完成
 $(document).ready(function(){
 	var codeType = '30101004';
-	$("#queryBean_corpId").autocomplete({
+	$("#region").autocomplete({
 	    // 静态的数据源
 	    source:'dict/getValues/30101004/10',
 	    dataType: 'json',
@@ -19,6 +18,39 @@ $(document).ready(function(){
 	});
 });
 
+function loadData(){
+	 	$("#user-list").html("");
+	    // 显示loading.gif
+	    $("#loadingDiv").show();
+	    $.ajax({
+	        type:"post",
+	        url: "userList",
+	        dataType:"json",
+	        data:queryBean,
+	        success:function(data){
+	            var users = data.list;
+	            for (var i = 0; i < users.length; i++) {
+	                userArray.push(users[i]);
+	                $("#user-list").append(
+	                    '<tr>' +
+	                    '<td style="text-align: center"><input id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
+	                    '<td style="text-align: center">' + users[i].name + '</td>' +      // 用户名
+	                    '<td style="text-align: center">' + users[i].realName + '</td>' +   // 昵称
+	                    '<td>' + users[i].corpId + '</td>' +                 // 单位
+	                    '<td>' + users[i].deptId + '</td>' +                 // 部门
+	                    '</tr>'
+	                );
+	            }
+	            // 隐藏loading.gif
+	            $("#loadingDiv").hide();
+	        }
+	    });
+}
+
+function listDataHtml(data){
+	//
+	$("#data-list").html("");
+}
 
 function auth(){
 	//权限 控制按钮是否显示

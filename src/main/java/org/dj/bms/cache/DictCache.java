@@ -50,8 +50,11 @@ public class DictCache implements CommandLineRunner {
 	public String getKey(Dict dict) {
 		StringBuilder sb = new StringBuilder();
 		String name = dict.getName();
-		sb.append(dict.getPid() + "|").append(dict.getCode() + "|").append(PingyinUtils.convert2qp(name) + "|")
-				.append(PingyinUtils.convert2jp(name));
+		sb.append(dict.getPid() + "|");
+		sb.append(dict.getCode() + "|");
+		sb.append(PingyinUtils.convert2qp(name) + "|");
+		sb.append(PingyinUtils.convert2jp(name) + "|");
+		sb.append(name + "|");
 		return sb.toString();
 	}
 
