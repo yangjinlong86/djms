@@ -52,6 +52,7 @@ $(document).ready(function(){
 
     });
 
+    // 表单验证
     $('#saveUserForm').bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
@@ -87,41 +88,7 @@ $(document).ready(function(){
                         message: '请填写昵称'
                     }
                 }
-            },
-            //password: {
-            //    validators: {
-            //        notEmpty: {
-            //            message: '密码不能为空'
-            //        },
-            //        different: {
-            //            field: 'name',
-            //            message: '密码不能与用户名相同'
-            //        }
-            //    }
-            //},
-            //confirmPassword: {
-            //    validators: {
-            //        notEmpty: {
-            //            message: '请再次填写确认密码'
-            //        },
-            //        identical: {
-            //            field: 'password',
-            //            message: '两次密码输入不一致'
-            //        },
-            //        different: {
-            //            field: 'name',
-            //            message: '密码不能与用户名相同'
-            //        }
-            //    }
-            //},
-            //roleList:{
-            //    validators:{
-            //        notEmpty: {
-            //            message: '请为用户分配角色'
-            //        }
-            //    }
-            //}
-
+            }
         }
     });
 
@@ -166,12 +133,18 @@ $(document).ready(function(){
             $('#saveUserForm').data('bootstrapValidator').resetForm(true);
         }
     );
+
+    // 绑定编辑用户点击事件
+    $("#editUserBtn").bind("click", function(){
+        editCheckedUser();
+    });
 });
 
 // 定义一个数组,用来存放用户信息
 var userArray;
 function queryUser(queryBean){
     userArray = new Array();
+    // 清空table下的内容
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
@@ -186,17 +159,11 @@ function queryUser(queryBean){
                 userArray.push(users[i]);
                 $("#user-list").append(
                     '<tr>' +
-                    '<td style="text-align: center"><input id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
+                    '<td style="text-align: center"><input name="checkbox_user" id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
                     '<td style="text-align: center">' + users[i].name + '</td>' +      // 用户名
                     '<td style="text-align: center">' + users[i].realName + '</td>' +   // 昵称
                     '<td>' + users[i].corpId + '</td>' +                 // 单位
                     '<td>' + users[i].deptId + '</td>' +                 // 部门
-                    '<td style="text-align: center">' +
-                        // 操作：编辑
-                    '<a href="javascript:void(0)" class="btn btn-primary btn-outline btn-sm" data-toggle="modal" onclick="editUser(' + i + ')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp; ' +
-                        // 操作：删除
-                    '<a href="javascript:void(0)" class="btn btn-danger btn-outline btn-sm" onclick="deleteUser(' + i + ')"><i class="fa fa-times"></i></a>' +
-                    '</td>' +
                     '</tr>'
                 );
             }
@@ -206,12 +173,21 @@ function queryUser(queryBean){
     });
 }
 
-// 修改用户信息
-// 根据下标访问userArray数据,获取用户信息
-function editUser(index){
-    var user = userArray[index];
+function editCheckedUser(){
+    var checkedUserIds = getCheckedUserIds();
+    if(checkedUserIds.count > 1){
+        alert("只能选择一条数据进行编辑!");
+        return;
+    }
+    if(checkedUserIds.count == 0){
+        alert("请选择一条数据!");
+        return;
+    }
+    var user = getUserFromArray(checkedUserIds.values);
+
     $("#userModalLabel").html("修改用户");
     $("#userModal").modal('show');
+    // 自动填充表单
     $("#saveUserForm").autofill(user);
     $.ajax({
         type:"post",
@@ -223,9 +199,39 @@ function editUser(index){
             for (var i = 0; i < roleList.length; i++) {
                 $("#roleId").val(roleList[i].id);
             }
-
         }
     });
+}
+
+// 获取列表中已经勾选的用户ID
+// 返回值:单条数据返回ID字符串，多条数据返回用逗号隔开的ID字符串
+function getCheckedUserIds(){
+    var checkedList = $("input[name='checkbox_user']");
+    var checkedUserIds = {
+        values:"",
+        count:0
+    };
+    for(var i=0; i<checkedList.length; i++){
+        if(checkedList[i].checked){
+            if(i != checkedList.length-1){
+                checkedUserIds.values += checkedList[i].value+",";
+                checkedUserIds.count++;
+            }
+            checkedUserIds.values += checkedList[i].value;
+            checkedUserIds.count++;
+        }
+    }
+    return checkedUserIds;
+}
+
+function getUserFromArray(userId){
+    var user;
+    for(var i = 0; i<userArray.length; i++){
+        if(userId == userArray[i].id){
+            user = userArray[i];
+            return user;
+        }
+    }
 }
 
 // 删除用户
@@ -254,6 +260,7 @@ $(function () { $('#userModal').on('hide.bs.modal', function () {
     });
 });
 
+// queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
 function queryBean(pageNum, limitNum, corpId, deptId, name){
     this.pageNum = pageNum;
     this.limitNum = limitNum;
@@ -262,6 +269,7 @@ function queryBean(pageNum, limitNum, corpId, deptId, name){
     this.name = name;
 }
 
+// 初始化queryBean,实时获取页面当前各个查询条件,需要重新调用此方法
 function initQueryBean(){
     var user_querybean = new queryBean(
         $("#pageNum").val(),
@@ -273,6 +281,7 @@ function initQueryBean(){
     return user_querybean;
 }
 
+// 加载所有的角色
 function initRoleList(){
     $("#roles_checkboxs").html("");
     $.ajax({
