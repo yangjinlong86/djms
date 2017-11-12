@@ -175,7 +175,7 @@ function queryUser(queryBean){
 }
 
 function editCheckedUser(){
-    var checkedUserIds = getCheckedUserIds("checkbox_user");
+    var checkedUserIds = getCheckedIds("checkbox_user");
     if(checkedUserIds.count == 0){
         alert("请选择一条数据!");
         return;
@@ -190,6 +190,8 @@ function editCheckedUser(){
     $("#userModal").modal('show');
     // 自动填充表单
     $("#saveUserForm").autofill(user);
+    // 全部取消选中
+    $("[name='checkbox_role']").removeAttr("checked");
     $.ajax({
         type:"post",
         url:"findRoleListByUserId/"+user.id,
