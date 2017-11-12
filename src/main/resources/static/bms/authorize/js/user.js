@@ -148,6 +148,7 @@ function queryUser(queryBean){
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
+
     $.ajax({
         type:"post",
         url: "userList",
@@ -175,12 +176,12 @@ function queryUser(queryBean){
 
 function editCheckedUser(){
     var checkedUserIds = getCheckedUserIds();
-    if(checkedUserIds.count > 1){
-        alert("只能选择一条数据进行编辑!");
-        return;
-    }
     if(checkedUserIds.count == 0){
         alert("请选择一条数据!");
+        return;
+    }
+    if(checkedUserIds.count > 1){
+        alert("只能选择一条数据进行编辑!");
         return;
     }
     var user = getUserFromArray(checkedUserIds.values);
