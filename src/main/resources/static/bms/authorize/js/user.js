@@ -106,7 +106,6 @@ $(document).ready(function () {
             roleValues += $(this).val() + ",";
         })
         roleValues = roleValues.substring(0, roleValues.length - 1);
-        debugger
         $.ajax({
             type: "post",
             url: "saveUser",
