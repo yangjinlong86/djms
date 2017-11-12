@@ -14,12 +14,13 @@ import java.util.Map;
  * @author Created by jason on 17/11/3.
  */
 @Service
-public class ResourceServiceImpl implements ResourceService{
+public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private RoleResourceMapper roleResourceMapper;
 
     @Autowired
     ResourceMapper resourceMapper;
+
     @Override
     public List<Resource> findResourcesByRoleId(String roleId) {
         //

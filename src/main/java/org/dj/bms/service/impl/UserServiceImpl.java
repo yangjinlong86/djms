@@ -130,6 +130,11 @@ public class UserServiceImpl implements UserService {
 		return userRoleMapper.deleteUserRoleByUserId(userId);
 	}
 
+    /**
+     *
+     * @param user
+     * @return
+     */
 	private int saveUserRole(User user) {
 		int resCount = 0;
 		if (StringUtils.isBlank(user.getRoleValues())) {
