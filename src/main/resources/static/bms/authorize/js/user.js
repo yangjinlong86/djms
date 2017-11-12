@@ -98,11 +98,10 @@ $(document).ready(function(){
         queryUser(queryBean);
     });
 
-    // 表单验证
+    // 保存用户信息
     $('#btnSaveUser').click(function() {
         var roleList = $("input[name='role_checkbox']:checked");
         var roleValues = "";
-        var checkBoxValue = "";
         roleList.each(function(){
             roleValues += $(this).val()+",";
         })
@@ -117,6 +116,18 @@ $(document).ready(function(){
                 corpId: $("#corpId").val(),
                 deptId: $("#deptId").val(),
                 roleValues:roleValues
+            },
+            success:function(res){
+                if("exist" == res){
+                    alert("用户名已经存在");
+                    return;
+                }else if("true" == res){
+                    alert("保存成功");
+                    return;
+                }else if("false" == res){
+                    alert("保存失败");
+                    return;
+                }
             }
         });
 
