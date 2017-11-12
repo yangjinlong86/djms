@@ -64,7 +64,7 @@ $(document).ready(function () {
         if (event.keyCode == "13") {
             // 如果输入的值大于总页数,将其置为总页数
             var pages = $("#pages").html();
-            if ($("#pageNum").val() > pages) {
+            if (Number($("#pageNum").val()) > Number(pages)) {
                 $("#pageNum").val(pages);
             }
             queryUser(initQueryBean());
