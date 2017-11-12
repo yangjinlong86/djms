@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#btnCloseUserAlert").click(function(){
+    $("#btnCloseUserAlert").click(function () {
         $("#alertMsg").html("");
         $("#userAlert").removeClass("alert-success")
             .removeClass("alert-warning")
@@ -60,11 +60,11 @@ $(document).ready(function () {
     });
 
     // 回车键后查询指定页码的数据
-    $("#pageNum").bind('keypress',function(event){
-        if(event.keyCode == "13") {
+    $("#pageNum").bind('keypress', function (event) {
+        if (event.keyCode == "13") {
             // 如果输入的值大于总页数,将其置为总页数
             var pages = $("#pages").html();
-            if($("#pageNum").val() >  pages){
+            if ($("#pageNum").val() > pages) {
                 $("#pageNum").val(pages);
             }
             queryUser(initQueryBean());
@@ -72,7 +72,7 @@ $(document).ready(function () {
     });
 
     // 每页条数改变后,默认查第一页的数据
-    $("#pageSize").bind("change",function(){
+    $("#pageSize").bind("change", function () {
         $("#pageNum").val(1);
         queryUser(initQueryBean());
     });
@@ -123,8 +123,8 @@ $(document).ready(function () {
         queryUser(queryBean);
     });
 
-    $("#btnSelect").bind("keypress",function (event) {
-        if(event.keyCode == "13") {
+    $("#btnSelect").bind("keypress", function (event) {
+        if (event.keyCode == "13") {
             var queryBean = initQueryBean();
             queryUser(queryBean);
         }
