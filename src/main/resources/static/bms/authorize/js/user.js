@@ -222,6 +222,7 @@ function queryUser(queryBean) {
 }
 
 function editCheckedUser() {
+    $("#btnCloseUserAlert").click();
     var checkedUserIds = getCheckedIds("checkbox_user");
     if (checkedUserIds.count == 0) {
         $("#alertMsg").html("请选择一条数进行编辑!");
