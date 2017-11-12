@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,16 +32,16 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveUser")
-    @ResponseBody
+	@ResponseBody
 	public String save(User user) {
-        User existsUser = userService.findByUsername(user.getName());
-        if(existsUser != null){
-            return ResponseEnum.ALREADY_EXISTS.getStatus();
-        }
-        if(userService.saveOrUpdate(user) > 0){
-            return ResponseEnum.SUCCESS.getStatus();
-        }
-        return ResponseEnum.FAILED.getStatus();
+		User existsUser = userService.findByUsername(user.getName());
+		if (existsUser != null) {
+			return ResponseEnum.ALREADY_EXISTS.getStatus();
+		}
+		if (userService.saveOrUpdate(user) > 0) {
+			return ResponseEnum.SUCCESS.getStatus();
+		}
+		return ResponseEnum.FAILED.getStatus();
 	}
 
 	/**
