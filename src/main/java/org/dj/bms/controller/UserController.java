@@ -9,7 +9,6 @@ import org.dj.bms.query.UserQueryBean;
 import org.dj.bms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,10 +54,9 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/userList")
 	@ResponseBody
-	public PageInfo<User> selectAllUsers(UserQueryBean queryBean, Model model) {
+	public PageInfo<User> selectAllUsers(UserQueryBean queryBean) {
 		// 总记录数
 		queryBean.setCount(userService.selectCountUser());
-		model.addAttribute("queryBean", queryBean);
 		return userService.selectUsers(queryBean);
 	}
 

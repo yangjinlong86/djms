@@ -24,7 +24,7 @@
       FROM USER
       <where>
           <if test="name != null and name != ''">
-            AND NAME = #{name, jdbcType=VARCHAR}
+            AND NAME like CONCAT('%','${name}','%')
           </if>
           <if test="corpId != null and corpId != ''">
             AND CORP_ID = #{corpId, jdbcType=VARCHAR}

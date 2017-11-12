@@ -8,10 +8,10 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
-                <form id="queryUserForm" role="form" action="userList" method="post">
+                <div role="form">
                     <div class="col-lg-3">
                         <label>所在单位</label>
-                        <select id="queryBean_corpId" class="form-control" name="corpId" th:value="${corpId}">
+                        <select id="queryBean_corpId" class="form-control" name="corpId">
                             <option value=""></option>
                             <option value="1">总店</option>
                             <option value="2">成都分店</option>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-lg-3">
                         <label>所在部门</label>
-                        <select class="form-control" name="deptId" id="queryBean_deptId" th:value="${deptId}">
+                        <select class="form-control" name="deptId" id="queryBean_deptId">
                             <option value=""></option>
                             <option value="1">一部门</option>
                             <option value="2">二部门</option>
@@ -28,13 +28,13 @@
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label>用户名</label><input id="queryBean_name" name="name" class="form-control" th:value="${name}"/>
+                        <label>用户名</label><input id="queryBean_name" name="name" class="form-control"/>
                     </div>
                     <div class="col-lg-3">
                         <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查 询</button>
                         <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default" style="margin-top:1.7em;">重 置</button>
                     </div>
-                </form>
+                </div>
                 <!-- /.col-lg-12 -->
             </div>
             <hr/>

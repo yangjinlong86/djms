@@ -116,6 +116,13 @@ $(document).ready(function () {
         queryUser(queryBean);
     });
 
+    $("#btnSelect").bind("keypress",function (event) {
+        if(event.keyCode == "13") {
+            var queryBean = initQueryBean();
+            queryUser(queryBean);
+        }
+    });
+
     // 保存用户信息
     $('#btnSaveUser').click(function () {
         var roleList = $("input[name='checkbox_role']:checked");
