@@ -4,13 +4,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * @ClassName: BmsService
+ * @ClassName: BaseService
  * @Description: TODO
  * @author pufangfei@163.com
  * @date 2017年11月8日 下午11:18:26
  */
 
-public abstract class BmsService {
+public abstract class BaseService {
 	/**
 	 * 日志
 	 */

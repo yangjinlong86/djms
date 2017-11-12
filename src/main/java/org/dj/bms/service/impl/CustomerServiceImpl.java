@@ -5,7 +5,7 @@ import org.dj.bms.dao.CustomerMapper;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.model.Customer;
 import org.dj.bms.query.QueryBean;
-import org.dj.bms.service.BmsService;
+import org.dj.bms.service.BaseService;
 import org.dj.bms.service.CustomerService;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import com.github.pagehelper.PageInfo;
  * @date 2017年11月8日 下午11:28:04
  */
 @Service("customerService")
-public class CustomerServiceImpl extends BmsService implements CustomerService {
+public class CustomerServiceImpl extends BaseService implements CustomerService {
 	@Autowired
 	private CustomerMapper customerMapper;
 

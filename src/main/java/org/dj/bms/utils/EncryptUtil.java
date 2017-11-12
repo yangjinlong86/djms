@@ -10,8 +10,8 @@ import org.dj.bms.model.User;
  * Created by jason on 17/11/11.
  */
 public class EncryptUtil {
-    private static final String algorithmName = "md5";
-    private static final int hashIterations = 2;
+    private static final String ALGORITHM_NAME = "md5";
+    private static final int HASH_ITERATIONS = 2;
 
     public static void encryptPassword(User user) {
         if(user == null){
@@ -21,10 +21,10 @@ public class EncryptUtil {
             user.setPassword("123456");
         }
         String newPassword = new SimpleHash(
-                algorithmName,
+                ALGORITHM_NAME,
                 user.getPassword(),
                 ByteSource.Util.bytes(user.getName()),
-                hashIterations).toHex();
+                HASH_ITERATIONS).toHex();
         user.setPassword(newPassword);
     }
 }
