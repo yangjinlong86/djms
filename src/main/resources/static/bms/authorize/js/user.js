@@ -148,6 +148,7 @@ function queryUser(queryBean){
     $("#user-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
+
     $.ajax({
         type:"post",
         url: "userList",
@@ -174,13 +175,13 @@ function queryUser(queryBean){
 }
 
 function editCheckedUser(){
-    var checkedUserIds = getCheckedUserIds();
-    if(checkedUserIds.count > 1){
-        alert("只能选择一条数据进行编辑!");
-        return;
-    }
+    var checkedUserIds = getCheckedIds("checkbox_user");
     if(checkedUserIds.count == 0){
         alert("请选择一条数据!");
+        return;
+    }
+    if(checkedUserIds.count > 1){
+        alert("只能选择一条数据进行编辑!");
         return;
     }
     var user = getUserFromArray(checkedUserIds.values);
@@ -189,39 +190,25 @@ function editCheckedUser(){
     $("#userModal").modal('show');
     // 自动填充表单
     $("#saveUserForm").autofill(user);
+    // 全部取消选中
+    $("[name='checkbox_role']").removeAttr("checked");
     $.ajax({
         type:"post",
         url:"findRoleListByUserId/"+user.id,
-        success:function(roleList){
-            if(roleList == "" || roleList.length == 0){
+        success:function(roles){
+            if(roles == "" || roles.length == 0){
                 return;
             }
-            for (var i = 0; i < roleList.length; i++) {
-                $("#roleId").val(roleList[i].id);
+            for (var i = 0; i < roles.length; i++) {
+                var checkboxs = $("input[name='checkbox_role']");
+                for(var j=0; j<checkboxs.length; j++){
+                    if(checkboxs[j].value == roles[i].id){
+                        checkboxs.eq(j).attr("checked",'true');
+                    }
+                }
             }
         }
     });
-}
-
-// 获取列表中已经勾选的用户ID
-// 返回值:单条数据返回ID字符串，多条数据返回用逗号隔开的ID字符串
-function getCheckedUserIds(){
-    var checkedList = $("input[name='checkbox_user']");
-    var checkedUserIds = {
-        values:"",
-        count:0
-    };
-    for(var i=0; i<checkedList.length; i++){
-        if(checkedList[i].checked){
-            if(i != checkedList.length-1){
-                checkedUserIds.values += checkedList[i].value+",";
-                checkedUserIds.count++;
-            }
-            checkedUserIds.values += checkedList[i].value;
-            checkedUserIds.count++;
-        }
-    }
-    return checkedUserIds;
 }
 
 function getUserFromArray(userId){
@@ -255,9 +242,9 @@ function deleteUser(index){
 $(function () { $('#userModal').modal('hide')});
 // hidden.bs.modal	当模态框完全对用户隐藏时触发。
 $(function () { $('#userModal').on('hide.bs.modal', function () {
-        // 重置表单
-        $("#resetBtn").click();
-    });
+    // 重置表单
+    $("#resetBtn").click();
+});
 });
 
 // queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
@@ -292,7 +279,7 @@ function initRoleList(){
                 for(var i=0; i<roles.length; i++){
                     $("#roles_checkboxs").append(
                         '<label>'+
-                        '<input type="checkbox" name="role_checkbox" value="'+roles[i].id+'">'+ roles[i].roleDesc +
+                        '<input type="checkbox" name="checkbox_role" value="'+roles[i].id+'">'+ roles[i].roleDesc +
                         '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                     );
                 }
