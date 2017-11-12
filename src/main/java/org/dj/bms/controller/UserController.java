@@ -1,5 +1,7 @@
 package org.dj.bms.controller;
 
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
@@ -11,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.PageInfo;
 
 /**
  * UserContrller
@@ -34,10 +34,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/saveUser")
 	@ResponseBody
 	public String save(User user) {
-		User existsUser = userService.findByUsername(user.getName());
-		if (existsUser != null) {
-			return ResponseEnum.ALREADY_EXISTS.getStatus();
-		}
+        // 新建用户时,需要校验用户名是否已经存在
+        if(StringUtils.isBlank(user.getId())){
+            User existsUser = userService.findByUsername(user.getName());
+            if (existsUser != null) {
+                return ResponseEnum.ALREADY_EXISTS.getStatus();
+            }
+        }
+
 		if (userService.saveOrUpdate(user) > 0) {
 			return ResponseEnum.SUCCESS.getStatus();
 		}

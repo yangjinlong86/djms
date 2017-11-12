@@ -1,12 +1,12 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     // 加载用户数据列表
     queryUser(initQueryBean());
     initRoleList();
     // 绑定第一页按钮事件
-    $("#firstPage").bind("click",function(){
+    $("#firstPage").bind("click", function () {
         var qb = initQueryBean();
-        if(qb.pageNum != 1){
+        if (qb.pageNum != 1) {
             qb.pageNum = 1;
             queryUser(qb);
             $("#pageNum").val(1);
@@ -14,10 +14,10 @@ $(document).ready(function(){
     });
 
     // 绑定上一页按钮事件
-    $("#prevPage").bind("click",function(){
+    $("#prevPage").bind("click", function () {
         var qb = initQueryBean();
         var currentPageNum = Number(qb.pageNum);
-        if(currentPageNum == 1){
+        if (currentPageNum == 1) {
             this.disabled;
             return;
         }
@@ -27,10 +27,10 @@ $(document).ready(function(){
     });
 
     // 绑定下一页按钮事件
-    $("#nextPage").bind("click",function(){
+    $("#nextPage").bind("click", function () {
         var qb = initQueryBean();
         var currentPageNum = Number(qb.pageNum);
-        if(currentPageNum == 10){
+        if (currentPageNum == 10) {
             this.disabled;
             return;
         }
@@ -40,10 +40,10 @@ $(document).ready(function(){
     });
 
     // 绑定最后一页按钮事件
-    $("#lastPage").bind("click",function(){
+    $("#lastPage").bind("click", function () {
         var qb = initQueryBean();
         var totalPage = 10;
-        if(qb.pageNum != totalPage){
+        if (qb.pageNum != totalPage) {
             // TODO 获取总页数
             qb.pageNum = totalPage;
             queryUser(qb);
@@ -93,19 +93,19 @@ $(document).ready(function(){
     });
 
     // 为查询按钮绑定提交表单事件
-    $("#btnSelect").click(function(){
+    $("#btnSelect").click(function () {
         var queryBean = initQueryBean();
         queryUser(queryBean);
     });
 
     // 保存用户信息
-    $('#btnSaveUser').click(function() {
+    $('#btnSaveUser').click(function () {
         var roleList = $("input[name='role_checkbox']:checked");
         var roleValues = "";
-        roleList.each(function(){
-            roleValues += $(this).val()+",";
+        roleList.each(function () {
+            roleValues += $(this).val() + ",";
         })
-        roleValues = roleValues.substring(0,roleValues.length-1);
+        roleValues = roleValues.substring(0, roleValues.length - 1);
         $.ajax({
             type: "post",
             url: "saveUser",
@@ -115,16 +115,16 @@ $(document).ready(function(){
                 realName: $('#realName').val(),
                 corpId: $("#corpId").val(),
                 deptId: $("#deptId").val(),
-                roleValues:roleValues
+                roleValues: roleValues
             },
-            success:function(res){
-                if("exist" == res){
+            success: function (res) {
+                if ("exist" == res) {
                     alert("用户名已经存在");
                     return;
-                }else if("true" == res){
+                } else if ("true" == res) {
                     alert("保存成功");
                     return;
-                }else if("false" == res){
+                } else if ("false" == res) {
                     alert("保存失败");
                     return;
                 }
@@ -134,26 +134,26 @@ $(document).ready(function(){
     });
 
     // 绑定重置表单事件
-    $('#btnResetQueryUserForm').bind("click",function() {
+    $('#btnResetQueryUserForm').bind("click", function () {
             $('#queryUserForm')[0].reset();
         }
     );
 
     // 绑定重置表单事件
-    $('#resetBtn').bind("click",function() {
+    $('#resetBtn').bind("click", function () {
             $('#saveUserForm').data('bootstrapValidator').resetForm(true);
         }
     );
 
     // 绑定编辑用户点击事件
-    $("#editUserBtn").bind("click", function(){
+    $("#editUserBtn").bind("click", function () {
         editCheckedUser();
     });
 });
 
 // 定义一个数组,用来存放用户信息
 var userArray;
-function queryUser(queryBean){
+function queryUser(queryBean) {
     userArray = new Array();
     // 清空table下的内容
     $("#user-list").html("");
@@ -161,11 +161,11 @@ function queryUser(queryBean){
     $("#loadingDiv").show();
 
     $.ajax({
-        type:"post",
+        type: "post",
         url: "userList",
-        dataType:"json",
-        data:queryBean,
-        success:function(data){
+        dataType: "json",
+        data: queryBean,
+        success: function (data) {
             var users = data.list;
             for (var i = 0; i < users.length; i++) {
                 userArray.push(users[i]);
@@ -185,13 +185,13 @@ function queryUser(queryBean){
     });
 }
 
-function editCheckedUser(){
+function editCheckedUser() {
     var checkedUserIds = getCheckedIds("checkbox_user");
-    if(checkedUserIds.count == 0){
+    if (checkedUserIds.count == 0) {
         alert("请选择一条数据!");
         return;
     }
-    if(checkedUserIds.count > 1){
+    if (checkedUserIds.count > 1) {
         alert("只能选择一条数据进行编辑!");
         return;
     }
@@ -204,17 +204,17 @@ function editCheckedUser(){
     // 全部取消选中
     $("[name='checkbox_role']").removeAttr("checked");
     $.ajax({
-        type:"post",
-        url:"findRoleListByUserId/"+user.id,
-        success:function(roles){
-            if(roles == "" || roles.length == 0){
+        type: "post",
+        url: "findRoleListByUserId/" + user.id,
+        success: function (roles) {
+            if (roles == "" || roles.length == 0) {
                 return;
             }
             for (var i = 0; i < roles.length; i++) {
                 var checkboxs = $("input[name='checkbox_role']");
-                for(var j=0; j<checkboxs.length; j++){
-                    if(checkboxs[j].value == roles[i].id){
-                        checkboxs.eq(j).attr("checked",'true');
+                for (var j = 0; j < checkboxs.length; j++) {
+                    if (checkboxs[j].value == roles[i].id) {
+                        checkboxs.eq(j).attr("checked", 'true');
                     }
                 }
             }
@@ -222,10 +222,10 @@ function editCheckedUser(){
     });
 }
 
-function getUserFromArray(userId){
+function getUserFromArray(userId) {
     var user;
-    for(var i = 0; i<userArray.length; i++){
-        if(userId == userArray[i].id){
+    for (var i = 0; i < userArray.length; i++) {
+        if (userId == userArray[i].id) {
             user = userArray[i];
             return user;
         }
@@ -233,13 +233,13 @@ function getUserFromArray(userId){
 }
 
 // 删除用户
-function deleteUser(index){
+function deleteUser(index) {
     var user = userArray[index];
     $.ajax({
-        type:"post",
-        url:"deleteUser/" +user.id,
+        type: "post",
+        url: "deleteUser/" + user.id,
         async: false,
-        success:function(status){
+        success: function (status) {
             if (status == "true") {
                 queryUser(initQueryBean());
             } else {
@@ -250,16 +250,19 @@ function deleteUser(index){
 }
 
 // 隐藏模态框
-$(function () { $('#userModal').modal('hide')});
-// hidden.bs.modal	当模态框完全对用户隐藏时触发。
-$(function () { $('#userModal').on('hide.bs.modal', function () {
-    // 重置表单
-    $("#resetBtn").click();
+$(function () {
+    $('#userModal').modal('hide')
 });
+// hidden.bs.modal	当模态框完全对用户隐藏时触发。
+$(function () {
+    $('#userModal').on('hide.bs.modal', function () {
+        // 重置表单
+        $("#resetBtn").click();
+    });
 });
 
 // queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
-function queryBean(pageNum, limitNum, corpId, deptId, name){
+function queryBean(pageNum, limitNum, corpId, deptId, name) {
     this.pageNum = pageNum;
     this.limitNum = limitNum;
     this.corpId = corpId;
@@ -268,7 +271,7 @@ function queryBean(pageNum, limitNum, corpId, deptId, name){
 }
 
 // 初始化queryBean,实时获取页面当前各个查询条件,需要重新调用此方法
-function initQueryBean(){
+function initQueryBean() {
     var user_querybean = new queryBean(
         $("#pageNum").val(),
         $("#pageSize").val(),
@@ -280,17 +283,17 @@ function initQueryBean(){
 }
 
 // 加载所有的角色
-function initRoleList(){
+function initRoleList() {
     $("#roles_checkboxs").html("");
     $.ajax({
-        type:"post",
-        url:"findAllRoles",
-        success:function(roles){
-            if(roles != "" && roles.length > 0){
-                for(var i=0; i<roles.length; i++){
+        type: "post",
+        url: "findAllRoles",
+        success: function (roles) {
+            if (roles != "" && roles.length > 0) {
+                for (var i = 0; i < roles.length; i++) {
                     $("#roles_checkboxs").append(
-                        '<label>'+
-                        '<input type="checkbox" name="checkbox_role" value="'+roles[i].id+'">'+ roles[i].roleDesc +
+                        '<label>' +
+                        '<input type="checkbox" name="checkbox_role" value="' + roles[i].id + '">' + roles[i].roleDesc +
                         '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                     );
                 }

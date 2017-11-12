@@ -1,15 +1,7 @@
 package org.dj.bms.configuration;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -20,6 +12,10 @@ import org.dj.bms.model.Resource;
 import org.dj.bms.model.User;
 import org.dj.bms.service.ResourceService;
 import org.dj.bms.service.UserService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Created by jason on 17/11/2.

@@ -12,9 +12,10 @@ import java.util.List;
  * @author Created by jason on 17/11/3.
  */
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
-    @Autowired private RoleMapper roleMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Override
     public List<Role> findRoleListByUserId(String userId) {
@@ -22,7 +23,7 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public List<Role> findAllRoles(){
+    public List<Role> findAllRoles() {
         return roleMapper.findAllRoles();
     }
 }
