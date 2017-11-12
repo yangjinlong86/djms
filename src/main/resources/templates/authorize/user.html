@@ -22,9 +22,9 @@
                         <label>所在部门</label>
                         <select class="form-control" name="deptId" id="queryBean_deptId" th:value="${deptId}">
                             <option value=""></option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <option value="1">一部门</option>
+                            <option value="2">二部门</option>
+                            <option value="3">三部门</option>
                         </select>
                     </div>
                     <div class="col-lg-3">
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>姓名</label>
+                                                    <label>昵称</label>
                                                     <input class="form-control" id="realName" name="realName"/>
                                                 </div>
                                             </div>
@@ -145,6 +145,7 @@
                             </div>
 
                             <div class="form-inline" style="float:right;">
+                                <span>共<span id="pages"></span>页</span>
                                 <span>每页条数:</span>
                                 <select id="pageSize" class="form-control">
                                     <option value="5">5</option>
@@ -156,7 +157,7 @@
                                 <input id="pageNum" class="form-control" type="text" size="5" value="1" style="vertical-align:middle"/>
                                 <a id="nextPage" class="btn btn-outline btn-info">下一页</a>
                                 <a id="lastPage" class="btn btn-outline btn-info">最后一页</a>
-                                <span>共:<span id="totalNum" th:value="${count}"></span>条记录</span>
+                                <span>共<span id="totalNum"></span>条记录</span>
                             </div>
                         </div>
                     </div>

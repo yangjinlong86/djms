@@ -129,6 +129,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 保存用户和角色对应关系
      * @param user
      * @return
      */

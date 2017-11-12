@@ -29,8 +29,9 @@ $(document).ready(function () {
     // 绑定下一页按钮事件
     $("#nextPage").bind("click", function () {
         var qb = initQueryBean();
+        var pages = $("#pages").html();
         var currentPageNum = Number(qb.pageNum);
-        if (currentPageNum == 10) {
+        if (currentPageNum == pages) {
             this.disabled;
             return;
         }
@@ -42,14 +43,31 @@ $(document).ready(function () {
     // 绑定最后一页按钮事件
     $("#lastPage").bind("click", function () {
         var qb = initQueryBean();
-        var totalPage = 10;
-        if (qb.pageNum != totalPage) {
-            // TODO 获取总页数
-            qb.pageNum = totalPage;
+        var pages = $("#pages").html();
+        if (qb.pageNum != pages) {
+            qb.pageNum = pages;
             queryUser(qb);
-            $("#pageNum").val(totalPage);
+            $("#pageNum").val(pages);
         }
 
+    });
+
+    // 回车键后查询指定页码的数据
+    $("#pageNum").bind('keypress',function(event){
+        if(event.keyCode == "13") {
+            // 如果输入的值大于总页数,将其置为总页数
+            var pages = $("#pages").html();
+            if($("#pageNum").val() >  pages){
+                $("#pageNum").val(pages);
+            }
+            queryUser(initQueryBean());
+        }
+    });
+
+    // 每页条数改变后,默认查第一页的数据
+    $("#pageSize").bind("change",function(){
+        $("#pageNum").val(1);
+        queryUser(initQueryBean());
     });
 
     // 表单验证
@@ -166,16 +184,19 @@ function queryUser(queryBean) {
         dataType: "json",
         data: queryBean,
         success: function (data) {
+            $("#pages").html(data.pages);
+            $("#totalNum").html(data.total);
+
             var users = data.list;
             for (var i = 0; i < users.length; i++) {
                 userArray.push(users[i]);
                 $("#user-list").append(
                     '<tr>' +
                     '<td style="text-align: center"><input name="checkbox_user" id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
-                    '<td style="text-align: center">' + users[i].name + '</td>' +      // 用户名
-                    '<td style="text-align: center">' + users[i].realName + '</td>' +   // 昵称
-                    '<td>' + users[i].corpId + '</td>' +                 // 单位
-                    '<td>' + users[i].deptId + '</td>' +                 // 部门
+                    '<td style="text-align: center">' + users[i].name + '</td>' + // 用户名
+                    '<td style="text-align: center">' + users[i].realName + '</td>' + // 昵称
+                    '<td>' + users[i].corpId + '</td>' + // 单位
+                    '<td>' + users[i].deptId + '</td>' + // 部门
                     '</tr>'
                 );
             }

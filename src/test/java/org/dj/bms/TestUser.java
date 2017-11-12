@@ -26,14 +26,17 @@ public class TestUser {
     private UserService userService;
 
     @Test
-    public void saveOrUpdate() {
-        User user = new User();
-        user.setName("admin");
-        user.setPassword("admin");
-        user.setRealName("管理员");
-        user.setCorpId("1");
-        user.setDeptId("1");
-        user.setCreateTime(Calendar.getInstance().getTime());
-        userService.saveOrUpdate(user);
+    public void testSaveOrUpdate() {
+        for (int i = 0; i<100; i++) {
+            User user = new User();
+            user.setName("user"+i);
+            user.setPassword("123");
+            user.setRealName("美容师"+i);
+            user.setCorpId("1");
+            user.setDeptId("2");
+            user.setCreateTime(Calendar.getInstance().getTime());
+            user.setRoleValues("1");
+            userService.saveOrUpdate(user);
+        }
     }
 }
