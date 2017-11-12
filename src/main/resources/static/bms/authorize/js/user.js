@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    $("#btnCloseUserAlert").click(function(){
+        $("#alertMsg").html("");
+        $("#userAlert").removeClass("alert-success")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .hide();
+    });
 
     // 加载用户数据列表
     queryUser(initQueryBean());
@@ -144,7 +151,8 @@ $(document).ready(function () {
             },
             success: function (res) {
                 if ("exist" == res) {
-                    alert("用户名已经存在");
+                    $("#alertMsg").html("用户已经存在");
+                    $("#userAlert").removeClass("hidden").addClass("alert-warning").show();
                     return;
                 } else if ("true" == res) {
                     alert("保存成功");
@@ -216,11 +224,13 @@ function queryUser(queryBean) {
 function editCheckedUser() {
     var checkedUserIds = getCheckedIds("checkbox_user");
     if (checkedUserIds.count == 0) {
-        alert("请选择一条数据!");
+        $("#alertMsg").html("请选择一条数进行编辑!");
+        $("#userAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
     if (checkedUserIds.count > 1) {
-        alert("只能选择一条数据进行编辑!");
+        $("#alertMsg").html("编辑时只能选择一条数据!");
+        $("#userAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
     var user = getUserFromArray(checkedUserIds.values);
