@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Created by jason on 17/10/29.
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
@@ -97,8 +97,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int deleteByUserIds(String[] idArr) {
+        return userMapper.deleteByUserIds(idArr);
+    }
+
+    @Override
     public PageInfo<User> selectUsers(UserQueryBean userQueryBean) {
-        PageHelper.startPage(userQueryBean.getPageNum(), userQueryBean.getLimitNum()).setOrderBy("create_time desc");
+        PageHelper.startPage(userQueryBean.getPageNum(), userQueryBean.getLimitNum()).setOrderBy("CREATE_TIME DESC");
         Map<String, String> paramsMap = null;
         try {
             paramsMap = BeanUtils.describe(userQueryBean);

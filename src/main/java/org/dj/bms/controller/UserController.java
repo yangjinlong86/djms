@@ -55,14 +55,16 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/userList")
 	@ResponseBody
 	public PageInfo<User> selectAllUsers(UserQueryBean queryBean) {
-		// 总记录数
-		queryBean.setCount(userService.selectCountUser());
 		return userService.selectUsers(queryBean);
 	}
 
 	@RequestMapping(value = "/deleteUser/{id}")
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
+        if(id.contains(",")){
+            String[] idArr = id.split(",");
+            userService.deleteByUserIds(idArr);
+        }
 		if (DBEnum.OPERATION_SUCCESS.getValue() == userService.deleteByUserId(id)) {
 			return ResponseEnum.SUCCESS.getStatus();
 		}

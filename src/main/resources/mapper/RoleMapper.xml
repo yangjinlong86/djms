@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.RoleMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Role" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, ROLE_DESC
+<mapper namespace="org.dj.bms.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="org.dj.bms.model.Role">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR"/>
+        <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, ROLE_DESC, ROLE_NAME
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from ROLE
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ROLE
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
     <select id="findAllRoles" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from ROLE
     </select>
 
-    <select id="findRoleListByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    <select id="findRoleListByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from ROLE R , USER_ROLE UR
         WHERE R.ID = UR.ROLE_ID
         AND UR.USER_ID= #{userId}
     </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Role" >
+    <insert id="insert" parameterType="org.dj.bms.model.Role">
     insert into ROLE (ID, ROLE_DESC)
     values (#{id,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Role" >
-    insert into ROLE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="roleDesc != null" >
-        ROLE_DESC,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="roleDesc != null" >
-        #{roleDesc,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Role" >
+    <insert id="insertSelective" parameterType="org.dj.bms.model.Role">
+        insert into ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="roleDesc != null">
+                ROLE_DESC,
+            </if>
+            <if test="roleName != null">
+                ROLE_NAME
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Role">
+        update ROLE
+        <set>
+            <if test="roleDesc != null">
+                ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Role">
     update ROLE
-    <set >
-      <if test="roleDesc != null" >
-        ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Role" >
-    update ROLE
-    set ROLE_DESC = #{roleDesc,jdbcType=VARCHAR}
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR}, ROLE_DESC = #{roleDesc,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

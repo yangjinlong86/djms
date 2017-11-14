@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Created by jason on 17/10/29.
  */
-public interface UserService {
+public interface UserService{
 
 	User selectByUserId(String id);
 
@@ -23,6 +23,8 @@ public interface UserService {
 	String getUserPassword(String id);
 
 	int deleteByUserId(String id);
+
+    int deleteByUserIds(String[] idArr);
 
 	PageInfo<User> selectUsers(UserQueryBean userQueryBean);
 

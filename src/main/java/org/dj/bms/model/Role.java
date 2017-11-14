@@ -8,9 +8,19 @@ public class Role implements Serializable {
 
     private String id;
 
+    private String roleName;
+
     private String roleDesc;
 
     private static final long serialVersionUID = 1L;
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public String getId() {
         return id;

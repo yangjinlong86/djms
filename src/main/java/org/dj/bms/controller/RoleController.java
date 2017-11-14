@@ -1,6 +1,11 @@
 package org.dj.bms.controller;
 
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.Role;
+import org.dj.bms.model.Role;
+import org.dj.bms.query.QueryBean;
 import org.dj.bms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +24,9 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping("/findRoleListByUserId/{userId}")
+    @RequestMapping("/findRoleListByUserId/{roleId}")
     @ResponseBody
-    public List<Role> findRoleListByUserId(@PathVariable String userId){
+    public List<Role> findRoleListByRoleId(@PathVariable String userId){
         return roleService.findRoleListByUserId(userId);
     }
 
@@ -32,4 +37,34 @@ public class RoleController {
         model.addAttribute("allRoles", roleList);
         return roleList;
     }
+
+    /**
+     * 分页查询
+     * @param QueryBean bean
+     * @return pageInfo
+     */
+    @RequestMapping("/selectRoles")
+    @ResponseBody
+    public PageInfo<Role> selectRoles(QueryBean bean){
+        return roleService.selectRoles(bean);
+    }
+
+    @RequestMapping(value = "/saveRole")
+    @ResponseBody
+    public String save(Role role) {
+        // 新建时,需要校验角色名是否已经存在
+        if(StringUtils.isBlank(role.getId())){
+            Role existsRole = roleService.findByRoleName(role.getRoleName());
+            if (existsRole != null) {
+                return ResponseEnum.ALREADY_EXISTS.getStatus();
+            }
+        }
+
+        if (roleService.saveOrUpdate(role) > 0) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
+    }
+
+
 }
