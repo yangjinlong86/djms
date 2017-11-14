@@ -2,7 +2,7 @@ package org.dj.bms.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.model.Customer;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.CustQueryInfo;
 import org.dj.bms.service.CustomerService;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class CustomerController extends BaseController {
 	}
 
 	@RequestMapping(value = "/custList")
-	public ResponseMsg selectCustomer(QueryBean qb) {
+	public ResponseMsg selectCustomer(CustQueryInfo qb) {
 		ResponseMsg resData = getRes(true);
 		resData.setData(customerService.selectCustomer(qb));
 		return resData;

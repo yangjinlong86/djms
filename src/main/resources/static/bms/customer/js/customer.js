@@ -1,16 +1,24 @@
+var page = {};
+
+var qp = {};
 //页面加载时完成
 $(document).ready(function(){
+	//初始化查询条件
+	qb = getQueryBean();
 	//加载列表数据
-	loadData();
+	loadData(qb);
+	
+	bingPage();
+	
+	bingQuery()
 	//绑定自动填充
 	autocomplete("auto");
-	
 	//新增客户
 	$("#addCustBtn").on("click",function(){
 		$('#saveCustForm')[0].reset();
 		$("#custModal").modal('show');
 	});
-	
+	//删除客户
 	$("#delCustBtn").on("click",function(){
 		var checkdata = getCheckedIds("checkboxIds");
 		var msg = validCheckId(1,checkdata.count);
@@ -25,7 +33,7 @@ $(document).ready(function(){
 		        data:{'ids':checkdata.checkIds},
 		        success:function(data){
 		        	if(data.status){
-		        		loadData();
+		        		loadData(qb);
 		        	}
 		        }
 		 	});
@@ -56,7 +64,7 @@ $(document).ready(function(){
 		        data:data,
 		        success:function(data){
 		        	if(data.status){
-		        		loadData();
+		        		loadData(qb);
 		        		$("#custModal").modal('hide');
 		        	}
 		        }
@@ -101,7 +109,7 @@ function autocomplete(className){
 	});
 }
 
-function loadData(){
+function loadData(qp){
 	
 	    // 显示loading.gif
 	    $("#loadingDiv").show();
@@ -109,12 +117,73 @@ function loadData(){
 	        type:"post",
 	        url: "custList",
 	        dataType:"json",
-	        data:getQueryBean(),
+	        data:qp,
 	        success:function(data){
-	        	
 	        	listDataHtml(data);
 	        }
 	    });
+}
+
+function initQb(pageInfo){
+	page = pageInfo;
+}
+
+function bingPage(){
+	//第一页
+	$("#firstPage").on("click",function(){
+		qp = getQueryBean();
+		qp['pageNum'] = page.firstPage;
+		loadData(qp);
+	});
+	//最后一页
+	$("#lastPage").on("click",function(){
+		qp = getQueryBean();
+		qp['pageNum'] = page.lastPage;
+		loadData(qp);
+	});
+	//上一页
+	$("#prevPage").on("click",function(){
+		qp = getQueryBean();
+		qp['pageNum'] = page.prePage;
+		loadData(qp);
+	});
+	//下一页
+	$("#nextPage").on("click",function(){
+		qp = getQueryBean();
+		qp['pageNum'] = page.nextPage;
+		loadData(qp);
+	});
+	 $("#pageNum").keydown(function(e) {  
+         if (e.keyCode == 13) {
+        	 qp = getQueryBean();
+        	 qp['pageNum'] = $(this).val(); 
+        	 loadData(qp);
+         }
+     });
+}
+
+function bingQuery(){
+	$(".qb").keydown(function(e) {  
+        if (e.keyCode == 13) {
+         qp = getQueryBean();
+       	 qp['pageNum'] = 1; 
+       	 loadData(qp);
+        }
+    });
+	$("#btnSelect").on("click",function(){
+		qp = getQueryBean();
+		qp['pageNum'] = 1; 
+		loadData(qp);
+	});
+}
+//设置分页栏信息
+function setPageInfo(){
+	//总条数
+	$("#total").html(page.total);
+	//总页数
+	$("#pages").html("共：" + page.pages+"页");
+	//当前页
+	$("#pageNum").val(page.pageNum);
 }
 
 function listDataHtml(res){
@@ -124,8 +193,10 @@ function listDataHtml(res){
 		//$("#data-list").html("");
 		var dataHtml = "";
 		var pageData = res.data;
+		initQb(pageData);
+		setPageInfo();
 		var dataList = pageData.list;
-		$("#totalNum").html(pageData.pages);
+		
 		var data = {};
 		for ( var index in dataList) {
 			data = dataList[index];
@@ -215,10 +286,13 @@ function getCheckedIds(name){
 
 function getQueryBean(){
 	var queryBean ={};
-	$(".qb").find(":input").each(function(index,element){
-		var name = $(element).attr("name");
-		var value = $(element).val();
-		queryBean[name] = value
+	$(".qb").each(function(index,element){
+		var e = $(element).prop("tagName")
+		if(e == 'INPUT'){
+			var name = $(element).attr("name");
+			var value = $(element).val();
+			queryBean[name] = value
+		}
 	});
 	return queryBean;
 }

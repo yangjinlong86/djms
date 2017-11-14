@@ -17,11 +17,9 @@
                         <label>姓名/电话</label>
                         <input name="name" class="form-control qb"></input>
                     </div>
-                    <input type="hidden" name="pageNum" th:value="${pageNum}"/>
-                    <input type="hidden" name="limitNum" th:value="${limitNum}"/>
                     <div class="col-lg-3">
-                        <button id="btnSelect" type="button" class="btn btn-outline btn-success auth" style="margin-top:1.7em;">查 询</button>
-                        <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default auth" style="margin-top:1.7em;">重 置</button>
+                        <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查 询</button>
+                        <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default" style="margin-top:1.7em;">重 置</button>
                     </div>
                 </form>
                 <!-- /.col-lg-12 -->
@@ -145,17 +143,18 @@
 
                             <div class="form-inline" style="float:right;">
                                 <span>每页条数:</span>
-                                <select id="pageSize" class="form-control">
+                                <select id="pageSize" class="form-control qb">
                                     <option value="5">5</option>
-                                    <option value="10" selected="selected">10</option>
+                                    <option value="2" selected="selected">2</option>
                                     <option value="20">20</option>
                                 </select>
                                 <a href="javascript:void(0)" id="firstPage" class="btn btn-outline btn-info">第一页</a>
                                 <a id="prevPage" class="btn btn-outline btn-info">上一页</a>
-                                <input class="form-control qb" type="text" size="5" value="1" style="vertical-align:middle"/>
+                                <input class="form-control" id="pageNum" type="text" style="vertical-align:middle"></input>
                                 <a id="nextPage" class="btn btn-outline btn-info">下一页</a>
                                 <a id="lastPage" class="btn btn-outline btn-info">最后一页</a>
-                                <span>共:<span id="totalNum"></span>条记录</span>
+                                <span>共:<span id="total"></span>条记录</span>
+                                <span><span id="pages"></span></span>
                             </div>
                         </div>
                     </div>
@@ -175,7 +174,7 @@
     <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
     <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
     <script th:src="@{vendor/json/json.js}"></script>
-    <script th:src="@{customer/js/customer.js}"></script>
+    <script th:src="@{bms/customer/js/customer.js}"></script>
 </body>
 
 </html>

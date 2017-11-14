@@ -1,8 +1,9 @@
 package org.dj.bms.service;
 
-import com.github.pagehelper.PageInfo;
 import org.dj.bms.model.Customer;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.IQueryInfo;
+
+import com.github.pagehelper.PageInfo;
 
 /**
  * @ClassName: CustomerService
@@ -38,7 +39,7 @@ public interface CustomerService {
 	* @return Page<Customer>    
 	* @throws
 	 */
-	PageInfo<Customer> selectCustomer(QueryBean qb);
+	PageInfo<Customer> selectCustomer(IQueryInfo qb);
 	
 	boolean deleteByIds(String ids);
 	

@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.dao.CustomerMapper;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.model.Customer;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.IQueryInfo;
 import org.dj.bms.service.BaseService;
 import org.dj.bms.service.CustomerService;
 import org.dj.bms.utils.IdGenerator;
@@ -44,8 +44,8 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
 	}
 
 	@Override
-	public PageInfo<Customer> selectCustomer(QueryBean qb) {
-		PageHelper.startPage(qb.getPageNum(), qb.getLimitNum()).setOrderBy("create_time desc");
+	public PageInfo<Customer> selectCustomer(IQueryInfo qb) {
+		PageHelper.startPage(qb.getPageNum(), qb.getPageSize()).setOrderBy(qb.getOrderBy());
 		return new PageInfo<Customer>(customerMapper.selectCustomer(qb));
 	}
 
