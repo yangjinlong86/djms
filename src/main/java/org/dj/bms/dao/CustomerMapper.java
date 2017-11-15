@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.Customer;
+import org.dj.bms.query.IQueryInfo;
 import org.dj.bms.query.QueryBean;
 
 @Mapper
@@ -21,7 +22,7 @@ public interface CustomerMapper {
 
 	int updateByPrimaryKey(Customer record);
 
-	List<Customer> selectCustomer(QueryBean qb);
+	List<Customer> selectCustomer(IQueryInfo qb);
 
 	int selectCustomerCount(QueryBean qb);
 

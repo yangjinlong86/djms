@@ -108,6 +108,12 @@ public class Customer extends Bms {
 		return addr.toString();
 	}
 
+	public String getRegionStr() {
+		StringBuilder addr = new StringBuilder();
+		addr.append(ECacheUtils.getCodeName(DictEnum.AREA, region));
+		return addr.toString();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

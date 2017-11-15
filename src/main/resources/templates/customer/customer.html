@@ -17,11 +17,9 @@
                         <label>姓名/电话</label>
                         <input name="name" class="form-control qb"></input>
                     </div>
-                    <input type="hidden" name="pageNum" th:value="${pageNum}"/>
-                    <input type="hidden" name="limitNum" th:value="${limitNum}"/>
                     <div class="col-lg-3">
-                        <button id="btnSelect" type="button" class="btn btn-outline btn-success auth" style="margin-top:1.7em;">查 询</button>
-                        <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default auth" style="margin-top:1.7em;">重 置</button>
+                        <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查 询</button>
+                        <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default" style="margin-top:1.7em;">重 置</button>
                     </div>
                 </form>
                 <!-- /.col-lg-12 -->
@@ -42,11 +40,11 @@
                                 <form id="saveCustForm" role="form" action="#" th:action="@{/saveOrUpdateCust}"  method="post">
                                     <div class="modal-body">
                                         <div class="row">
-                                            <input type="hidden" id="id" name="id"></input>
-                                            <div class="col-lg-4">
+                                            <input type="hidden" name="id"></input>
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>所属门店</label>
-                                                    <select class="form-control" name="corpId" id="corpId">
+                                                    <select class="form-control" name="corpId">
                                                         <option value=""></option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -54,21 +52,29 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>姓名</label>
-                                                   <input class="form-control" id="name" name="name"></input>
+                                                   <input class="form-control" name="name"></input>
                                                 </div>
                                             </div>
-                                             <div class="col-lg-4">
+                                        </div>
+                                        
+                                   		<div class="row">
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>所在部门</label>
-                                                    <select class="form-control" name="deptId" id="deptId">
-                                                        <option value=""></option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                    </select>
+                                                    <label>生日</label>
+                                                    <div class="input-group date form_date" data-date="">
+									                    <input class="form-control" name="birthday" id="birth" size="16" type="text" value="" readonly="true"></input>
+									                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>电话</label>
+                                                   <input class="form-control" name="telephone"></input>
                                                 </div>
                                             </div>
 
@@ -78,22 +84,9 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                 <label>家庭地址</label>
-                                                    <input class="form-control auto"  name="region_auto" type="text" code='30101004'></input>
+                                                    <input class="form-control auto"  name="region_auto" id="region_auto" type="text" code='30101004'></input>
                                                     <input name="region" type="hidden" id="region"></input>
                                                     <input class="form-control"  name="address"></input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label>角色</label>
-                                                    <select class="form-control" name="roleId" >
-                                                        <option value=""></option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,17 +138,18 @@
 
                             <div class="form-inline" style="float:right;">
                                 <span>每页条数:</span>
-                                <select id="pageSize" class="form-control">
+                                <select id="pageSize" class="form-control qb">
                                     <option value="5">5</option>
-                                    <option value="10" selected="selected">10</option>
+                                    <option value="2" selected="selected">2</option>
                                     <option value="20">20</option>
                                 </select>
                                 <a href="javascript:void(0)" id="firstPage" class="btn btn-outline btn-info">第一页</a>
                                 <a id="prevPage" class="btn btn-outline btn-info">上一页</a>
-                                <input class="form-control qb" type="text" size="5" value="1" style="vertical-align:middle"/>
+                                <input class="form-control" id="pageNum" type="text" style="vertical-align:middle"></input>
                                 <a id="nextPage" class="btn btn-outline btn-info">下一页</a>
                                 <a id="lastPage" class="btn btn-outline btn-info">最后一页</a>
-                                <span>共:<span id="totalNum"></span>条记录</span>
+                                <span>共:<span id="total"></span>条记录</span>
+                                <span><span id="pages"></span></span>
                             </div>
                         </div>
                     </div>
@@ -169,13 +163,15 @@
 
     <script th:src="@{vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{vendor/bootstrap/js/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{vendor/bootstrap/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
     <script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
     <script th:src="@{vendor/jquery-ui/jquery-ui.min.js}"></script>
     <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
     <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
     <script th:src="@{vendor/json/json.js}"></script>
-    <script th:src="@{customer/js/customer.js}"></script>
+    <script th:src="@{bms/customer/js/customer.js}"></script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@
     <result column="REGION" property="region" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
     <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
-    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" javaType="java.util.Date"/>
     <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
     <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
     <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
   				and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
   			</if>
   			<if test="corpId != null and corpId != ''">
-  				and corpId = #{corpId,jdbcType=VARCHAR}
+  				and corp_id = #{corpId,jdbcType=VARCHAR}
   			</if>
   		</where>
   </select>
