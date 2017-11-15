@@ -3,6 +3,7 @@ var page = {};
 var qp = {};
 //页面加载时完成
 $(document).ready(function(){
+	dateInit();
 	//初始化查询条件
 	qb = getQueryBean();
 	//加载列表数据
@@ -51,6 +52,8 @@ $(document).ready(function(){
 		var dataId = checkdata.checkIds;
 		var data = getDataById(dataId);
 		$("#saveCustForm").autofill(data);
+		$("#birth").val(data.birth);
+		$("#region_auto").val(data.regionStr);
 		$("#custModal").modal('show');
 		
 	});
@@ -86,6 +89,23 @@ $.fn.serializeObject = function() {
     });  
     return o;  
 } 
+
+function dateInit(){
+	  
+	$('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 1,
+		format: "yyyy-MM-dd",
+	    linkField: "birth",
+	    linkFormat: "yyyy-MM-dd"
+    });
+}
 function autocomplete(className){
 	$("."+className).each(function(index,element){
 		var codeType = $(element).attr("code");
@@ -156,7 +176,11 @@ function bingPage(){
 	 $("#pageNum").keydown(function(e) {  
          if (e.keyCode == 13) {
         	 qp = getQueryBean();
-        	 qp['pageNum'] = $(this).val(); 
+        	 var num = $(this).val();
+        	 if(isNaN(num) || num == ''){
+        		 num = 0;
+        	 }
+        	 qp['pageNum'] = num; 
         	 loadData(qp);
          }
      });

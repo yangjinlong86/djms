@@ -9,7 +9,7 @@
     <result column="REGION" property="region" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
     <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
-    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" javaType="java.util.Date"/>
     <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
     <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
     <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
