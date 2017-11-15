@@ -132,7 +132,9 @@ $(document).ready(function () {
 
     // 保存用户信息
     $('#btnSaveUser').click(function () {
-        if (!$('#saveUserForm').data("bootstrapValidator").isValid()) {
+        // 编辑的时候需要手动调用一下validate()方法,否则校验不通过!
+        $('#saveUserForm').data("bootstrapValidator").validate();
+        if(!$('#saveUserForm').data("bootstrapValidator").isValid()) {
             return false;
         }
 

@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.Role;
-import org.dj.bms.model.Role;
 import org.dj.bms.query.QueryBean;
 import org.dj.bms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * Created by jason on 17/11/11.
+ * @author Created by jason on 17/11/11.
  */
 @Controller
 public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping("/findRoleListByUserId/{roleId}")
+    @RequestMapping("/findRoleListByUserId/{userId}")
     @ResponseBody
     public List<Role> findRoleListByRoleId(@PathVariable String userId){
         return roleService.findRoleListByUserId(userId);
