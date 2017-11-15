@@ -58,12 +58,19 @@ public class UserController extends BaseController {
 		return userService.selectUsers(queryBean);
 	}
 
+    /**
+     * 单个,批量删除用户
+     * 批量删除Id时,参数ID 是 多个id用逗号隔开的字符串
+     * @param id
+     * @return
+     */
 	@RequestMapping(value = "/deleteUser/{id}")
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
         // 批量删除
         if(id.contains(",")){
             String[] idArr = id.split(",");
+            // 拆分id为字符串数组作为参数传入
             if (DBEnum.OPERATION_SUCCESS.getValue() <= userService.deleteByUserIds(idArr)) {
                 return ResponseEnum.SUCCESS.getStatus();
             }

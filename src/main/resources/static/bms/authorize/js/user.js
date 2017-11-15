@@ -155,14 +155,16 @@ $(document).ready(function () {
             },
             success: function (res) {
                 if ("exist" == res) {
-                    $("#alertMsg").html("用户已经存在");
+                    $("#alertMsg").html("用户已经存在!");
                     $("#userAlert").removeClass("hidden").addClass("alert-warning").show();
                     return;
                 } else if ("true" == res) {
-                    alert("保存成功");
+                    $("#alertMsg").html("保存成功!");
+                    $("#userAlert").removeClass("hidden").addClass("alert-success").show();
                     return;
                 } else if ("false" == res) {
-                    alert("保存失败");
+                    $("#alertMsg").html("保存失败!");
+                    $("#userAlert").removeClass("hidden").addClass("alert-danger").show();
                     return;
                 }
             }
@@ -295,9 +297,16 @@ function deleteCheckedUsers() {
         return;
     }
 
+    $("#delModal").modal('show');
+    // TODO
+    $("#checkedUserIds_input").val(checkedUserIds.values);
+}
+
+function deleteByIds(){
+    var ids = $("#checkedUserIds_input").val();
     $.ajax({
         type: "post",
-        url: "deleteUser/" + checkedUserIds.values,
+        url: "deleteUser/" + ids,
         async: false,
         success: function (status) {
             if (status == "true") {
@@ -307,8 +316,6 @@ function deleteCheckedUsers() {
             }
         }
     });
-
-
 }
 
 // 隐藏模态框
