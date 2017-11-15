@@ -1,20 +1,20 @@
 $(document).ready(function () {
-    $("#btnCloseRoleAlert").click(function () {
+    $("#btnCloseResourceAlert").click(function () {
         $("#alertMsg").html("");
-        $("#roleAlert").removeClass("alert-success")
+        $("#resourceAlert").removeClass("alert-success")
             .removeClass("alert-warning")
             .removeClass("alert-danger")
             .hide();
     });
 
-    // 加载用户数据列表
-    queryRole(initQueryBean());
+    // 加载资源数据列表
+    queryResource(initQueryBean());
     // 绑定第一页按钮事件
     $("#firstPage").bind("click", function () {
         var qb = initQueryBean();
         if (qb.pageNum != 1) {
             qb.pageNum = 1;
-            queryRole(qb);
+            queryResource(qb);
             $("#pageNum").val(1);
         }
     });
@@ -28,7 +28,7 @@ $(document).ready(function () {
             return;
         }
         qb.pageNum = currentPageNum - 1;
-        queryRole(qb);
+        queryResource(qb);
         $("#pageNum").val(qb.pageNum);
     });
 
@@ -42,7 +42,7 @@ $(document).ready(function () {
             return;
         }
         qb.pageNum = currentPageNum + 1;
-        queryRole(qb);
+        queryResource(qb);
         $("#pageNum").val(qb.pageNum);
     });
 
@@ -52,7 +52,7 @@ $(document).ready(function () {
         var pages = $("#pages").html();
         if (qb.pageNum != pages) {
             qb.pageNum = pages;
-            queryRole(qb);
+            queryResource(qb);
             $("#pageNum").val(pages);
         }
 
@@ -66,18 +66,18 @@ $(document).ready(function () {
             if (Number($("#pageNum").val()) > Number(pages)) {
                 $("#pageNum").val(pages);
             }
-            queryRole(initQueryBean());
+            queryResource(initQueryBean());
         }
     });
 
     // 每页条数改变后,默认查第一页的数据
     $("#pageSize").bind("change", function () {
         $("#pageNum").val(1);
-        queryRole(initQueryBean());
+        queryResource(initQueryBean());
     });
 
     // 表单验证
-    $('#saveRoleForm').bootstrapValidator({
+    $('#saveResourceForm').bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -85,10 +85,10 @@ $(document).ready(function () {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            roleName: {
+            resourceName: {
                 validators: {
                     notEmpty: {
-                        message: '请填写角色名称'
+                        message: '请填写资源名称'
                     }
                 }
             }
@@ -98,38 +98,38 @@ $(document).ready(function () {
     // 为查询按钮绑定提交表单事件
     $("#btnSelect").click(function () {
         var queryBean = initQueryBean();
-        queryRole(queryBean);
+        queryResource(queryBean);
     });
 
     $("#btnSelect").bind("keypress", function (event) {
         if (event.keyCode == "13") {
             var queryBean = initQueryBean();
-            queryRole(queryBean);
+            queryResource(queryBean);
         }
     });
 
-    // 保存用户信息
-    $('#btnSaveRole').click(function () {
-        if (!$('#saveRoleForm').data("bootstrapValidator").isValid()) {
+    // 保存资源信息
+    $('#btnSaveResource').click(function () {
+        if (!$('#saveResourceForm').data("bootstrapValidator").isValid()) {
             return false;
         }
-        var roleList = $("input[name='checkbox_role']:checked");
-        var roleValues = "";
-        roleList.each(function () {
-            roleValues += $(this).val() + ",";
+        var resourceList = $("input[name='checkbox_resource']:checked");
+        var resourceValues = "";
+        resourceList.each(function () {
+            resourceValues += $(this).val() + ",";
         })
-        roleValues = roleValues.substring(0, roleValues.length - 1);
+        resourceValues = resourceValues.substring(0, resourceValues.length - 1);
         $.ajax({
             type: "post",
-            url: "saveRole",
+            url: "saveResource",
             data: {
-                roleName: $('#roleName').val(),
-                roleDesc: $('#roleDesc').val()
+                resourceName: $('#resourceName').val(),
+                resourceDesc: $('#resourceDesc').val()
             },
             success: function (res) {
                 if ("exist" == res) {
-                    $("#alertMsg").html("角色名称已经存在");
-                    $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+                    $("#alertMsg").html("资源名称已经存在");
+                    $("#resourceAlert").removeClass("hidden").addClass("alert-warning").show();
                     return;
                 } else if ("true" == res) {
                     alert("保存成功");
@@ -144,54 +144,54 @@ $(document).ready(function () {
     });
 
     // 绑定重置表单事件
-    $('#btnResetQueryRoleForm').bind("click", function () {
-            $('#queryRoleForm')[0].reset();
+    $('#btnResetQueryResourceForm').bind("click", function () {
+            $('#queryResourceForm')[0].reset();
         }
     );
 
     // 绑定重置表单事件
     $('#resetBtn').bind("click", function () {
-            $('#saveRoleForm').data('bootstrapValidator').resetForm(true);
+            $('#saveResourceForm').data('bootstrapValidator').resetForm(true);
         }
     );
 
-    // 绑定编辑用户点击事件
-    $("#editRoleBtn").bind("click", function () {
-        editCheckedRole();
+    // 绑定编辑资源点击事件
+    $("#editResourceBtn").bind("click", function () {
+        editCheckedResource();
     });
 
-    // 绑定删除用户事件
-    $("#delRoleBtn").bind("click", function () {
-        deleteCheckedRoles();
+    // 绑定删除资源事件
+    $("#delResourceBtn").bind("click", function () {
+        deleteCheckedResources();
     });
 });
 
-// 定义一个数组,用来存放用户信息
-var roleArray;
-function queryRole(queryBean) {
-    roleArray = new Array();
+// 定义一个数组,用来存放资源信息
+var resourceArray;
+function queryResource(queryBean) {
+    resourceArray = new Array();
     // 清空table下的内容
-    $("#role-list").html("");
+    $("#resource-list").html("");
     // 显示loading.gif
     $("#loadingDiv").show();
 
     $.ajax({
         type: "post",
-        url: "selectRoles",
+        url: "selectResources",
         dataType: "json",
         data: queryBean,
         success: function (data) {
             $("#pages").html(data.pages);
             $("#totalNum").html(data.total);
 
-            var roles = data.list;
-            for (var i = 0; i < roles.length; i++) {
-                roleArray.push(roles[i]);
-                $("#role-list").append(
+            var resources = data.list;
+            for (var i = 0; i < resources.length; i++) {
+                resourceArray.push(resources[i]);
+                $("#resource-list").append(
                     '<tr>' +
-                    '<td style="text-align: center"><input name="checkbox_role" id="checkbox_' + i + '" type="checkbox" value="' + roles[i].id + '"></td>' +
-                    '<td style="text-align: center">' + roles[i].roleName + '</td>' + // 角色名称
-                    '<td style="text-align: center">' + roles[i].roleDesc + '</td>' + // 角色描述
+                    '<td style="text-align: center"><input name="checkbox_resource" id="checkbox_' + i + '" type="checkbox" value="' + resources[i].id + '"></td>' +
+                    '<td style="text-align: center">' + resources[i].resourceName + '</td>' + // 资源名称
+                    '<td style="text-align: center">' + resources[i].resourceDesc + '</td>' + // 资源描述
                     '</tr>'
                 );
             }
@@ -201,31 +201,31 @@ function queryRole(queryBean) {
     });
 }
 
-function editCheckedRole() {
+function editCheckedResource() {
     // 默认隐藏alert提示框
-    $("#btnCloseRoleAlert").click();
-    // 获取选中的用户ID
-    var checkedRoleIds = getCheckedIds("checkbox_role");
-    if (checkedRoleIds.count == 0) {
+    $("#btnCloseResourceAlert").click();
+    // 获取选中的资源ID
+    var checkedResourceIds = getCheckedIds("checkbox_resource");
+    if (checkedResourceIds.count == 0) {
         $("#alertMsg").html("请选择一条数进行编辑!");
-        $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+        $("#resourceAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
-    if (checkedRoleIds.count > 1) {
+    if (checkedResourceIds.count > 1) {
         $("#alertMsg").html("编辑时只能选择一条数据!");
-        $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+        $("#resourceAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
-    var role = getRoleFromArray(checkedRoleIds.values);
+    var resource = getResourceFromArray(checkedResourceIds.values);
 
-    $("#roleModalLabel").html("修改角色");
-    $("#roleModal").modal('show');
+    $("#resourceModalLabel").html("修改资源");
+    $("#resourceModal").modal('show');
     // 自动填充表单
-    $("#saveRoleForm").autofill(role);
+    $("#saveResourceForm").autofill(resource);
 
     $.ajax({
         type: "post",
-        url: "findResourcesByRoleId/" + role.id,
+        url: "findResourcesByResourceId/" + resource.id,
         success: function (resources) {
             if (resources == "" || resources.length == 0) {
                 return;
@@ -236,35 +236,35 @@ function editCheckedRole() {
     });
 }
 
-function getRoleFromArray(roleId) {
-    var role;
-    for (var i = 0; i < roleArray.length; i++) {
-        if (roleId == roleArray[i].id) {
-            role = roleArray[i];
-            return role;
+function getResourceFromArray(resourceId) {
+    var resource;
+    for (var i = 0; i < resourceArray.length; i++) {
+        if (resourceId == resourceArray[i].id) {
+            resource = resourceArray[i];
+            return resource;
         }
     }
 }
 
-// 删除角色
-function deleteCheckedRoles() {
+// 删除资源
+function deleteCheckedResources() {
     // 默认隐藏alert提示框
-    $("#btnCloseRoleAlert").click();
-    // 获取选中的用户ID
-    var checkedRoleIds = getCheckedIds("checkbox_role");
-    if (checkedRoleIds.count == 0) {
+    $("#btnCloseResourceAlert").click();
+    // 获取选中的资源ID
+    var checkedResourceIds = getCheckedIds("checkbox_resource");
+    if (checkedResourceIds.count == 0) {
         $("#alertMsg").html("请选择一条数进行操作!");
-        $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+        $("#resourceAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
 
     $.ajax({
         type: "post",
-        url: "deleteRole/" + checkedRoleIds.values,
+        url: "deleteResource/" + checkedResourceIds.values,
         async: false,
         success: function (status) {
             if (status == "true") {
-                queryRole(initQueryBean());
+                queryResource(initQueryBean());
             } else {
                 alert("delete failed");
             }
@@ -276,33 +276,29 @@ function deleteCheckedRoles() {
 
 // 隐藏模态框
 $(function () {
-    $('#roleModal').modal('hide')
+    $('#resourceModal').modal('hide')
 });
-// hidden.bs.modal	当模态框完全对用户隐藏时触发。
+// hidden.bs.modal	当模态框完全对资源隐藏时触发。
 $(function () {
-    $('#roleModal').on('hide.bs.modal', function () {
+    $('#resourceModal').on('hide.bs.modal', function () {
         // 重置表单
         $("#resetBtn").click();
     });
 });
 
 // queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
-function queryBean(pageNum, limitNum, corpId, deptId, name) {
+function queryBean(pageNum, limitNum, name) {
     this.pageNum = pageNum;
     this.limitNum = limitNum;
-    this.corpId = corpId;
-    this.deptId = deptId;
     this.name = name;
 }
 
 // 初始化queryBean,实时获取页面当前各个查询条件,需要重新调用此方法
 function initQueryBean() {
-    var role_querybean = new queryBean(
+    var resource_querybean = new queryBean(
         $("#pageNum").val(),
         $("#pageSize").val(),
-        $("#queryBean_corpId").val(),
-        $("#queryBean_deptId").val(),
         $("#queryBean_name").val()
     );
-    return role_querybean;
+    return resource_querybean;
 }

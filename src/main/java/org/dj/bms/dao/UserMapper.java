@@ -14,7 +14,7 @@ public interface UserMapper {
 
     int deleteByPrimaryKey(String id);
 
-    int deleteByUserIds(String[] idArr);
+    int deleteByUserIds(String[] idArray);
 
     int insert(User record);
 

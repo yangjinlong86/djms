@@ -61,9 +61,10 @@
 
     <delete id="deleteByUserIds" parameterType="list">
         DELETE FROM USER
-        WHERE ID IN (
-        <!-- TODO-->
-        )
+        WHERE ID IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
     <insert id="insert" parameterType="org.dj.bms.model.User">
     insert into USER (ID, `NAME`, `PASSWORD`, 

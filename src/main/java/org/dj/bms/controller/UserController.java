@@ -61,10 +61,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/deleteUser/{id}")
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
+        // 批量删除
         if(id.contains(",")){
             String[] idArr = id.split(",");
-            userService.deleteByUserIds(idArr);
+            if (DBEnum.OPERATION_SUCCESS.getValue() <= userService.deleteByUserIds(idArr)) {
+                return ResponseEnum.SUCCESS.getStatus();
+            }
         }
+        // 单个删除
 		if (DBEnum.OPERATION_SUCCESS.getValue() == userService.deleteByUserId(id)) {
 			return ResponseEnum.SUCCESS.getStatus();
 		}

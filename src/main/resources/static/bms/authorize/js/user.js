@@ -132,6 +132,10 @@ $(document).ready(function () {
 
     // 保存用户信息
     $('#btnSaveUser').click(function () {
+        if (!$('#saveUserForm').data("bootstrapValidator").isValid()) {
+            return false;
+        }
+
         var roleList = $("input[name='checkbox_role']:checked");
         var roleValues = "";
         roleList.each(function () {
@@ -247,8 +251,9 @@ function editCheckedUser() {
     $("#userModal").modal('show');
     // 自动填充表单
     $("#saveUserForm").autofill(user);
-    // 全部取消选中
+    // 先将角色全部取消选中
     $("[name='checkbox_role']").removeAttr("checked");
+    // 查询用户拥有的角色,选中对应值
     $.ajax({
         type: "post",
         url: "findRoleListByUserId/" + user.id,
