@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dj.bms.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="org.dj.bms.model.Product" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CAPACITY" property="capacity" jdbcType="VARCHAR" />
+    <result column="METE" property="mete" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+    <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, `NAME`, CAPACITY, METE, `TYPE`, AMOUNT, `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  
+  <sql id="Column_List" >
+    ID, `NAME`, CAPACITY, METE, `TYPE`, AMOUNT, `COMMENT`
+  </sql>
+  
+  <select id="selectProduct" resultMap="BaseResultMap" parameterType="org.dj.bms.query.ProductQueryInfo">
+  		select 
+  			<include refid="Column_List"/>
+  		from
+  			product
+  		<where>
+  			<if test="name !=null and name != ''">
+  				and (name like CONCAT('%', #{name}, '%')
+  			</if>
+  			<if test="corpId != null and corpId != ''">
+  				and corp_id = #{corpId,jdbcType=VARCHAR}
+  			</if>
+  		</where>
+  </select>
+  <delete id="deleteByIds">
+  	  delete from product where id in
+        <foreach collection="ids" item="id" index="index"  
+            open="(" close=")" separator=",">  
+            #{id}  
+        </foreach>  
+  </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.dj.bms.model.Product" >
+    insert into product (ID, `NAME`, CAPACITY, 
+      METE, `TYPE`, AMOUNT, 
+      `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{capacity,jdbcType=VARCHAR}, 
+      #{mete,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{comment,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.dj.bms.model.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        `NAME`,
+      </if>
+      <if test="capacity != null" >
+        CAPACITY,
+      </if>
+      <if test="mete != null" >
+        METE,
+      </if>
+      <if test="type != null" >
+        `TYPE`,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="comment != null" >
+        `COMMENT`,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null" >
+        #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="mete != null" >
+        #{mete,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Product" >
+    update product
+    <set >
+      <if test="name != null" >
+        `NAME` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null" >
+        CAPACITY = #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="mete != null" >
+        METE = #{mete,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `TYPE` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        `COMMENT` = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Product" >
+    update product
+    set `NAME` = #{name,jdbcType=VARCHAR},
+      CAPACITY = #{capacity,jdbcType=VARCHAR},
+      METE = #{mete,jdbcType=VARCHAR},
+      `TYPE` = #{type,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      `COMMENT` = #{comment,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

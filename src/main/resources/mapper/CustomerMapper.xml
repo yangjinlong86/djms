@@ -24,7 +24,7 @@
   <sql id="Column_List" >
     ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`
   </sql>
-  <select id="selectCustomer" resultMap="BaseResultMap" parameterType="org.dj.bms.query.QueryBean">
+  <select id="selectCustomer" resultMap="BaseResultMap" parameterType="org.dj.bms.query.CustQueryInfo">
   		select 
   			<include refid="Column_List"/>
   		from
