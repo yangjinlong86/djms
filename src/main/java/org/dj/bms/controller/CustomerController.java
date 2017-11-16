@@ -31,6 +31,7 @@ public class CustomerController extends BaseController {
 		ResponseMsg resData = getRes(status);
 		try {
 			status = customerService.saveOrUpdate(cust);
+			resData.setMsg("操作成功");
 		} catch (Exception e) {
 			logger.error(e + "");
 			resData.setMsg(e.getMessage());

@@ -14,6 +14,52 @@ $(document).ready(function(){
 	bingQuery()
 	//绑定自动填充
 	autocomplete("auto");
+	
+	// 表单验证
+    $('#saveCustForm').bootstrapValidator({
+        message: '输入不为空',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            corpId: {
+                validators: {
+                    notEmpty: {
+                        message: '请选择单位'
+                    }
+                }
+            },
+            /*birthday: {
+                validators: {
+                	date: {
+                        message: '输入顾客生日'
+                    },
+                    notEmpty: {
+                        message: '输入顾客生日'
+                    }
+                }
+            },*/
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: '请填写用户名'
+                    }
+                }
+            },
+            telephone: {
+                validators: {
+                	/*phone: {
+                        message: '请填电话'
+                    },*/
+                    notEmpty: {
+                        message: '请填电话'
+                    }
+                }
+            }
+        }
+    });
 	//新增客户
 	$("#addCustBtn").on("click",function(){
 		$('#saveCustForm')[0].reset();
@@ -24,9 +70,15 @@ $(document).ready(function(){
 		var checkdata = getCheckedIds("checkboxIds");
 		var msg = validCheckId(1,checkdata.count);
 		if(msg != ''){
-			alert(msg);
+			$("#alertMsg").html(msg);
+            $("#custAlert").removeClass("hidden").addClass("alert-warning").show();
 			return;
 		}
+		$("#delModal").modal('show');
+	});
+	
+	$("#delbBtnConfirm").on("click",function(){
+		var checkdata = getCheckedIds("checkboxIds");
 		 $.ajax({
 		        type:"post",
 		        url: "delete",
@@ -39,14 +91,21 @@ $(document).ready(function(){
 		        }
 		 	});
 	});
-	
+	$("#btnCloseCustAlert").click(function () {
+        $("#alertMsg").html("");
+        $("#custAlert").removeClass("alert-success")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .hide();
+    });
 	//编辑客户
 	$("#editCustBtn").on("click",function(){
 		$('#saveCustForm')[0].reset();
 		var checkdata = getCheckedIds("checkboxIds");
 		var msg = validCheckId(2,checkdata.count);
 		if(msg != ''){
-			alert(msg);
+			$("#alertMsg").html(msg);
+            $("#custAlert").removeClass("hidden").addClass("alert-warning").show();
 			return;
 		}
 		var dataId = checkdata.checkIds;
@@ -59,6 +118,10 @@ $(document).ready(function(){
 	});
 	//保存或修改
 	$("#btnSaveCust").on("click",function(){
+		 $('#saveCustForm').data("bootstrapValidator").validate();
+	        if(!$('#saveCustForm').data("bootstrapValidator").isValid()) {
+	            return false;
+	        }
 		var data = $("#saveCustForm").serializeObject();
 		 $.ajax({
 		        type:"post",
@@ -67,6 +130,8 @@ $(document).ready(function(){
 		        data:data,
 		        success:function(data){
 		        	if(data.status){
+		        		$("#alertMsg").html(data.msg);
+		                $("#custAlert").removeClass("hidden").addClass("alert-success").show();
 		        		loadData(qb);
 		        		$("#custModal").modal('hide');
 		        	}
