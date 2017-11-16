@@ -4,7 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author Created by jason on 17/11/3.
+ * @author jason
+ * @date 17/11/3
  */
 @Controller
 public class AuthController {
