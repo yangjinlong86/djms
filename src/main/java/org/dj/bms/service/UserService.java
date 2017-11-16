@@ -12,24 +12,61 @@ import java.util.List;
  */
 public interface UserService{
 
+    /**
+     * 根据主键查询用户
+     * @param id
+     * @return
+     */
 	User selectByUserId(String id);
 
+    /**
+     * 保存或更新用户
+     * @param user
+     * @return
+     */
 	int saveOrUpdate(User user);
 
+    /**
+     * 查询当前用的拥有的角色
+     * @param user
+     * @return
+     */
 	List<Role> findCurrentUserRoles(User user);
 
+    /**
+     * 根据用户名查找用户
+     * @param name
+     * @return
+     */
 	User findByUsername(String name);
 
-	String getUserPassword(String id);
+    int countByUsername(User user);
 
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
 	int deleteByUserId(String id);
 
+    /**
+     * 批量删除用户
+     * @param idArr
+     * @return
+     */
     int deleteByUserIds(String[] idArr);
 
+    /**
+     * 查询用户
+     * @param userQueryBean
+     * @return
+     */
 	PageInfo<User> selectUsers(UserQueryBean userQueryBean);
 
-	User selectByUserName(String name);
-
-	int selectCountUser();
-
+    /**
+     * 保存用户角色对应关系
+     * @param user
+     * @return
+     */
+    public int saveUserRole(User user);
 }

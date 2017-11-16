@@ -8,7 +8,6 @@ import org.dj.bms.query.QueryBean;
 import org.dj.bms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,17 +28,9 @@ public class RoleController {
         return roleService.findRoleListByUserId(userId);
     }
 
-    @RequestMapping("/findAllRoles")
-    @ResponseBody
-    public List<Role> findAllRoles(Model model){
-        List<Role> roleList = roleService.findAllRoles();
-        model.addAttribute("allRoles", roleList);
-        return roleList;
-    }
-
     /**
      * 分页查询
-     * @param QueryBean bean
+     * @param  bean
      * @return pageInfo
      */
     @RequestMapping("/selectRoles")

@@ -2,13 +2,16 @@ package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Role;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author YANGJINLONG
  */
 @Mapper
+@Repository
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);
 
@@ -24,6 +27,6 @@ public interface RoleMapper {
 
     List<Role> findRoleListByUserId(String userId);
 
-    List<Role> findAllRoles();
+    List<Role> findRoles(Map<String,String> paramsMap);
 
 }

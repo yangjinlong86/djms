@@ -2,6 +2,7 @@ package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
  *@author jason
  */
 @Mapper
+@Repository
 public interface UserMapper {
 
     int deleteByPrimaryKey(String id);
@@ -31,5 +33,7 @@ public interface UserMapper {
     List<User> selectUsers(Map<String,String> paramsMap);
 
     int selectCountUser();
+
+    int countByUsername(User user);
 
 }

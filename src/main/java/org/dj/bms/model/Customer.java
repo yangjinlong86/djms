@@ -1,11 +1,11 @@
 package org.dj.bms.model;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DictEnum;
 import org.dj.bms.utils.DateUtils;
 import org.dj.bms.utils.ECacheUtils;
+
+import java.util.Date;
 
 public class Customer extends Bms {
 

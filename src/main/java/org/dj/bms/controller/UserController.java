@@ -1,7 +1,6 @@
 package org.dj.bms.controller;
 
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
@@ -33,19 +32,26 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/saveUser")
 	@ResponseBody
 	public String save(User user) {
-        // 新建用户时,需要校验用户名是否已经存在
-        if(StringUtils.isBlank(user.getId())){
-            User existsUser = userService.findByUsername(user.getName());
-            if (existsUser != null) {
-                return ResponseEnum.ALREADY_EXISTS.getStatus();
-            }
+
+        if (userService.countByUsername(user) >= 1) {
+            return ResponseEnum.ALREADY_EXISTS.getStatus();
         }
+
 
 		if (userService.saveOrUpdate(user) > 0) {
 			return ResponseEnum.SUCCESS.getStatus();
 		}
 		return ResponseEnum.FAILED.getStatus();
 	}
+
+    @RequestMapping(value="/saveUserRole")
+    @ResponseBody
+    public String saveUserRole(User user) {
+        if (userService.saveUserRole(user) > 0) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
+    }
 
 	/**
 	 * 分页查询用户

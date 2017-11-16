@@ -6,8 +6,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.dao.RoleMapper;
 import org.dj.bms.model.Role;
-import org.dj.bms.model.User;
 import org.dj.bms.query.QueryBean;
+import org.dj.bms.service.BaseService;
 import org.dj.bms.service.RoleService;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Created by jason on 17/11/3.
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseService implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
@@ -40,25 +40,21 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.findRoleListByUserId(userId);
     }
 
-    @Override
-    public List<Role> findAllRoles() {
-        return roleMapper.findAllRoles();
-    }
 
     @Override
     public PageInfo<Role> selectRoles(QueryBean queryBean) {
-        PageHelper.startPage(queryBean.getPageNum(), queryBean.getLimitNum());
+        PageHelper.startPage(queryBean.getPageNum(), queryBean.getLimitNum()).setOrderBy("ROLE_NAME ASC");
         Map<String, String> paramsMap = null;
         try {
             paramsMap = BeanUtils.describe(queryBean);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
-        List<Role> list = roleMapper.findAllRoles();
+        List<Role> list = roleMapper.findRoles(paramsMap);
         PageInfo<Role> pageInfo = new PageInfo<Role>(list);
         return pageInfo;
     }

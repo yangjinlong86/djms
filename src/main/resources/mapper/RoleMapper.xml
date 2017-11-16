@@ -15,10 +15,18 @@
         from ROLE
         where ID = #{id,jdbcType=VARCHAR}
     </select>
-    <select id="findAllRoles" resultMap="BaseResultMap">
+    <select id="findRoles" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ROLE
+        <where>
+            <if test="roleName != null and roleName != ''">
+                AND NAME like CONCAT('%','${roleName}','%')
+            </if>
+            <if test="roleName != null and roleName != ''">
+                AND NAME = #{roleDesc,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <select id="findRoleListByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">

@@ -10,9 +10,12 @@ import java.util.List;
  * @author Created by jason on 17/11/3.
  */
 public interface RoleService {
+    /**
+     * 通过用户主键查询用户所有的角色
+     * @param userId
+     * @return
+     */
     List<Role> findRoleListByUserId(String userId);
-
-    List<Role> findAllRoles();
 
     PageInfo<Role> selectRoles(QueryBean queryBean);
 

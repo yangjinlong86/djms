@@ -48,7 +48,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         // 获取用户的输入的账号.
         String username = (String) token.getPrincipal();
-        User user = userService.selectByUserName(username);
+        User user = userService.findByUsername(username);
         if (user == null) {
             throw new UnknownAccountException();
         }
