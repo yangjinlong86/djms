@@ -51,5 +51,42 @@ CREATE TABLE `DICT` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- ----------------------------
+--  Table structure for `DICT`
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `ID` varchar(32) COLLATE utf8_bin NOT NULL,
+  `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `NAME` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `CAPACITY` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `METE` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,
+  `COMMENT` varchar(2048) DEFAULT NULL,
+  `CREATE_USER_ID` varchar(32) DEFAULT NULL,
+  `UPDATE_USER_ID` varchar(32) DEFAULT NULL,
+  `CREATE_TIME` timestamp,
+  `UPDATE_TIME` timestamp,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS `formula`;
+CREATE TABLE `formula` (
+  `ID` varchar(32) COLLATE utf8_bin NOT NULL,
+  `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `NAME` varchar(512) COLLATE utf8_bin DEFAULT NULL,
+  `SCENE` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  `TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,
+  `COMMENT` varchar(2048) DEFAULT NULL,
+  `CREATE_USER_ID` varchar(32) DEFAULT NULL,
+  `UPDATE_USER_ID` varchar(32) DEFAULT NULL,
+  `CREATE_TIME` timestamp,
+  `UPDATE_TIME` timestamp,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
 
 SET FOREIGN_KEY_CHECKS = 1;
