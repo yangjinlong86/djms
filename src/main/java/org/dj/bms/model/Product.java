@@ -9,6 +9,8 @@ public class Product extends Bms {
 
 	private String name;
 
+	private String corpId;
+
 	private String capacity;
 
 	private String mete;
@@ -55,6 +57,14 @@ public class Product extends Bms {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public String getCorpId() {
+		return corpId;
+	}
+
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
 	}
 
 }

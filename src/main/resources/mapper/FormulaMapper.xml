@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.ProductMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Product" >
+<mapper namespace="org.dj.bms.dao.FormulaMapper" >
+  <resultMap id="BaseResultMap" type="org.dj.bms.model.Formula" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="CORP_ID" property="corpId" jdbcType="VARCHAR" />
-    <result column="CAPACITY" property="capacity" jdbcType="VARCHAR" />
-    <result column="METE" property="mete" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SCENE" property="scene" jdbcType="VARCHAR" />
     <result column="TYPE" property="type" jdbcType="VARCHAR" />
     <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
     <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
@@ -16,72 +15,43 @@
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, `NAME`, CAPACITY, METE, `TYPE`, AMOUNT, `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
+    ID, CORP_ID, `NAME`, SCENE, `TYPE`, AMOUNT, `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
     CREATE_TIME, UPDATE_TIME
   </sql>
-  
-  <sql id="Column_List" >
-    ID, `NAME`, CAPACITY, METE, `TYPE`, AMOUNT, `COMMENT`,CORP_ID
-  </sql>
-  
-  <select id="selectProduct" resultMap="BaseResultMap" parameterType="org.dj.bms.query.ProductQueryInfo">
-  		select 
-  			<include refid="Column_List"/>
-  		from
-  			product
-  		<where>
-  			<if test="name !=null and name != ''">
-  				and (name like CONCAT('%', #{name}, '%')
-  			</if>
-  			<if test="corpId != null and corpId != ''">
-  				and corp_id = #{corpId,jdbcType=VARCHAR}
-  			</if>
-  		</where>
-  </select>
-  <delete id="deleteByIds">
-  	  delete from product where id in
-        <foreach collection="ids" item="id" index="index"  
-            open="(" close=")" separator=",">  
-            #{id}  
-        </foreach>  
-  </delete>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from product
+    from formula
     where ID = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from product
+    delete from formula
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Product" >
-    insert into product (ID, CORP_ID,`NAME`, CAPACITY, 
-      METE, `TYPE`, AMOUNT, 
+  <insert id="insert" parameterType="org.dj.bms.model.Formula" >
+    insert into formula (ID, CORP_ID, `NAME`, 
+      SCENE, `TYPE`, AMOUNT, 
       `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
       CREATE_TIME, UPDATE_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{corpId,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{capacity,jdbcType=VARCHAR}, 
-      #{mete,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+    values (#{id,jdbcType=VARCHAR}, #{corpId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{scene,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
       #{comment,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Product" >
-    insert into product
+  <insert id="insertSelective" parameterType="org.dj.bms.model.Formula" >
+    insert into formula
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
       </if>
-      <if test="name != null" >
-        `NAME`,
-      </if>
       <if test="corpId != null" >
         CORP_ID,
       </if>
-      <if test="capacity != null" >
-        CAPACITY,
+      <if test="name != null" >
+        `NAME`,
       </if>
-      <if test="mete != null" >
-        METE,
+      <if test="scene != null" >
+        SCENE,
       </if>
       <if test="type != null" >
         `TYPE`,
@@ -109,17 +79,14 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
       <if test="corpId != null" >
         #{corpId,jdbcType=VARCHAR},
       </if>
-      <if test="capacity != null" >
-        #{capacity,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="mete != null" >
-        #{mete,jdbcType=VARCHAR},
+      <if test="scene != null" >
+        #{scene,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
@@ -144,20 +111,17 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Product" >
-    update product
+  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Formula" >
+    update formula
     <set >
-      <if test="name != null" >
-        `NAME` = #{name,jdbcType=VARCHAR},
-      </if>
       <if test="corpId != null" >
         CORP_ID = #{corpId,jdbcType=VARCHAR},
       </if>
-      <if test="capacity != null" >
-        CAPACITY = #{capacity,jdbcType=VARCHAR},
+      <if test="name != null" >
+        `NAME` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="mete != null" >
-        METE = #{mete,jdbcType=VARCHAR},
+      <if test="scene != null" >
+        SCENE = #{scene,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         `TYPE` = #{type,jdbcType=VARCHAR},
@@ -183,12 +147,11 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Product" >
-    update product
-    set `NAME` = #{name,jdbcType=VARCHAR},
-    	CORP_ID = #{corpId,jdbcType=VARCHAR},
-      CAPACITY = #{capacity,jdbcType=VARCHAR},
-      METE = #{mete,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Formula" >
+    update formula
+    set CORP_ID = #{corpId,jdbcType=VARCHAR},
+      `NAME` = #{name,jdbcType=VARCHAR},
+      SCENE = #{scene,jdbcType=VARCHAR},
       `TYPE` = #{type,jdbcType=VARCHAR},
       AMOUNT = #{amount,jdbcType=DECIMAL},
       `COMMENT` = #{comment,jdbcType=VARCHAR},
