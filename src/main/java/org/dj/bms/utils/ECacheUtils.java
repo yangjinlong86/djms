@@ -1,15 +1,14 @@
 package org.dj.bms.utils;
 
-import java.util.Map;
-
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DictEnum;
 import org.dj.bms.enumeration.ECacheEnum;
 import org.dj.bms.model.Dict;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
+import java.util.Map;
 
 /**
  * @ClassName: ECacheUtils

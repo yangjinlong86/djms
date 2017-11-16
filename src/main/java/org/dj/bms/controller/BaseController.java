@@ -1,16 +1,15 @@
 package org.dj.bms.controller;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.dj.bms.model.User;
 import org.dj.bms.utils.ResponseMsg;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: BaseController

@@ -1,9 +1,8 @@
 package org.dj.bms.service;
 
+import com.github.pagehelper.PageInfo;
 import org.dj.bms.model.Customer;
 import org.dj.bms.query.IQueryInfo;
-
-import com.github.pagehelper.PageInfo;
 
 /**
  * @ClassName: CustomerService

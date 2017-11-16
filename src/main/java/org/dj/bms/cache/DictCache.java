@@ -1,9 +1,8 @@
 package org.dj.bms.cache;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.dj.bms.dao.NodeMapper;
 import org.dj.bms.enumeration.ECacheEnum;
 import org.dj.bms.model.Dict;
@@ -12,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: DictCache

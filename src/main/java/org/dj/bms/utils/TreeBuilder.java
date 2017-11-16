@@ -1,10 +1,10 @@
 package org.dj.bms.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.dj.bms.model.Node;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreeBuilder {
 

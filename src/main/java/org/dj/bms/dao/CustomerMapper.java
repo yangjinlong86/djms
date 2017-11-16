@@ -1,12 +1,12 @@
 package org.dj.bms.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.Customer;
 import org.dj.bms.query.IQueryInfo;
 import org.dj.bms.query.QueryBean;
+
+import java.util.List;
 
 @Mapper
 public interface CustomerMapper {

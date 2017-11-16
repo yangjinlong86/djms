@@ -1,10 +1,10 @@
 package org.dj.bms.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.dj.bms.model.Dict;
 import org.dj.bms.model.Node;
+
+import java.util.List;
 
 /**
  * @ClassName: NodeMapper
