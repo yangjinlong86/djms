@@ -1,7 +1,6 @@
 package org.dj.bms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.dj.bms.model.Resource;
 import org.dj.bms.model.RoleResource;
 import org.springframework.stereotype.Repository;
 
