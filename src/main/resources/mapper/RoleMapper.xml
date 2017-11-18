@@ -40,6 +40,14 @@
     delete from ROLE
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
+    <delete id="deleteByIds" parameterType="list">
+        DELETE FROM ROLE
+        WHERE ID IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <insert id="insert" parameterType="org.dj.bms.model.Role">
     insert into ROLE (ID, ROLE_DESC)
     values (#{id,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR})

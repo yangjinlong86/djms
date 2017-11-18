@@ -108,34 +108,31 @@ $(document).ready(function () {
         }
     });
 
-    // 保存用户信息
+    // 保存角色信息
     $('#btnSaveRole').click(function () {
+        // 编辑的时候需要手动调用一下validate()方法,否则校验不通过!
+        $('#saveRoleForm').data("bootstrapValidator").validate();
         if (!$('#saveRoleForm').data("bootstrapValidator").isValid()) {
             return false;
         }
-        var roleList = $("input[name='checkbox_role']:checked");
-        var roleValues = "";
-        roleList.each(function () {
-            roleValues += $(this).val() + ",";
-        })
-        roleValues = roleValues.substring(0, roleValues.length - 1);
         $.ajax({
             type: "post",
             url: "saveRole",
-            data: {
-                roleName: $('#roleName').val(),
-                roleDesc: $('#roleDesc').val()
-            },
+            data: $("#saveRoleForm").serializeObject(),
             success: function (res) {
                 if ("exist" == res) {
-                    $("#alertMsg").html("角色名称已经存在");
+                    $("#alertMsg").html("角色名称已经存在!");
                     $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
                     return;
                 } else if ("true" == res) {
-                    alert("保存成功");
-                    return;
+                    $("#alertMsg").html("保存成功!");
+                    $("#roleAlert").removeClass("hidden").addClass("alert-success").show();
+                    $("#roleModal").modal("hide");
+                    var queryBean = initQueryBean();
+                    queryRole(queryBean);
                 } else if ("false" == res) {
-                    alert("保存失败");
+                    $("#alertMsg").html("保存失败!");
+                    $("#roleAlert").removeClass("hidden").addClass("alert-danger").show();
                     return;
                 }
             }
@@ -257,16 +254,18 @@ function deleteCheckedRoles() {
         $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
-
     $.ajax({
         type: "post",
         url: "deleteRole/" + checkedRoleIds.values,
         async: false,
         success: function (status) {
             if (status == "true") {
+                $("#alertMsg").html("删除成功");
+                $("#roleAlert").removeClass("hidden").addClass("alert-success").show();
                 queryRole(initQueryBean());
             } else {
-                alert("delete failed");
+                $("#alertMsg").html("删除失败");
+                $("#roleAlert").removeClass("hidden").addClass("alert-danger").show();
             }
         }
     });

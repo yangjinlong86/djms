@@ -2,6 +2,7 @@ package org.dj.bms.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.Role;
 import org.dj.bms.query.QueryBean;
@@ -24,18 +25,19 @@ public class RoleController {
 
     @RequestMapping("/findRoleListByUserId/{userId}")
     @ResponseBody
-    public List<Role> findRoleListByRoleId(@PathVariable String userId){
+    public List<Role> findRoleListByRoleId(@PathVariable String userId) {
         return roleService.findRoleListByUserId(userId);
     }
 
     /**
      * 分页查询
-     * @param  bean
+     *
+     * @param bean
      * @return pageInfo
      */
     @RequestMapping("/selectRoles")
     @ResponseBody
-    public PageInfo<Role> selectRoles(QueryBean bean){
+    public PageInfo<Role> selectRoles(QueryBean bean) {
         return roleService.selectRoles(bean);
     }
 
@@ -43,7 +45,7 @@ public class RoleController {
     @ResponseBody
     public String save(Role role) {
         // 新建时,需要校验角色名是否已经存在
-        if(StringUtils.isBlank(role.getId())){
+        if (StringUtils.isBlank(role.getId())) {
             Role existsRole = roleService.findByRoleName(role.getRoleName());
             if (existsRole != null) {
                 return ResponseEnum.ALREADY_EXISTS.getStatus();
@@ -57,4 +59,19 @@ public class RoleController {
     }
 
 
+    /**
+     * 单个,批量删除用户
+     * 批量删除Id时,参数ID 是 多个id用逗号隔开的字符串
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteRole/{id}")
+    @ResponseBody
+    public String deleteRole(@PathVariable String id) {
+        if (DBEnum.OPERATION_SUCCESS.getValue() <= roleService.deleteRoleByIds(id)) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
+    }
 }

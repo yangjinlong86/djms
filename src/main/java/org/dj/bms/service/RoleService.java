@@ -22,4 +22,6 @@ public interface RoleService {
     Role findByRoleName(String roleName);
 
     int saveOrUpdate(Role role);
+
+    int deleteRoleByIds(String ids);
 }

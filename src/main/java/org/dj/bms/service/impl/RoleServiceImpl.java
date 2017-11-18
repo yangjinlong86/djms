@@ -63,4 +63,15 @@ public class RoleServiceImpl extends BaseService implements RoleService {
     public Role findByRoleName(String roleName) {
         return null;
     }
+
+    @Override
+    public int deleteRoleByIds(String ids) {
+        String[] idArr = null;
+        if (ids.contains(",")) {
+            idArr = ids.split(",");
+        } else {
+            idArr = new String[]{ids};
+        }
+        return roleMapper.deleteByIds(idArr);
+    }
 }

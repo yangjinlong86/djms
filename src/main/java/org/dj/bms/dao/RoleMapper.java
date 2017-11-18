@@ -15,6 +15,8 @@ import java.util.Map;
 public interface RoleMapper {
     int deleteByPrimaryKey(String id);
 
+    int deleteByIds(String[] idArr);
+
     int insert(Role record);
 
     int insertSelective(Role record);
