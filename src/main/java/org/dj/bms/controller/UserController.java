@@ -82,9 +82,9 @@ public class UserController extends BaseController {
             }
         }
         // 单个删除
-		if (DBEnum.OPERATION_SUCCESS.getValue() == userService.deleteByUserId(id)) {
-			return ResponseEnum.SUCCESS.getStatus();
-		}
+        if (DBEnum.OPERATION_SUCCESS.getValue() <= userService.deleteByUserId(id)) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
 		return ResponseEnum.FAILED.getStatus();
 	}
 }

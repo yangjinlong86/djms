@@ -37,4 +37,12 @@
     <delete id="deleteUserRoleByUserId" parameterType="java.lang.String" >
         DELETE FROM USER_ROLE WHERE USER_ID=#{userId}
     </delete>
+
+    <delete id="deleteUserRoleByUserIds" parameterType="list">
+        DELETE FROM USER_ROLE
+        WHERE USER_ID IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

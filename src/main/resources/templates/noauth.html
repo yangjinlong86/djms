@@ -1,21 +1,26 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
+    <link rel="stylesheet" th:href="@{vendor/ztree//css/zTreeStyle/zTreeStyle.css}" type="text/css"/>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="box col-md-6 col-md-offset-3">
-            <div class="custom-header">
-                <!--<img src="http://shiro.apache.org/assets/images/apache-shiro-logo.png"/>-->
-            </div>
-            <div class="logo">
-                <h1 th:text="没有权限"></h1>
-            </div>
-            <p class="lead text-muted" th:text="您没有权限操作此页面">Unauthorized</p>
-            <a href="/" class="btn btn-primary">Go Home</a>
-        </div>
+<div th:include="fragments/nav :: nav"></div>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+        您没有权限访问此页面
     </div>
+    <!-- /#page-wrapper -->
 </div>
+<!-- /#wrapper -->
+
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
+<script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
+<script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
+<script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
+<script th:src="@{vendor/ztree/js/jquery.ztree.core.js}"></script>
 </body>
+
 </html>

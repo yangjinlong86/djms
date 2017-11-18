@@ -9,18 +9,6 @@
 <div id="wrapper">
     <div id="page-wrapper">
         <div class="row">
-            <div resource="form">
-                <div class="col-lg-4">
-                    <label>资源名称</label><input id="queryBean_name" name="name" class="form-control"/>
-                </div>
-                <div class="col-lg-4">
-                    <label>资源类型</label><input id="queryBean_type" name="type" class="form-control"/>
-                </div>
-                <div class="col-lg-4">
-                    <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查 询</button>
-                    <button id="btnResetQueryResourceForm" type="button" class="btn btn-outline btn-default" style="margin-top:1.7em;">重 置</button>
-                </div>
-            </div>
         </div>
         <hr/>
         <div class="row">
@@ -89,7 +77,7 @@
 <script th:src="@{vendor/ztree/js/jquery.ztree.core.js}"></script>
 <script th:src="@{bms/public/js/public.js}"></script>
 <script th:src="@{bms/authorize/js/resource.js}"></script>
-<script type="text/javascript">
+<script th:inline="javascript">
     /*<![CDATA[*/
     var setting = {
         data: {
@@ -99,22 +87,26 @@
         }
     };
 
-    var zNodes =[
-        { id:1, pId:0, name:"美容院信息管理系统", open:true},
-        { id:11, pId:1, name:"父节点11 - 折叠"},
-        { id:111, pId:11, name:"叶子节点111"},
-        { id:112, pId:11, name:"叶子节点112"},
-        { id:113, pId:11, name:"叶子节点113"},
-        { id:114, pId:11, name:"叶子节点114"},
-        { id:12, pId:1, name:"父节点12 - 折叠"},
-        { id:121, pId:12, name:"叶子节点121"},
-        { id:122, pId:12, name:"叶子节点122"},
-        { id:123, pId:12, name:"叶子节点123"},
-        { id:124, pId:12, name:"叶子节点124"},
-        { id:13, pId:1, name:"父节点13 - 没有子节点", isParent:true}
-    ];
+    // 获取model数据
+    var resources = JSON.parse([[${resources}]]);
+    var zNodes = [];
+    // 组装treeNode数据
+    for (var i in resources) {
+        if (resources[i].id == 1) {
+            // id=1时, 设置为根节点
+            zNodes.push({
+                id: resources[i].id,
+                pId: resources[i].parentId,
+                name: resources[i].name,
+                isParent: true,
+                open: true
+            });
+        } else {
+            zNodes.push({id: resources[i].id, pId: resources[i].parentId, name: resources[i].name});
+        }
+    }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
 

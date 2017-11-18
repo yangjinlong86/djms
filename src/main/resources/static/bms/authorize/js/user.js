@@ -136,24 +136,11 @@ $(document).ready(function () {
         if(!$('#saveUserForm').data("bootstrapValidator").isValid()) {
             return false;
         }
-
-        var roleList = $("input[name='checkbox_role']:checked");
-        var roleValues = "";
-        roleList.each(function () {
-            roleValues += $(this).val() + ",";
-        })
-        roleValues = roleValues.substring(0, roleValues.length - 1);
+        var params = $("#saveUserForm").serializeObject();
         $.ajax({
             type: "post",
             url: "saveUser",
-            data: {
-                id: $('#id').val(),
-                name: $('#name').val(),
-                realName: $('#realName').val(),
-                corpId: $("#corpId").val(),
-                deptId: $("#deptId").val(),
-                roleValues: roleValues
-            },
+            data: params,
             success: function (res) {
                 if ("exist" == res) {
                     $("#alertMsg").html("用户已经存在!");
@@ -370,10 +357,7 @@ function setUserRole(){
 }
 
 function saveUserRole(){
-    var params = {
-        id:$('#user_id').val(),
-        roleValues:getCheckedIds("checkbox_role").values
-    }
+    var params = {id: $('#user_id').val(), roleValues: getCheckedIds("checkbox_role").values}
     $.ajax({
         type: "post",
         url: "saveUserRole",

@@ -17,6 +17,7 @@ import org.dj.bms.utils.EncryptUtil;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
@@ -40,6 +41,7 @@ public class UserServiceImpl extends BaseService implements UserService{
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int saveOrUpdate(User user) {
         if (user == null) {
             return DBEnum.OPERATION_FAILED.getValue();
@@ -82,13 +84,21 @@ public class UserServiceImpl extends BaseService implements UserService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByUserId(String id) {
-        return userMapper.deleteByPrimaryKey(id);
+        int count = 0;
+        count += userRoleMapper.deleteUserRoleByUserId(id);
+        count += userMapper.deleteByPrimaryKey(id);
+        return count;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByUserIds(String[] idArr) {
-        return userMapper.deleteByUserIds(idArr);
+        int count = 0;
+        count += userRoleMapper.deleteUserRoleByUserIds(idArr);
+        count += userMapper.deleteByUserIds(idArr);
+        return count;
     }
 
     @Override

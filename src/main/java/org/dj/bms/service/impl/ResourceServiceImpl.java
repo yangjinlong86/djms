@@ -23,7 +23,6 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<Resource> findResourcesByRoleId(String roleId) {
-        //
         return roleResourceMapper.selectResourcesByRoleId(roleId);
     }
 

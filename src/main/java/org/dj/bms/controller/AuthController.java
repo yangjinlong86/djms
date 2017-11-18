@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuthController {
 
-	@RequestMapping("/resource")
-	public String resource() {
-		return "authorize/resource";
-	}
-
 	@RequestMapping("/role")
 	public String role() {
 		return "authorize/role";
@@ -24,6 +19,11 @@ public class AuthController {
 	public String user() {
 		return "authorize/user";
 	}
+
+    @RequestMapping("/noauth")
+    public String noauth() {
+        return "noauth";
+    }
 
 	@RequestMapping("/customer")
 	public String customer() {

@@ -19,4 +19,6 @@ public interface UserRoleMapper {
     List<UserRole> selectUserRoleByUserId(String userId);
 
     int deleteUserRoleByUserId(String userId);
+
+    int deleteUserRoleByUserIds(String[] userIdArr);
 }
