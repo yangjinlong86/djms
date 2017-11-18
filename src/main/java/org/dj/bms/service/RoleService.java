@@ -2,6 +2,7 @@ package org.dj.bms.service;
 
 import com.github.pagehelper.PageInfo;
 import org.dj.bms.model.Role;
+import org.dj.bms.model.RoleResource;
 import org.dj.bms.query.QueryBean;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface RoleService {
     int saveOrUpdate(Role role);
 
     int deleteRoleByIds(String ids);
+
+    int saveRoleResource(RoleResource roleResource);
+
+    int deleteRoleResource(String[] roleIdArr);
 }

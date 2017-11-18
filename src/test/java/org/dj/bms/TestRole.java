@@ -1,7 +1,9 @@
 package org.dj.bms;
 
 import org.dj.bms.dao.RoleMapper;
+import org.dj.bms.dao.RoleResourceMapper;
 import org.dj.bms.model.Role;
+import org.dj.bms.model.RoleResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +24,22 @@ public class TestRole {
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RoleResourceMapper rrMapper;
+
     @Test
     public void testRoleMapper() {
-        List<Role> roleList = roleMapper.findRoleListByUserId("b6136ad5fbc84256a074e116ec3a0d07");
-        System.out.println("拥有角色个数:" + roleList.size());
+        //List<Role> roleList = roleMapper.findRoleListByUserId("b6136ad5fbc84256a074e116ec3a0d07");
+
+        List<RoleResource> rrList = new ArrayList<>();
+        RoleResource rr1 = new RoleResource();
+        rr1.setRoleId("aa");
+        rr1.setResourceId("AA");
+        RoleResource rr2 = new RoleResource();
+        rr2.setRoleId("bb");
+        rr2.setResourceId("BB");
+        rrList.add(rr1);
+        rrList.add(rr2);
+        assert (rrMapper.insert(rrList) > 0);
     }
 }

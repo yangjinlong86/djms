@@ -28,4 +28,6 @@ public interface ResourceMapper {
     List<Resource> selectResources();
 
     List<Resource> selectUserResources(Map<String, Object> paramMap);
+
+    List<Resource> selectResourcesByRoleId(String roleId);
 }

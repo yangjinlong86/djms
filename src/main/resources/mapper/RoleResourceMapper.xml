@@ -5,9 +5,12 @@
     <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="org.dj.bms.model.RoleResource" >
+    <insert id="insert" parameterType="java.util.List">
     insert into ROLE_RESOURCE (ROLE_ID, RESOURCE_ID)
-    values (#{roleId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR})
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.roleId}, #{item.resourceId})
+        </foreach>
   </insert>
   <insert id="insertSelective" parameterType="org.dj.bms.model.RoleResource" >
     insert into ROLE_RESOURCE
@@ -28,4 +31,14 @@
       </if>
     </trim>
   </insert>
+
+
+    <delete id="deleteRoleResource" parameterType="list">
+        DELETE FROM ROLE_RESOURCE
+        WHERE ROLE_ID IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.Role;
+import org.dj.bms.model.RoleResource;
 import org.dj.bms.query.QueryBean;
 import org.dj.bms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,21 @@ public class RoleController {
         return ResponseEnum.FAILED.getStatus();
     }
 
+    /**
+     * 保存角色资源对应关系
+     *
+     * @param roleResource
+     * @return
+     */
+    @RequestMapping("/saveRoleResource")
+    @ResponseBody
+    public String saveRoleResource(RoleResource roleResource) {
+        if (DBEnum.OPERATION_SUCCESS.getValue() <= roleService.saveRoleResource(roleResource)) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
+    }
+
 
     /**
      * 单个,批量删除用户
@@ -70,6 +86,21 @@ public class RoleController {
     @ResponseBody
     public String deleteRole(@PathVariable String id) {
         if (DBEnum.OPERATION_SUCCESS.getValue() <= roleService.deleteRoleByIds(id)) {
+            return ResponseEnum.SUCCESS.getStatus();
+        }
+        return ResponseEnum.FAILED.getStatus();
+    }
+
+    /**
+     * 删除角色资源对应关系
+     *
+     * @param roleResource
+     * @return
+     */
+    @RequestMapping("/deleteRoleResource")
+    @ResponseBody
+    public String deleteRoleResource(RoleResource roleResource) {
+        if (DBEnum.OPERATION_SUCCESS.getValue() <= roleService.deleteRoleResource(new String[]{roleResource.getRoleId()})) {
             return ResponseEnum.SUCCESS.getStatus();
         }
         return ResponseEnum.FAILED.getStatus();

@@ -18,6 +18,23 @@
     from RESOURCE
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+    <select id="selectResourcesByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+            R.ID,
+            R.PARENT_ID,
+            R.NAME,
+            R.URL,
+            R.TYPE,
+            R.SORT
+        FROM
+            ROLE RO ,
+            ROLE_RESOURCE RR,
+            RESOURCE R
+        WHERE RO.ID = RR.ROLE_ID
+        AND RR.RESOURCE_ID = R.ID
+        AND RO.ID = #{id,jdbcType=VARCHAR}
+    </select>
+
     <select id="selectResources" resultMap="BaseResultMap">
         select
           <include refid="Base_Column_List" />

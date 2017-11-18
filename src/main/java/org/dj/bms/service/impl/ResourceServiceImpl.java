@@ -15,15 +15,13 @@ import java.util.Map;
  */
 @Service
 public class ResourceServiceImpl implements ResourceService {
-    @Autowired
-    private RoleResourceMapper roleResourceMapper;
 
     @Autowired
-    ResourceMapper resourceMapper;
+    private ResourceMapper resourceMapper;
 
     @Override
     public List<Resource> findResourcesByRoleId(String roleId) {
-        return roleResourceMapper.selectResourcesByRoleId(roleId);
+        return resourceMapper.selectResourcesByRoleId(roleId);
     }
 
     @Override
@@ -35,4 +33,6 @@ public class ResourceServiceImpl implements ResourceService {
     public List<Resource> findUserResources(Map<String, Object> paramMap) {
         return resourceMapper.selectUserResources(paramMap);
     }
+
+
 }

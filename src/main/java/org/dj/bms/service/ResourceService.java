@@ -1,6 +1,7 @@
 package org.dj.bms.service;
 
 import org.dj.bms.model.Resource;
+import org.dj.bms.model.RoleResource;
 
 import java.util.List;
 import java.util.Map;

@@ -12,9 +12,21 @@ import java.util.List;
 @Mapper
 @Repository
 public interface RoleResourceMapper {
-    int insert(RoleResource record);
+    /**
+     * 批量插入
+     *
+     * @param list
+     * @return
+     */
+    int insert(List<RoleResource> list);
 
     int insertSelective(RoleResource record);
 
-    List<Resource> selectResourcesByRoleId(String roleId);
+    /**
+     * 批量删除
+     *
+     * @param roleIdArr
+     * @return
+     */
+    int deleteRoleResource(String[] roleIdArr);
 }

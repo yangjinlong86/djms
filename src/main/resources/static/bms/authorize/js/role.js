@@ -108,6 +108,7 @@ $(document).ready(function () {
         }
     });
 
+
     // 保存角色信息
     $('#btnSaveRole').click(function () {
         // 编辑的时候需要手动调用一下validate()方法,否则校验不通过!
@@ -161,9 +162,14 @@ $(document).ready(function () {
     $("#delRoleBtn").bind("click", function () {
         deleteCheckedRoles();
     });
+
+    // 绑定设置角色权限点击事件
+    $("#setRoleResourceBtn").bind("click", function () {
+        showSetRoleResourceModal();
+    });
 });
 
-// 定义一个数组,用来存放用户信息
+// 定义一个数组,用来存放角色信息
 var roleArray;
 function queryRole(queryBean) {
     roleArray = new Array();
@@ -220,18 +226,9 @@ function editCheckedRole() {
     // 自动填充表单
     $("#saveRoleForm").autofill(role);
 
-    $.ajax({
-        type: "post",
-        url: "findResourcesByRoleId/" + role.id,
-        success: function (resources) {
-            if (resources == "" || resources.length == 0) {
-                return;
-            }
-            // 资源用树形结构展示
 
-        }
-    });
 }
+
 
 function getRoleFromArray(roleId) {
     var role;
@@ -254,9 +251,15 @@ function deleteCheckedRoles() {
         $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
         return;
     }
+    $("#delModal").modal('show');
+    $("#checkedRoleIds_input").val(checkedRoleIds.values);
+}
+
+function deleteByIds() {
+    var ids = $("#checkedRoleIds_input").val();
     $.ajax({
         type: "post",
-        url: "deleteRole/" + checkedRoleIds.values,
+        url: "deleteRole/" + ids,
         async: false,
         success: function (status) {
             if (status == "true") {
@@ -269,8 +272,6 @@ function deleteCheckedRoles() {
             }
         }
     });
-
-
 }
 
 // 隐藏模态框
@@ -304,4 +305,76 @@ function initQueryBean() {
         $("#queryBean_name").val()
     );
     return role_querybean;
+}
+
+
+function showSetRoleResourceModal() {
+
+    // 默认隐藏alert提示框
+    $("#btnCloseRoleAlert").click();
+    // 获取选中的用户ID
+    var checkedRoleIds = getCheckedIds("checkbox_role");
+    if (checkedRoleIds.count == 0) {
+        $("#alertMsg").html("请选择一个角色进行权限设置!");
+        $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+        return;
+    }
+    if (checkedRoleIds.count > 1) {
+        $("#alertMsg").html("只能选择一个角色进行权限设置!");
+        $("#roleAlert").removeClass("hidden").addClass("alert-warning").show();
+        return;
+    }
+
+    $("#setResourceModal").modal('show');
+    $("#checkedRoleIds_setResource").val(checkedRoleIds.values);
+
+    $.ajax({
+        type: "post",
+        url: "findResourcesByRoleId/" + checkedRoleIds.values,
+        success: function (resources) {
+            if (resources == "" || resources.length == 0) {
+                return;
+            }
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            for (var i = 0; i < resources.length; i++) {
+                // console.log(resources[i]);
+                console.log(zTree.getNodeByTId("11"));
+                // 选中拥有的资源
+                // zTree.checkNode(zTree.getNodeByTId(resources[i].id), true, true);
+            }
+
+
+        }
+    });
+}
+
+/**
+ * 保存角色资源对应关系
+ */
+function setRoleResource() {
+    var roleId = $("#checkedRoleIds_setResource").val();
+    var resources = $.fn.zTree.getZTreeObj("treeDemo").getCheckedNodes(true);
+    var resourceIds = "";
+    $.each(resources, function (n, value) {
+        resourceIds += value.id + ",";
+    });
+    $.ajax({
+        type: "post",
+        url: "saveRoleResource",
+        data: {
+            roleId: roleId,
+            resourceId: resourceIds
+        },
+        async: false,
+        success: function (status) {
+            if (status == "true") {
+                $("#alertMsg").html("设置成功");
+                $("#roleAlert").removeClass("hidden").addClass("alert-success").show();
+                queryRole(initQueryBean());
+            } else {
+                $("#alertMsg").html("设置失败");
+                $("#roleAlert").removeClass("hidden").addClass("alert-danger").show();
+            }
+        }
+    });
 }

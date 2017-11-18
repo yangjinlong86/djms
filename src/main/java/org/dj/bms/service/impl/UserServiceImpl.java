@@ -2,7 +2,6 @@ package org.dj.bms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.dao.UserMapper;
 import org.dj.bms.dao.UserRoleMapper;
@@ -13,6 +12,7 @@ import org.dj.bms.model.UserRole;
 import org.dj.bms.query.UserQueryBean;
 import org.dj.bms.service.BaseService;
 import org.dj.bms.service.UserService;
+import org.dj.bms.utils.BeanUtils;
 import org.dj.bms.utils.EncryptUtil;
 import org.dj.bms.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,17 +104,7 @@ public class UserServiceImpl extends BaseService implements UserService{
     @Override
     public PageInfo<User> selectUsers(UserQueryBean userQueryBean) {
         PageHelper.startPage(userQueryBean.getPageNum(), userQueryBean.getLimitNum()).setOrderBy("CREATE_TIME DESC");
-        Map<String, String> paramsMap = null;
-        try {
-            paramsMap = BeanUtils.describe(userQueryBean);
-        } catch (IllegalAccessException e) {
-            logger.error(e);
-        } catch (InvocationTargetException e) {
-            logger.error(e);
-        } catch (NoSuchMethodException e) {
-            logger.error(e);
-        }
-        List<User> list = userMapper.selectUsers(paramsMap);
+        List<User> list = userMapper.selectUsers(BeanUtils.convertBean2Map(userQueryBean));
         PageInfo<User> pageInfo = new PageInfo<User>(list);
         return pageInfo;
     }
