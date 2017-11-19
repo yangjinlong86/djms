@@ -1,9 +1,9 @@
 package org.dj.bms.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Formula;
+import org.dj.bms.model.Consume;
 import org.dj.bms.query.CustQueryInfo;
-import org.dj.bms.service.FormulaService;
+import org.dj.bms.service.ConsumeService;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @ClassName: FormulaController
- * @Description: 美容方案
+ * @Description: 订单、销售记录
  * @author pufangfei@163.com
  * @date 2017年11月19日 下午6:16:39
  */
 @RestController
-@RequestMapping("/formula")
-public class FormulaController extends BaseController {
+@RequestMapping("/consume")
+public class ConsumeController extends BaseController {
 	@Autowired
-	@Qualifier("formulaService")
-	private FormulaService formulaService;
+	@Qualifier("consumeService")
+	private ConsumeService consumeService;
 
 	@RequestMapping(path = "saveOrUpdate", method = RequestMethod.POST)
-	public ResponseMsg saveOrUpdateCust(@ModelAttribute Formula formula) {
+	public ResponseMsg saveOrUpdateCust(@ModelAttribute Consume consume) {
 		boolean status = false;
 		ResponseMsg resData = getRes(status);
 		try {
-			status = formulaService.saveOrUpdate(formula);
+			status = consumeService.saveOrUpdate(consume);
 			resData.setMsg("操作成功");
 		} catch (Exception e) {
 			logger.error(e + "");
@@ -40,20 +40,20 @@ public class FormulaController extends BaseController {
 		return resData;
 	}
 
-	@RequestMapping(value = "/formulaList")
-	public ResponseMsg selectFormula(CustQueryInfo qb) {
+	@RequestMapping(value = "/consumeList")
+	public ResponseMsg selectconsume(CustQueryInfo qb) {
 		ResponseMsg resData = getRes(true);
-		resData.setData(formulaService.select(qb));
+		resData.setData(consumeService.select(qb));
 		return resData;
 	}
 
 	@RequestMapping(path = "delete", method = RequestMethod.POST)
-	public ResponseMsg deleteByFormulaId(String ids) {
+	public ResponseMsg deleteByconsumeId(String ids) {
 		boolean status = false;
 		ResponseMsg resData = getRes(status);
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				status = formulaService.deleteByIds(ids);
+				status = consumeService.deleteByIds(ids);
 			} else {
 				resData.setStatus(false);
 				resData.setMsg("参数为空");

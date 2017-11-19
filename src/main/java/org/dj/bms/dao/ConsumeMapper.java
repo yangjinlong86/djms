@@ -1,7 +1,11 @@
 package org.dj.bms.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.Consume;
+import org.dj.bms.query.IQueryInfo;
 
 @Mapper
 public interface ConsumeMapper {
@@ -16,4 +20,8 @@ public interface ConsumeMapper {
 	int updateByPrimaryKeySelective(Consume record);
 
 	int updateByPrimaryKey(Consume record);
+
+	int deleteByIds(@Param("ids") String[] ids);
+
+	List<Consume> select(IQueryInfo qb);
 }

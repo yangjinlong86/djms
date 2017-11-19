@@ -21,6 +21,29 @@
     ID, CORP_ID, CUSTOMER_ID, USER_ID, `TYPE`, USE_TYPE, END_VALIDITY, order_serive, 
     AMOUNT, `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, CREATE_TIME, UPDATE_TIME
   </sql>
+  <sql id="Column_List" >
+    ID, CORP_ID, CUSTOMER_ID, USER_ID, `TYPE`, USE_TYPE, END_VALIDITY, order_serive, 
+    AMOUNT, `COMMENT`
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.dj.bms.query.QueryInfo">
+  		select 
+  			<include refid="Column_List"/>
+  		from
+  			order
+  		<where>
+  			<if test="corpId != null and corpId != ''">
+  				and corp_id = #{corpId,jdbcType=VARCHAR}
+  			</if>
+  		</where>
+  </select>
+  
+  <delete id="deleteByIds">
+  	  delete from order where id in
+        <foreach collection="ids" item="id" index="index"  
+            open="(" close=")" separator=",">  
+            #{id}  
+        </foreach>  
+  </delete>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

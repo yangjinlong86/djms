@@ -1,7 +1,11 @@
 package org.dj.bms.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.FormulaDetails;
+import org.dj.bms.query.IQueryInfo;
 
 @Mapper
 public interface FormulaDetailsMapper {
@@ -16,4 +20,8 @@ public interface FormulaDetailsMapper {
 	int updateByPrimaryKeySelective(FormulaDetails record);
 
 	int updateByPrimaryKey(FormulaDetails record);
+
+	int deleteByIds(@Param("ids") String[] ids);
+
+	List<FormulaDetails> select(IQueryInfo qb);
 }

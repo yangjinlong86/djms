@@ -1,9 +1,9 @@
 package org.dj.bms.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Formula;
+import org.dj.bms.model.Order;
 import org.dj.bms.query.CustQueryInfo;
-import org.dj.bms.service.FormulaService;
+import org.dj.bms.service.OrderService;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @ClassName: FormulaController
- * @Description: 美容方案
+ * @Description: 订单、销售记录
  * @author pufangfei@163.com
  * @date 2017年11月19日 下午6:16:39
  */
 @RestController
-@RequestMapping("/formula")
-public class FormulaController extends BaseController {
+@RequestMapping("/order")
+public class OrderController extends BaseController {
 	@Autowired
-	@Qualifier("formulaService")
-	private FormulaService formulaService;
+	@Qualifier("orderService")
+	private OrderService orderService;
 
 	@RequestMapping(path = "saveOrUpdate", method = RequestMethod.POST)
-	public ResponseMsg saveOrUpdateCust(@ModelAttribute Formula formula) {
+	public ResponseMsg saveOrUpdateCust(@ModelAttribute Order order) {
 		boolean status = false;
 		ResponseMsg resData = getRes(status);
 		try {
-			status = formulaService.saveOrUpdate(formula);
+			status = orderService.saveOrUpdate(order);
 			resData.setMsg("操作成功");
 		} catch (Exception e) {
 			logger.error(e + "");
@@ -40,20 +40,20 @@ public class FormulaController extends BaseController {
 		return resData;
 	}
 
-	@RequestMapping(value = "/formulaList")
-	public ResponseMsg selectFormula(CustQueryInfo qb) {
+	@RequestMapping(value = "/orderList")
+	public ResponseMsg selectorder(CustQueryInfo qb) {
 		ResponseMsg resData = getRes(true);
-		resData.setData(formulaService.select(qb));
+		resData.setData(orderService.select(qb));
 		return resData;
 	}
 
 	@RequestMapping(path = "delete", method = RequestMethod.POST)
-	public ResponseMsg deleteByFormulaId(String ids) {
+	public ResponseMsg deleteByorderId(String ids) {
 		boolean status = false;
 		ResponseMsg resData = getRes(status);
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				status = formulaService.deleteByIds(ids);
+				status = orderService.deleteByIds(ids);
 			} else {
 				resData.setStatus(false);
 				resData.setMsg("参数为空");
