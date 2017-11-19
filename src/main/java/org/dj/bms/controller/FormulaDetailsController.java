@@ -1,9 +1,9 @@
 package org.dj.bms.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Formula;
+import org.dj.bms.model.FormulaDetails;
 import org.dj.bms.query.CustQueryInfo;
-import org.dj.bms.service.FormulaService;
+import org.dj.bms.service.FormulaDetailsService;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2017年11月19日 下午6:16:39
  */
 @RestController
-@RequestMapping("/formula")
-public class FormulaController extends BaseController {
+@RequestMapping("/formulaDetails")
+public class FormulaDetailsController extends BaseController {
 	@Autowired
-	@Qualifier("formulaService")
-	private FormulaService formulaService;
+	@Qualifier("formulaDetailsService")
+	private FormulaDetailsService formulaDetailsService;
 
 	@RequestMapping(path = "saveOrUpdate", method = RequestMethod.POST)
-	public ResponseMsg saveOrUpdateCust(@ModelAttribute Formula formula) {
+	public ResponseMsg saveOrUpdateCust(@ModelAttribute FormulaDetails formulaDetails) {
 		boolean status = false;
 		ResponseMsg resData = getRes(status);
 		try {
-			status = formulaService.saveOrUpdate(formula);
+			status = formulaDetailsService.saveOrUpdate(formulaDetails);
 			resData.setMsg("操作成功");
 		} catch (Exception e) {
 			logger.error(e + "");
@@ -40,10 +40,10 @@ public class FormulaController extends BaseController {
 		return resData;
 	}
 
-	@RequestMapping(value = "/formulaList")
+	@RequestMapping(value = "/formulaDetailsList")
 	public ResponseMsg selectFormula(CustQueryInfo qb) {
 		ResponseMsg resData = getRes(true);
-		resData.setData(formulaService.select(qb));
+		resData.setData(formulaDetailsService.select(qb));
 		return resData;
 	}
 
@@ -53,7 +53,7 @@ public class FormulaController extends BaseController {
 		ResponseMsg resData = getRes(status);
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				status = formulaService.deleteByIds(ids);
+				status = formulaDetailsService.deleteByIds(ids);
 			} else {
 				resData.setStatus(false);
 				resData.setMsg("参数为空");

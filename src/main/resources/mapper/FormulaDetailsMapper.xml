@@ -20,6 +20,25 @@
     ID, FORMULA_ID, PRODUCT_ID, STEP, CAPACITY, METE, AMOUNT, SORT, `COMMENT`, CREATE_USER_ID, 
     UPDATE_USER_ID, CREATE_TIME, UPDATE_TIME
   </sql>
+  <sql id="Column_List" >
+    ID, FORMULA_ID, PRODUCT_ID, STEP, CAPACITY, METE, AMOUNT, SORT, `COMMENT`
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.dj.bms.query.QueryInfo">
+  		select 
+  			<include refid="Column_List"/>
+  		from
+  			formula_details
+  		<where>
+  		</where>
+  </select>
+  
+  <delete id="deleteByIds">
+  	  delete from formula_details where id in
+        <foreach collection="ids" item="id" index="index"  
+            open="(" close=")" separator=",">  
+            #{id}  
+        </foreach>  
+  </delete>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
