@@ -143,9 +143,9 @@ $(document).ready(function () {
 
     // 绑定重置表单事件
     $('#btnResetQueryRoleForm').bind("click", function () {
-            $('#queryRoleForm')[0].reset();
-        }
-    );
+        $('#queryBean_roleName').val("");
+        $('#queryBean_roleDesc').val("");
+    });
 
     // 绑定重置表单事件
     $('#resetBtn').bind("click", function () {
@@ -287,12 +287,11 @@ $(function () {
 });
 
 // queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
-function queryBean(pageNum, limitNum, corpId, deptId, name) {
+function queryBean(pageNum, limitNum, roleName, roleDesc) {
     this.pageNum = pageNum;
     this.limitNum = limitNum;
-    this.corpId = corpId;
-    this.deptId = deptId;
-    this.name = name;
+    this.roleName = roleName;
+    this.roleDesc = roleDesc;
 }
 
 // 初始化queryBean,实时获取页面当前各个查询条件,需要重新调用此方法
@@ -300,9 +299,8 @@ function initQueryBean() {
     var role_querybean = new queryBean(
         $("#pageNum").val(),
         $("#pageSize").val(),
-        $("#queryBean_corpId").val(),
-        $("#queryBean_deptId").val(),
-        $("#queryBean_name").val()
+        $("#queryBean_roleName").val(),
+        $("#queryBean_roleDesc").val()
     );
     return role_querybean;
 }
@@ -342,8 +340,6 @@ function showSetRoleResourceModal() {
                 // 选中拥有的资源
                 // zTree.checkNode(zTree.getNodeByTId(resources[i].id), true, true);
             }
-
-
         }
     });
 }

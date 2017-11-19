@@ -7,7 +7,7 @@ import org.dj.bms.dao.RoleMapper;
 import org.dj.bms.dao.RoleResourceMapper;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.RoleResource;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.RoleQueryBean;
 import org.dj.bms.service.BaseService;
 import org.dj.bms.service.RoleService;
 import org.dj.bms.utils.BeanUtils;
@@ -49,7 +49,7 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 
 
     @Override
-    public PageInfo<Role> selectRoles(QueryBean queryBean) {
+    public PageInfo<Role> selectRoles(RoleQueryBean queryBean) {
         PageHelper.startPage(queryBean.getPageNum(), queryBean.getLimitNum()).setOrderBy("ROLE_NAME ASC");
         List<Role> list = roleMapper.findRoles(BeanUtils.convertBean2Map(queryBean));
         PageInfo<Role> pageInfo = new PageInfo<Role>(list);

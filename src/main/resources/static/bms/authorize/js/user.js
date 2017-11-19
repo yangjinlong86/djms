@@ -168,7 +168,9 @@ $(document).ready(function () {
 
     // 绑定重置表单事件
     $('#btnResetQueryUserForm').bind("click", function () {
-            $('#queryUserForm')[0].reset();
+        $('#queryBean_corpId').val("");
+        $('#queryBean_deptId').val("");
+        $('#queryBean_name').val("");
         }
     );
 
