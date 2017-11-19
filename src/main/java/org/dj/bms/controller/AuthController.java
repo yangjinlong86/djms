@@ -34,6 +34,16 @@ public class AuthController {
 		return "authorize/user";
 	}
 
+    @RequestMapping("/user-setting")
+    public String userSetting() {
+        return "authorize/user-setting";
+    }
+
+    @RequestMapping("/organization")
+    public String organization() {
+        return "authorize/organization";
+    }
+
     @RequestMapping("/noauth")
     public String noauth() {
         return "noauth";

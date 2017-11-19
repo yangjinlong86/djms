@@ -1,0 +1,77 @@
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
+</head>
+<body>
+<div th:include="fragments/nav :: nav"></div>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="page-header">
+                        <h2>个人设置</h2>
+                    </div>
+
+                    <form id="defaultForm" method="post" class="form-horizontal" action="#">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">用户名</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" name="username" placeholder="用户名"
+                                       disabled="disabled"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">昵称</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" name="firstName" placeholder="昵称"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">原密码</label>
+                            <div class="col-lg-5">
+                                <input type="password" class="form-control" name="password"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">新密码</label>
+                            <div class="col-lg-5">
+                                <input type="password" class="form-control" name="password"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">新密码确认</label>
+                            <div class="col-lg-5">
+                                <input type="password" class="form-control" name="confirmPassword"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-3">
+                                <button type="button" class="btn btn-default" id="resetBtn">关闭</button>
+                                <button type="submit" class="btn btn-primary" name="signup" value="Sign up">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
+<script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
+<script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
+<script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
+<script th:src="@{bms/public/js/public.js}"></script>
+</body>
+
+</html>
