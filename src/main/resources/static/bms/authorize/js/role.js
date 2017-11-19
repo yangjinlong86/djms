@@ -338,7 +338,7 @@ function showSetRoleResourceModal() {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             for (var i = 0; i < resources.length; i++) {
                 // console.log(resources[i]);
-                console.log(zTree.getNodeByTId("11"));
+                console.log(zTree.getNodeByTId(resources[i].id));
                 // 选中拥有的资源
                 // zTree.checkNode(zTree.getNodeByTId(resources[i].id), true, true);
             }
