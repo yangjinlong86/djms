@@ -198,6 +198,7 @@ function queryRole(queryBean) {
                     '</tr>'
                 );
             }
+            // console.log("角色列表刷新成功!");
             // 隐藏loading.gif
             $("#loadingDiv").hide();
         }
@@ -225,8 +226,6 @@ function editCheckedRole() {
     $("#roleModal").modal('show');
     // 自动填充表单
     $("#saveRoleForm").autofill(role);
-
-
 }
 
 
@@ -307,7 +306,7 @@ function initQueryBean() {
 
 
 function showSetRoleResourceModal() {
-
+    $.fn.zTree.getZTreeObj("resourceTree").checkAllNodes(false);
     // 默认隐藏alert提示框
     $("#btnCloseRoleAlert").click();
     // 获取选中的用户ID
@@ -335,10 +334,13 @@ function showSetRoleResourceModal() {
             }
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             for (var i = 0; i < resources.length; i++) {
-                // console.log(resources[i]);
-                console.log(zTree.getNodeByTId(resources[i].id));
                 // 选中拥有的资源
-                // zTree.checkNode(zTree.getNodeByTId(resources[i].id), true, true);
+                var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+                var node = zTree.getNodeByParam("id", resources[i].id);
+                // 默认情况根节点一勾选就会全部选中,所以此处id为根点时不勾选
+                if (resources[i].id != "1") {
+                    zTree.checkNode(node, true, true);
+                }
             }
         }
     });
@@ -349,7 +351,7 @@ function showSetRoleResourceModal() {
  */
 function setRoleResource() {
     var roleId = $("#checkedRoleIds_setResource").val();
-    var resources = $.fn.zTree.getZTreeObj("treeDemo").getCheckedNodes(true);
+    var resources = $.fn.zTree.getZTreeObj("resourceTree").getCheckedNodes(true);
     var resourceIds = "";
     $.each(resources, function (n, value) {
         resourceIds += value.id + ",";

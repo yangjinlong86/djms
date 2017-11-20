@@ -79,8 +79,9 @@ public class RoleServiceImpl extends BaseService implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int saveRoleResource(RoleResource roleResource) {
-        this.deleteRoleResource(new String[]{roleResource.getRoleId()});
-        return roleResourceMapper.insert(parseRoleResource(roleResource));
+        int count = this.deleteRoleResource(new String[]{roleResource.getRoleId()});
+        List<RoleResource> roleResourceList = parseRoleResource(roleResource);
+        return (roleResourceList.size() > 0) ? roleResourceMapper.insert(roleResourceList) : count;
     }
 
     @Override
