@@ -65,9 +65,10 @@ public class RoleServiceImpl extends BaseService implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public int deleteRoleByIds(String ids) {
         int resCount = 0;
-        String[] idArr = null;
-        if (ids.contains(",")) {
-            idArr = ids.split(",");
+        String[] idArr;
+        String separator = ",";
+        if (ids.contains(separator)) {
+            idArr = ids.split(separator);
         } else {
             idArr = new String[]{ids};
         }

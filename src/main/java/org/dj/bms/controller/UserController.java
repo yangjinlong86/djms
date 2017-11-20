@@ -71,7 +71,8 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
         // 批量删除
-        if(id.contains(",")){
+        String separator = ",";
+        if (id.contains(separator)) {
             String[] idArr = id.split(",");
             // 拆分id为字符串数组作为参数传入
             if (DBEnum.OPERATION_SUCCESS.getValue() <= userService.deleteByUserIds(idArr)) {
