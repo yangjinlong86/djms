@@ -53,7 +53,7 @@ public class RoleController {
             }
         }
 
-        if (roleService.saveOrUpdate(role) > 0) {
+        if (roleService.saveOrUpdate(role) > DBEnum.OPERATION_FAILED.getValue()) {
             return ResponseEnum.SUCCESS.getStatus();
         }
         return ResponseEnum.FAILED.getStatus();

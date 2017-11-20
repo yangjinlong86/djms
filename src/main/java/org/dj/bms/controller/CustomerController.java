@@ -25,6 +25,11 @@ public class CustomerController extends BaseController {
 	@Qualifier("customerService")
 	private CustomerService customerService;
 
+    @RequestMapping("/customer")
+    public String customer() {
+        return "customer/customer";
+    }
+
 	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
 	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
 		boolean status = false;

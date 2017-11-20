@@ -49,9 +49,4 @@ public class AuthController {
         return "noauth";
     }
 
-    // FIXME -.-! 飞哥,把这个方法拿走,这是授权相关的方法的,不要放在这!!!
-    @RequestMapping("/customer")
-	public String customer() {
-		return "customer/customer";
-	}
 }
