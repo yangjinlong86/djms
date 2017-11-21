@@ -30,8 +30,7 @@ public class CustomerController extends BaseController {
 	public String customer() {
 		return "customer/customer";
 	}
-
-	@ResponseBody
+	
 	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
 	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
 		boolean status = false;

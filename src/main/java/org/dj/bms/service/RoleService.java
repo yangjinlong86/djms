@@ -3,7 +3,7 @@ package org.dj.bms.service;
 import com.github.pagehelper.PageInfo;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.RoleResource;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.RoleQueryBean;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface RoleService {
      */
     List<Role> findRoleListByUserId(String userId);
 
-    PageInfo<Role> selectRoles(QueryBean queryBean);
+    PageInfo<Role> selectRoles(RoleQueryBean queryBean);
 
     Role findByRoleName(String roleName);
 

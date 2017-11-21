@@ -32,13 +32,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/saveUser")
 	@ResponseBody
 	public String save(User user) {
-
         if (userService.countByUsername(user) >= 1) {
             return ResponseEnum.ALREADY_EXISTS.getStatus();
         }
-
-
-		if (userService.saveOrUpdate(user) > 0) {
+		if (userService.saveOrUpdate(user) > DBEnum.OPERATION_FAILED.getValue()) {
 			return ResponseEnum.SUCCESS.getStatus();
 		}
 		return ResponseEnum.FAILED.getStatus();
@@ -47,7 +44,7 @@ public class UserController extends BaseController {
     @RequestMapping(value="/saveUserRole")
     @ResponseBody
     public String saveUserRole(User user) {
-        if (userService.saveUserRole(user) > 0) {
+        if (userService.saveUserRole(user) > DBEnum.OPERATION_FAILED.getValue()) {
             return ResponseEnum.SUCCESS.getStatus();
         }
         return ResponseEnum.FAILED.getStatus();
@@ -74,7 +71,8 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
         // 批量删除
-        if(id.contains(",")){
+        String separator = ",";
+        if (id.contains(separator)) {
             String[] idArr = id.split(",");
             // 拆分id为字符串数组作为参数传入
             if (DBEnum.OPERATION_SUCCESS.getValue() <= userService.deleteByUserIds(idArr)) {

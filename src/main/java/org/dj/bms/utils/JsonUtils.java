@@ -13,14 +13,14 @@ import org.apache.commons.logging.LogFactory;
  */
 public class JsonUtils {
     private final static Log logger = LogFactory.getLog("JsonUtils");
-    private final static ObjectMapper objectMapper = new ObjectMapper();
+    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private JsonUtils() {
     }
 
     public static ObjectMapper getInstance() {
 
-        return objectMapper;
+        return OBJECT_MAPPER;
     }
 
     /**
@@ -32,7 +32,7 @@ public class JsonUtils {
      */
     public static String obj2json(Object obj) {
         try {
-            return objectMapper.writeValueAsString(obj);
+            return OBJECT_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             logger.error(e);
         }

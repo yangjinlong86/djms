@@ -143,9 +143,9 @@ $(document).ready(function () {
 
     // 绑定重置表单事件
     $('#btnResetQueryRoleForm').bind("click", function () {
-            $('#queryRoleForm')[0].reset();
-        }
-    );
+        $('#queryBean_roleName').val("");
+        $('#queryBean_roleDesc').val("");
+    });
 
     // 绑定重置表单事件
     $('#resetBtn').bind("click", function () {
@@ -198,6 +198,7 @@ function queryRole(queryBean) {
                     '</tr>'
                 );
             }
+            // console.log("角色列表刷新成功!");
             // 隐藏loading.gif
             $("#loadingDiv").hide();
         }
@@ -225,8 +226,6 @@ function editCheckedRole() {
     $("#roleModal").modal('show');
     // 自动填充表单
     $("#saveRoleForm").autofill(role);
-
-
 }
 
 
@@ -287,12 +286,11 @@ $(function () {
 });
 
 // queryBean对象,用于与后台交互,包含分页信息,组织机构信息,以及查询用的其他条件
-function queryBean(pageNum, limitNum, corpId, deptId, name) {
+function queryBean(pageNum, limitNum, roleName, roleDesc) {
     this.pageNum = pageNum;
     this.limitNum = limitNum;
-    this.corpId = corpId;
-    this.deptId = deptId;
-    this.name = name;
+    this.roleName = roleName;
+    this.roleDesc = roleDesc;
 }
 
 // 初始化queryBean,实时获取页面当前各个查询条件,需要重新调用此方法
@@ -300,16 +298,15 @@ function initQueryBean() {
     var role_querybean = new queryBean(
         $("#pageNum").val(),
         $("#pageSize").val(),
-        $("#queryBean_corpId").val(),
-        $("#queryBean_deptId").val(),
-        $("#queryBean_name").val()
+        $("#queryBean_roleName").val(),
+        $("#queryBean_roleDesc").val()
     );
     return role_querybean;
 }
 
 
 function showSetRoleResourceModal() {
-
+    $.fn.zTree.getZTreeObj("resourceTree").checkAllNodes(false);
     // 默认隐藏alert提示框
     $("#btnCloseRoleAlert").click();
     // 获取选中的用户ID
@@ -337,13 +334,14 @@ function showSetRoleResourceModal() {
             }
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             for (var i = 0; i < resources.length; i++) {
-                // console.log(resources[i]);
-                console.log(zTree.getNodeByTId(resources[i].id));
                 // 选中拥有的资源
-                // zTree.checkNode(zTree.getNodeByTId(resources[i].id), true, true);
+                var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+                var node = zTree.getNodeByParam("id", resources[i].id);
+                // 默认情况根节点一勾选就会全部选中,所以此处id为根点时不勾选
+                if (resources[i].id != "1") {
+                    zTree.checkNode(node, true, true);
+                }
             }
-
-
         }
     });
 }
@@ -353,7 +351,7 @@ function showSetRoleResourceModal() {
  */
 function setRoleResource() {
     var roleId = $("#checkedRoleIds_setResource").val();
-    var resources = $.fn.zTree.getZTreeObj("treeDemo").getCheckedNodes(true);
+    var resources = $.fn.zTree.getZTreeObj("resourceTree").getCheckedNodes(true);
     var resourceIds = "";
     $.each(resources, function (n, value) {
         resourceIds += value.id + ",";

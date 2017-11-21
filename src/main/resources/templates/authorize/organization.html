@@ -1,0 +1,60 @@
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
+</head>
+<body>
+<div th:include="fragments/nav :: nav"></div>
+
+<div id="wrapper">
+    <div id="page-wrapper">
+        <div class="row">
+            <div role="form">
+                <div class="col-lg-3">
+                    <label>单位</label>
+                    <select id="queryBean_corpId" class="form-control" name="corpId">
+                        <option value=""></option>
+                        <option value="1">总店</option>
+                        <option value="2">成都分店</option>
+                        <option value="3">重庆分店</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label>部门</label>
+                    <select class="form-control" name="deptId" id="queryBean_deptId">
+                        <option value=""></option>
+                        <option value="1">一部门</option>
+                        <option value="2">二部门</option>
+                        <option value="3">三部门</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查
+                        询
+                    </button>
+                    <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default"
+                            style="margin-top:1.7em;">重 置
+                    </button>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <hr/>
+        <div class="row">
+
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{vendor/metisMenu/metisMenu.min.js}"></script>
+<script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
+<script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
+<script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
+<script th:src="@{bms/public/js/public.js}"></script>
+
+</body>
+
+</html>

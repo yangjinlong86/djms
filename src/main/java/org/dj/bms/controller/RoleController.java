@@ -6,7 +6,7 @@ import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.RoleResource;
-import org.dj.bms.query.QueryBean;
+import org.dj.bms.query.RoleQueryBean;
 import org.dj.bms.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class RoleController {
      */
     @RequestMapping("/selectRoles")
     @ResponseBody
-    public PageInfo<Role> selectRoles(QueryBean bean) {
+    public PageInfo<Role> selectRoles(RoleQueryBean bean) {
         return roleService.selectRoles(bean);
     }
 
@@ -53,7 +53,7 @@ public class RoleController {
             }
         }
 
-        if (roleService.saveOrUpdate(role) > 0) {
+        if (roleService.saveOrUpdate(role) > DBEnum.OPERATION_FAILED.getValue()) {
             return ResponseEnum.SUCCESS.getStatus();
         }
         return ResponseEnum.FAILED.getStatus();
