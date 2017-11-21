@@ -52,17 +52,45 @@ CREATE TABLE `DICT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
---   Table structure for `product` 产品信息
+--   Table structure for `product` 库存信息
 --  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product` (
+DROP TABLE IF EXISTS `stock`;
+CREATE TABLE `stock` (
   `ID` varchar(32) COLLATE utf8_bin NOT NULL,
   `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
   `NAME` varchar(512) COLLATE utf8_bin DEFAULT NULL,-- 名称
   `CAPACITY` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 容量
   `METE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 计量
   `TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 类型
-  `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,-- 类型
+  `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,-- 单价
+  `STATUS` varchar(64) DEFAULT NULL,-- 状态  入库  出库
+  `IN_DATE` DATE DEFAULT NULL,-- 入库日期
+  `OUT_DATE` DATE DEFAULT NULL,-- 出库日期
+  `END_VALIDITY` DATE DEFAULT NULL,-- 保质期
+  `COMMENT` varchar(2048) DEFAULT NULL,
+  `CREATE_USER_ID` varchar(32) DEFAULT NULL,
+  `UPDATE_USER_ID` varchar(32) DEFAULT NULL,
+  `CREATE_TIME` timestamp,
+  `UPDATE_TIME` timestamp,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+--   Table structure for `product` 出库记录
+--  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+DROP TABLE IF EXISTS `stock_use`;
+CREATE TABLE `stock_use` (
+  `ID` varchar(32) COLLATE utf8_bin NOT NULL,
+  `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `NAME` varchar(512) COLLATE utf8_bin DEFAULT NULL,-- 名称
+  `CAPACITY` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 容量
+  `METE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 计量
+  `TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 类型
+  `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,-- 单价
+  `STATUS` varchar(64) DEFAULT NULL,-- 状态  入库  出库
+  `IN_DATE` DATE DEFAULT NULL,-- 入库日期
+  `OUT_DATE` DATE DEFAULT NULL,-- 出库日期
+  `END_VALIDITY` DATE DEFAULT NULL,-- 保质期
   `COMMENT` varchar(2048) DEFAULT NULL,
   `CREATE_USER_ID` varchar(32) DEFAULT NULL,
   `UPDATE_USER_ID` varchar(32) DEFAULT NULL,

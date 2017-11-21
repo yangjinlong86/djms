@@ -1,10 +1,11 @@
 package org.dj.bms.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.Product;
 import org.dj.bms.query.IQueryInfo;
-
-import java.util.List;
 
 @Mapper
 public interface ProductMapper {
@@ -20,7 +21,7 @@ public interface ProductMapper {
 
 	int updateByPrimaryKey(Product record);
 
-	int deleteByIds(String[] idArr);
+	int deleteByIds(@Param("ids") String[] idArr);
 
 	List<Product> selectProduct(IQueryInfo qb);
 }

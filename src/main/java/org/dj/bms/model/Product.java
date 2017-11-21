@@ -1,5 +1,7 @@
 package org.dj.bms.model;
 
+import java.util.Date;
+
 public class Product extends Bms {
 
 	/**
@@ -18,6 +20,8 @@ public class Product extends Bms {
 	private String type;
 
 	private Double amount;
+
+	private Date endValidity;
 
 	public String getName() {
 		return name;
@@ -65,6 +69,14 @@ public class Product extends Bms {
 
 	public void setCorpId(String corpId) {
 		this.corpId = corpId;
+	}
+
+	public Date getEndValidity() {
+		return endValidity;
+	}
+
+	public void setEndValidity(Date endValidity) {
+		this.endValidity = endValidity;
 	}
 
 }
