@@ -33,7 +33,7 @@ public class OrganizationServiceImpl extends BaseService implements Organization
         if(StringUtils.isBlank(organization.getId())){
             organization.setId(IdGenerator.generateUUID());
             organization.setCreateTime(new Date());
-            // organization.setCreateUser(UserUtils.getCurrentUser().getId());
+            organization.setCreateUser(UserUtils.getCurrentUser().getId());
             return organizationMapper.insertSelective(organization);
         }
         return organizationMapper.updateByPrimaryKeySelective(organization);
