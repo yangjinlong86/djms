@@ -1,5 +1,6 @@
 package org.dj.bms.controller;
 
+import org.dj.bms.service.OrganizationService;
 import org.dj.bms.service.ResourceService;
 import org.dj.bms.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
