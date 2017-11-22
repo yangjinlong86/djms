@@ -20,7 +20,15 @@ function getOrganizationInfo(orgId) {
         async: false,
         url: "/findOrganization/" + orgId,
         success: function (res) {
-            $("#OrganizationForm").autofill(JSON.parse(res));
+            var currentOrganization = JSON.parse(res);
+            $("#OrganizationForm").autofill(currentOrganization);
+            var treeObj = $.fn.zTree.getZTreeObj("organizationTree");
+            if (currentOrganization.pId != "0") {
+                var node = treeObj.getNodeByParam("id", currentOrganization.pId, null);
+                $("#parentOrganization").val(node.name);
+            } else {
+                $("#parentOrganization").val(currentOrganization.name);
+            }
         }
     });
 }
@@ -34,6 +42,7 @@ function addChildOrganization() {
     }
     $("#pId").val(newOransPId);
     $("#id").val("");
+    $("#parentOrganization").val($("#name").val());
     $("#name").val("");
     $("#type").val("");
     $("#comment").val("");
