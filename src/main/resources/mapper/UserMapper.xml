@@ -14,7 +14,7 @@
         <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    ID, `NAME`, `PASSWORD`, LAST_LOGIN_IP, LAST_LOGIN_TIME, CORP_ID, DEPT_ID, REAL_NAME, 
+    ID, `NAME`, `PASSWORD`, LAST_LOGIN_IP, LAST_LOGIN_TIME, CORP_ID, DEPT_ID, REAL_NAME,
     CREATE_TIME, UPDATE_TIME
   </sql>
 
@@ -80,13 +80,13 @@
         </foreach>
     </delete>
     <insert id="insert" parameterType="org.dj.bms.model.User">
-    insert into USER (ID, `NAME`, `PASSWORD`, 
-      LAST_LOGIN_IP, LAST_LOGIN_TIME, CORP_ID, 
-      DEPT_ID, REAL_NAME, CREATE_TIME, 
+    insert into USER (ID, `NAME`, `PASSWORD`,
+      LAST_LOGIN_IP, LAST_LOGIN_TIME, CORP_ID,
+      DEPT_ID, REAL_NAME, CREATE_TIME,
       UPDATE_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{corpId,jdbcType=VARCHAR}, 
-      #{deptId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{corpId,jdbcType=VARCHAR},
+      #{deptId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="org.dj.bms.model.User">

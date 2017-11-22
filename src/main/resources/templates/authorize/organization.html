@@ -1,45 +1,79 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
+    <link rel="stylesheet" th:href="@{vendor/ztree//css/zTreeStyle/zTreeStyle.css}" type="text/css"/>
 </head>
 <body>
 <div th:include="fragments/nav :: nav"></div>
 
 <div id="wrapper">
     <div id="page-wrapper">
-        <div class="row">
-            <div role="form">
-                <div class="col-lg-3">
-                    <label>单位</label>
-                    <select id="queryBean_corpId" class="form-control" name="corpId">
-                        <option value=""></option>
-                        <option value="1">总店</option>
-                        <option value="2">成都分店</option>
-                        <option value="3">重庆分店</option>
-                    </select>
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>组织机构</span>
                 </div>
-                <div class="col-lg-3">
-                    <label>部门</label>
-                    <select class="form-control" name="deptId" id="queryBean_deptId">
-                        <option value=""></option>
-                        <option value="1">一部门</option>
-                        <option value="2">二部门</option>
-                        <option value="3">三部门</option>
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查
-                        询
-                    </button>
-                    <button id="btnResetQueryUserForm" type="button" class="btn btn-outline btn-default"
-                            style="margin-top:1.7em;">重 置
-                    </button>
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row clearfix">
+
+                            <div class="col-md-3 column">
+                                <div class="zTreeDemoBackground">
+                                    <ul id="organizationTree" class="ztree"></ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9 column">
+
+                                <form id="OrganizationForm" method="post" class="form-horizontal" action="#">
+                                    <input type="hidden" id="id" name="id"/>
+                                    <input type="hidden" id="pId" name="pId"/>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-8">
+                                            <button id="addOrganBtn" class="btn btn-outline btn-primary"><i class="fa fa-plus"></i>新增下级机构</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">机构名称</label>
+                                        <div class="col-lg-8">
+                                            <input type="input" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">机构类型</label>
+                                        <div class="col-lg-8">
+                                            <input type="input" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">机构描述</label>
+                                        <div class="col-lg-8">
+                                            <textarea rows="3" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-8">
+                                            <button class="btn btn-primary">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <hr/>
-        <div class="row">
+
+
+
+
 
         </div>
     </div>
@@ -53,8 +87,43 @@
 <script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
 <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
 <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
+<script th:src="@{vendor/ztree/js/jquery.ztree.core.js}"></script>
 <script th:src="@{bms/public/js/public.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
 
+    // 获取model数据
+    var organizations = JSON.parse([[${organizations}]]);
+    var zNodes = [];
+    // 组装treeNode数据
+    for (var i in organizations) {
+        if (organizations[i].id == 1) {
+            // id=1时, 设置为根节点
+            zNodes.push({
+                id: organizations[i].id,
+                pId: organizations[i].pId,
+                name: organizations[i].name,
+                isParent: true,
+                open: true
+            });
+        } else {
+            zNodes.push({id: organizations[i].id, pId: organizations[i].pId, name: organizations[i].name});
+        }
+    }
+
+    $(document).ready(function () {
+        $.fn.zTree.init($("#organizationTree"), setting, zNodes);
+    });
+
+    /*]]>*/
+</script>
 </body>
 
 </html>
