@@ -7,10 +7,11 @@ import org.dj.bms.service.CustomerService;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @ClassName: CustomerController
@@ -18,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @author pufangfei@163.com
  * @date 2017年11月11日 上午9:58:45
  */
-@RestController
+@Controller
 public class CustomerController extends BaseController {
 
 	@Autowired
 	@Qualifier("customerService")
 	private CustomerService customerService;
 
-    @RequestMapping("/customer")
-    public String customer() {
-        return "customer/customer";
-    }
-
+	@RequestMapping("/customer")
+	public String customer() {
+		return "customer/customer";
+	}
+	
 	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
 	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
 		boolean status = false;
@@ -45,6 +46,7 @@ public class CustomerController extends BaseController {
 		return resData;
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/custList")
 	public ResponseMsg selectCustomer(CustQueryInfo qb) {
 		ResponseMsg resData = getRes(true);
@@ -52,6 +54,7 @@ public class CustomerController extends BaseController {
 		return resData;
 	}
 
+	@ResponseBody
 	@RequestMapping(path = "delete", method = RequestMethod.POST)
 	public ResponseMsg deleteByCustomerId(String ids) {
 		boolean status = false;

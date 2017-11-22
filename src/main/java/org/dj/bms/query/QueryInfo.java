@@ -20,6 +20,8 @@ public class QueryInfo implements IQueryInfo {
 	private String corpId;
 	// 部门ID 默认当前登录用的部门
 	private String deptId;
+	// 用户ID 默认当前登录用的id
+	private String userId;
 
 	/**
 	 * QueryInfo
@@ -35,6 +37,7 @@ public class QueryInfo implements IQueryInfo {
 		if (user != null) {
 			this.corpId = user.getCorpId();
 			this.deptId = user.getDeptId();
+			this.userId = user.getId();
 		}
 	}
 
@@ -79,6 +82,14 @@ public class QueryInfo implements IQueryInfo {
 
 	public void setDeptId(String deptId) {
 		this.deptId = deptId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

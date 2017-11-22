@@ -10,11 +10,7 @@
             <div class="row">
                 <form id="queryUserForm" role="form" action="userList" method="post">
                     <div class="col-lg-3">
-                        <label>门店</label>
-                        <input name="corpId" class="form-control qb"></input>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>姓名/电话</label>
+                        <label>产品名</label>
                         <input name="name" class="form-control qb"></input>
                     </div>
                     <div class="col-lg-3">
@@ -28,16 +24,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- 用户表单模态框-->
-                    <div class="modal fade" id="custModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         &times;
                                     </button>
-                                    <h4 class="modal-title" id="custModalLabel">新增顾客信息</h4>
+                                    <h4 class="modal-title" id="custModalLabel">新增产品信息</h4>
                                 </div>
-                                <form id="saveCustForm" role="form" action="#" th:action="@{/saveOrUpdateCust}"  method="post">
+                                <form id="saveForm" role="form" action="#"  method="post">
                                     <div class="modal-body">
                                         <div class="row">
                                             <input type="hidden" name="id"></input>
@@ -51,10 +47,10 @@
                                                         <option value="3">3</option>
                                                     </select>
                                                 </div>
-                                            </div> -->
+                                            </div>-->
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>姓名</label>
+                                                    <label>产品名称</label>
                                                    <input class="form-control" name="name"></input>
                                                 </div>
                                             </div>
@@ -63,30 +59,57 @@
                                    		<div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>生日</label>
-                                                    <div class="input-group date form_date" data-date="">
-									                    <input class="form-control" name="birthday" id="birth" size="16" type="text"></input>
-									                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-									                </div>
+                                                    <label>产品类型</label>
+                                                    <select class="form-control select" name="type" code="10000000">
+                                                        <option value=""></option>
+                                                        <option value="1">固体</option>
+                                                        <option value="2">液体</option>
+                                                        <option value="3">仪器</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>电话</label>
-                                                   <input class="form-control" name="telephone"></input>
+                                                    <label>容量</label>
+                                                   <input class="form-control" name="capacity"></input>
                                                 </div>
                                             </div>
 
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
-                                                <label>家庭地址</label>
-                                                    <input class="form-control auto"  name="region_auto" id="region_auto" type="text" code='30101004'></input>
-                                                    <input name="region" type="hidden" id="region"></input>
-                                                    <input class="form-control"  name="address"></input>
+                                                	<label>计量单位</label>
+                                                    <select class="form-control select" name="mete" code="10000001">
+                                                        <option value=""></option>
+                                                        <option value="1">毫升</option>
+                                                        <option value="2">克</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                <label>单价</label>
+                                                    <input class="form-control"  name="region_auto" type="text"></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                	<label>数量</label>
+                                                    <input class="form-control"  name="count" type="text"></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                	<label>保质期</label>
+                                                    <div class="input-group date form_date" data-date="">
+									                    <input class="form-control" name="endValidity" id="endDate" size="16" type="text"></input>
+									                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									                </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +117,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button id="closeWin" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button id="btnSaveCust" type="button" class="btn btn-primary">保存</button>
+                                        <button id="btnSave" type="button" class="btn btn-primary">保存</button>
                                         <button type="button" class="btn btn-info hidden" id="resetBtn">重置表单</button>
                                     </div>
                                 </form>
@@ -102,8 +125,8 @@
                         </div><!-- /.modal -->
                     </div>
 
-	 				<div id="custAlert" class="alert alert-success alert-dismissable hidden">
-	                    <button id="btnCloseCustAlert" type="button" class="close">&times;</button>
+	 				<div id="alert" class="alert alert-success alert-dismissable hidden">
+	                    <button id="btnCloseAlert" type="button" class="close">&times;</button>
 	                    <span id="alertMsg"></span>
 	                </div>
 	                
@@ -138,14 +161,14 @@
 	                
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <button id="addCustBtn" class="btn btn-outline btn-primary">
-                            	<i class="fa fa-pencil"></i>新增客户信息&nbsp;&nbsp;
+                            <button id="addBtn" class="btn btn-outline btn-primary">
+                            	<i class="fa fa-pencil"></i>新增产品信息&nbsp;&nbsp;
                             </button>
-                            <button id="editCustBtn" class="btn btn-outline btn-warning">
-                            	<i class="fa fa-pencil"></i>修改客户信息&nbsp;&nbsp;
+                            <button id="editBtn" class="btn btn-outline btn-warning">
+                            	<i class="fa fa-pencil"></i>修改产品信息&nbsp;&nbsp;
                             </button>
-                            <button id="delCustBtn" class="btn btn-outline btn-danger">
-                            	<i class="fa fa-times"></i>删除客户信息
+                            <button id="delBtn" class="btn btn-outline btn-danger">
+                            	<i class="fa fa-times"></i>删除产品信息
                             </button>
                         </div>
                         <div class="panel-body">
@@ -154,11 +177,12 @@
                                     <tr>
                                         <th width="5%;"></th>
                                         <th class="hidden">ID</th>
-                                        <th width="20%">姓名</th>
-                                        <th width="15%">电话</th>
-                                        <th width="20%">生日</th>
-                                        <th width="15%">角色</th>
-                                        <th width="25%">家庭地址</th>
+                                        <th width="20%">名称</th>
+                                        <th width="15%">类型</th>
+                                        <th width="15%">容量</th>
+                                        <th width="15%">计量单位</th>
+                                        <th width="15%">单价</th>
+                                        <th width="15%">保质期</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data-list">
@@ -204,7 +228,7 @@
     <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
     <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
     <script th:src="@{vendor/json/json.js}"></script>
-    <script th:src="@{bms/customer/js/customer.js}"></script>
+    <script th:src="@{bms/product/js/product.js}"></script>
 </body>
 
 </html>
