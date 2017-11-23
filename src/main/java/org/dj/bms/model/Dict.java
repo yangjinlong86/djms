@@ -1,11 +1,24 @@
 package org.dj.bms.model;
 
+/**
+ * 字典表
+ * 
+ * @ClassName: Dict
+ * @author pufangfei@163.com
+ * @date 2017年11月23日 下午9:50:58
+ */
 public class Dict {
-
+	/**
+	 * 父节点
+	 */
 	private String pid;
-
+	/**
+	 * 名称
+	 */
 	private String name;
-
+	/**
+	 * 代码 30101004
+	 */
 	private String code;
 
 	public String getPid() {

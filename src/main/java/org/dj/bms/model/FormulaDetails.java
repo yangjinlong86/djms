@@ -1,12 +1,21 @@
 package org.dj.bms.model;
 
+/**
+ * 配方细节
+ * 
+ * @ClassName: FormulaDetails
+ * @author pufangfei@163.com
+ * @date 2017年11月23日 下午9:51:30
+ */
 public class FormulaDetails extends Bms {
 
 	/**
 	 */
 
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * 方案
+	 */
 	private String formulaId;
 
 	private String productId;
