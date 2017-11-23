@@ -1,7 +1,5 @@
 package org.dj.bms;
 
-import java.util.Calendar;
-
 import org.dj.bms.model.User;
 import org.dj.bms.service.UserService;
 import org.junit.Test;
@@ -10,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.Calendar;
 
 /**
  * @author Created by jason on 17/11/5.

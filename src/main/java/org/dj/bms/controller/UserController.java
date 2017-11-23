@@ -6,6 +6,8 @@ import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
 import org.dj.bms.query.UserQueryBean;
 import org.dj.bms.service.UserService;
+import org.dj.bms.utils.EncryptUtil;
+import org.dj.bms.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,4 +87,23 @@ public class UserController extends BaseController {
         }
 		return ResponseEnum.FAILED.getStatus();
 	}
+
+    @RequestMapping(value = "/updatePassword")
+    @ResponseBody
+    public boolean updatePassword(User user) {
+        if (user == null) {
+            return false;
+        }
+        user.setId(UserUtils.getCurrentUser().getId());
+        user.setName(UserUtils.getCurrentUser().getName());
+        if (userService.validatePassword(user)) {
+            user.setPassword(user.getNewPassword());
+            EncryptUtil.encryptPassword(user);
+            if (userService.saveOrUpdate(user) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

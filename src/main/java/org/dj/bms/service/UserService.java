@@ -68,5 +68,7 @@ public interface UserService{
      * @param user
      * @return
      */
-    public int saveUserRole(User user);
+    int saveUserRole(User user);
+
+    boolean validatePassword(User user);
 }

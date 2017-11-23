@@ -1,4 +1,4 @@
-<html xmlns="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
 </head>
@@ -11,49 +11,56 @@
             <div class="col-lg-12">
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="page-header">
-                        <h2>个人设置</h2>
+                        <h2>个人设置 - 修改密码</h2>
                     </div>
-
-                    <form id="defaultForm" method="post" class="form-horizontal" action="#">
+                    <div id="userAlert" class="alert alert-success alert-dismissable hidden">
+                        <button id="btnCloseUserAlert" type="button" class="close">&times;</button>
+                        <span id="alertMsg"></span>
+                    </div>
+                    <form id="userSettingForm" method="post" class="form-horizontal" action="#">
+                        <div class="hidden">
+                            <span id="userId"><shiro:principal property="id"/></span>
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">用户名</label>
-                            <div class="col-lg-5">
-                                <input type="text" class="form-control" name="username" placeholder="用户名"
-                                       disabled="disabled"/>
+                            <div class="col-lg-5" style="margin-top:0.5em;" shiro:authenticated="true">
+                                <span id="username"><shiro:principal property="name"/></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">昵称</label>
-                            <div class="col-lg-5">
-                                <input type="text" class="form-control" name="firstName" placeholder="昵称"/>
+                            <div class="col-lg-5" style="margin-top:0.5em;" shiro:authenticated="true">
+                                <span id="realName"><shiro:principal property="realName"/></span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">原密码</label>
                             <div class="col-lg-5">
-                                <input type="password" class="form-control" name="password"/>
+                                <input type="password" class="form-control" id="password" name="password"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">新密码</label>
                             <div class="col-lg-5">
-                                <input type="password" class="form-control" name="password"/>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">新密码确认</label>
                             <div class="col-lg-5">
-                                <input type="password" class="form-control" name="confirmPassword"/>
+                                <input type="password" class="form-control" id="confirmNewPassword"
+                                       name="confirmNewPassword"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
-                                <button type="button" class="btn btn-default" id="resetBtn">关闭</button>
-                                <button type="submit" class="btn btn-primary" name="signup" value="Sign up">保存</button>
+                                <a class="btn btn-default" href="/">关闭</a>
+                                <button type="button" class="btn btn-primary" id="saveUserInfoBtn" value="Sign up">保存
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -72,6 +79,7 @@
 <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
 <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
 <script th:src="@{bms/public/js/public.js}"></script>
+<script th:src="@{bms/authorize/js/user-setting.js}"></script>
 </body>
 
 </html>

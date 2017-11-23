@@ -14,6 +14,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String newPassword;
+
     private String lastLoginIp;
 
     private Date lastLoginTime;
@@ -128,6 +130,14 @@ public class User implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     @Override

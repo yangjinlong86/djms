@@ -3,6 +3,8 @@ package org.dj.bms.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.dj.bms.dao.UserMapper;
 import org.dj.bms.dao.UserRoleMapper;
 import org.dj.bms.enumeration.DBEnum;
@@ -15,6 +17,7 @@ import org.dj.bms.service.UserService;
 import org.dj.bms.utils.BeanUtils;
 import org.dj.bms.utils.EncryptUtil;
 import org.dj.bms.utils.IdGenerator;
+import org.dj.bms.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,6 +135,17 @@ public class UserServiceImpl extends BaseService implements UserService{
             resCount += userRoleMapper.insertSelective(userRole);
         }
         return resCount;
+    }
+
+    @Override
+    public boolean validatePassword(User user) {
+        String inputPassword = new SimpleHash(
+                "md5",
+                user.getPassword(),
+                ByteSource.Util.bytes(user.getName()),
+                2).toHex();
+        String oldPassword = UserUtils.getCurrentUser().getPassword();
+        return oldPassword.equals(inputPassword);
     }
 
 }

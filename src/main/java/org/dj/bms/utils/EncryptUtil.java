@@ -7,7 +7,7 @@ import org.dj.bms.model.User;
 
 /**
  * 加密工具
- * Created by jason on 17/11/11.
+ * @author Created by jason on 17/11/11.
  */
 public class EncryptUtil {
     private static final String ALGORITHM_NAME = "md5";
