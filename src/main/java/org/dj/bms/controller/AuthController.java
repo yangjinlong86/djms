@@ -35,8 +35,9 @@ public class AuthController {
 	}
 
 	@RequestMapping("/user")
-	public String user() {
-		return "authorize/user";
+    public String user(Model model) {
+        model.addAttribute("organizations", JsonUtils.obj2json(organizationService.selectOrganizations(null)));
+        return "authorize/user";
 	}
 
     @RequestMapping("/user-setting")

@@ -1,6 +1,7 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
+    <link rel="stylesheet" th:href="@{vendor/ztree//css/zTreeStyle/zTreeStyle.css}" type="text/css"/>
 </head>
 <body>
 <div th:include="fragments/nav :: nav"></div>
@@ -57,49 +58,39 @@
                                     新增用户
                                 </h4>
                             </div>
-                            <form id="saveUserForm" role="form" action="" method="post">
+                            <form id="saveUserForm" role="form" action="" method="post" class="form-horizontal">
                                 <div class="modal-body">
                                     <div class="row">
                                         <input type="hidden" id="id" name="id"/>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>所在单位</label>
-                                                <select class="form-control" name="corpId" id="corpId">
-                                                    <option value=""></option>
-                                                    <option value="1">总店</option>
-                                                    <option value="2">成都分店</option>
-                                                    <option value="3">重庆分店</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>所在部门</label>
-                                                <select class="form-control" name="deptId" id="deptId">
-                                                    <option value=""></option>
-                                                    <option value="1">一部门</option>
-                                                    <option value="2">二部门</option>
-                                                    <option value="3">三部门</option>
-                                                </select>
+                                        <input type="hidden" id="corpId" name="corpId"/>
+                                        <input type="hidden" id="deptId" name="deptId"/>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-md-3 column">
+                                            <div class="zTreeDemoBackground">
+                                                <ul id="organizationTree" class="ztree"></ul>
                                             </div>
                                         </div>
 
+                                        <div class="col-md-9 column">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 control-label">用户名</label>
+                                                <div class="col-lg-9">
+                                                    <input class="form-control" id="name" name="name"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 control-label">昵称</label>
+                                                <div class="col-lg-9">
+                                                    <input class="form-control" id="realName" name="realName"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>用户名</label>
-                                                <input class="form-control" id="name" name="name"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>昵称</label>
-                                                <input class="form-control" id="realName" name="realName"/>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!-- modal-body end!-->
                                 </div>
                                 <div class="modal-footer">
@@ -119,8 +110,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <button id="addUserBtn" class="btn btn-outline btn-primary" data-toggle="modal"
-                                data-target="#userModal"><i class="fa fa-plus"></i>新增用户
+                        <button id="addUserBtn" class="btn btn-outline btn-primary"><i class="fa fa-plus"></i>新增用户
                         </button>
                         &nbsp;&nbsp;
                         <button id="editUserBtn" class="btn btn-outline btn-warning"><i class="fa fa-pencil"></i>修改用户信息
@@ -246,8 +236,69 @@
 <script th:src="@{vendor/admin/js/sb-admin-2.js}"></script>
 <script th:src="@{vendor/bootstrap-validator/bootstrapValidator.min.js}"></script>
 <script th:src="@{vendor/jquery-form-autofill/jQuery-form-autofill.js}"></script>
+<script th:src="@{vendor/ztree/js/jquery.ztree.core.js}"></script>
+<script th:src="@{vendor/ztree/js/jquery.ztree.excheck.js}"></script>
 <script th:src="@{bms/public/js/public.js}"></script>
 <script th:src="@{bms/authorize/js/user.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        check: {
+            enable: true,
+            chkStyle: "radio",
+            radioType: "all"
+        },
+        callback: {
+            onCheck: zTreeOnCheck,
+            onClick: zTreeOnClick
+        }
+    };
+    function zTreeOnClick(event, treeId, treeNode) {
+        $.fn.zTree.getZTreeObj("organizationTree").checkNode(treeNode, true, false, true);
+    }
+    ;
+
+    function zTreeOnCheck(event, treeId, treeNode) {
+        $.fn.zTree.getZTreeObj("organizationTree").selectNode(treeNode);
+        if (treeNode.id == 1) {
+            $("#corpId").val(treeNode.id);
+        } else {
+            $("#corpId").val(treeNode.pId);
+        }
+
+        $("#deptId").val(treeNode.id);
+    }
+
+    // 获取model数据
+    var organizations = JSON.parse([[${organizations}]]);
+    var zNodes = [];
+    // 组装treeNode数据
+    for (var i in organizations) {
+        if (organizations[i].id == 1) {
+            // id=1时, 设置为根节点
+            zNodes.push({
+                id: organizations[i].id,
+                pId: organizations[i].pId,
+                name: organizations[i].name,
+                isParent: true,
+                open: true
+            });
+        } else {
+            zNodes.push({id: organizations[i].id, pId: organizations[i].pId, name: organizations[i].name});
+        }
+    }
+
+    $(document).ready(function () {
+        $.fn.zTree.init($("#organizationTree"), setting, zNodes);
+    });
+
+    /*]]>*/
+</script>
 </body>
 
 </html>

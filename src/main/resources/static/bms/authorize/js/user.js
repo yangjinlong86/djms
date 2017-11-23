@@ -180,6 +180,10 @@ $(document).ready(function () {
         }
     );
 
+    $("#addUserBtn").bind("click", function () {
+        addUser();
+    });
+
     // 绑定编辑用户点击事件
     $("#editUserBtn").bind("click", function () {
         editCheckedUser();
@@ -232,6 +236,15 @@ function queryUser(queryBean) {
         }
     });
 }
+function addUser() {
+    $("#userModalLabel").html("新增用户");
+    $("#userModal").modal('show');
+    var treeObj = $.fn.zTree.getZTreeObj("organizationTree");
+    treeObj.refresh();
+    treeObj.checkNode(treeObj.getNodeByParam("id", "1", null), true, true);
+    $("#corpId").val("1");
+    $("#deptId").val("1");
+}
 
 // 编辑选中用户
 function editCheckedUser() {
@@ -255,6 +268,24 @@ function editCheckedUser() {
     $("#userModal").modal('show');
     // 自动填充表单
     $("#saveUserForm").autofill(user);
+
+    var treeObj = $.fn.zTree.getZTreeObj("organizationTree");
+
+    // 先取消选中所有节点
+    var nodes = treeObj.getNodes();
+    for (var i = 0; i < nodes.length; i++) {
+        treeObj.checkNode(nodes[i], false, true);
+    }
+    // 通过deptId获取机构节点
+    var node = treeObj.getNodeByParam("id", user.deptId, null);
+    // 通过CorpId获取父机构节点
+    var parentNode = treeObj.getNodeByParam("id", user.corpId, null);
+    // 选中该节点()
+    treeObj.selectNode(node);
+    treeObj.checkNode(node, true, true);
+    // 展开父节点
+    treeObj.expandNode(parentNode, true, false, true);
+
 }
 
 function getUserFromArray(userId) {
