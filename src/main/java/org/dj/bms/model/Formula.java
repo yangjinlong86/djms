@@ -1,17 +1,34 @@
 package org.dj.bms.model;
 
+/**
+ * 美容方案信息
+ * 
+ * @ClassName: Formula
+ * @author pufangfei@163.com
+ * @date 2017年11月23日 下午9:51:13
+ */
 public class Formula extends Bms {
 
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * 单位id
+	 */
 	private String corpId;
-
+	/**
+	 * 名称
+	 */
 	private String name;
-
+	/**
+	 * 应用场景 单值代码
+	 */
 	private String scene;
-
+	/**
+	 * 类型 单值代码
+	 */
 	private String type;
-
+	/**
+	 * 预估金额 单位 元
+	 */
 	private Double amount;
 
 	public String getCorpId() {

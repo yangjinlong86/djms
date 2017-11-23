@@ -1,196 +1,154 @@
 package org.dj.bms.model;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-public class Stock implements Serializable {
-    private String id;
+public class Stock extends Bms {
 
-    private String corpId;
+	/**
+	*/
 
-    private String name;
+	private static final long serialVersionUID = 4124839761528698168L;
+	/**
+	 * 单位ID
+	 */
+	private String corpId;
+	/**
+	 * 物品ID
+	 */
+	private String varietyId;
+	/**
+	 * 物品名称
+	 */
+	private String name;
+	/**
+	 * 容量
+	 */
+	private String capacity;
+	/**
+	 * 计量单位 单值代码
+	 */
+	private String mete;
+	/**
+	 * 类型
+	 */
+	private String type;
+	/**
+	 * 总金额 单位 元
+	 */
+	private Double amount;
 
-    private String capacity;
+	private String status;
+	/**
+	 * 入库时间
+	 */
+	private Date inDate;
+	/**
+	 * 总数量
+	 */
+	private Long count;
+	/**
+	 * 剩余数量
+	 */
+	private Long remainCount;
+	/**
+	 * 有效期
+	 */
+	private Date endValidity;
 
-    private String mete;
+	public String getCorpId() {
+		return corpId;
+	}
 
-    private String type;
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
 
-    private BigDecimal amount;
+	public String getVarietyId() {
+		return varietyId;
+	}
 
-    private String status;
+	public void setVarietyId(String varietyId) {
+		this.varietyId = varietyId;
+	}
 
-    private Date inDate;
+	public String getName() {
+		return name;
+	}
 
-    private Long count;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    private Date endValidity;
+	public String getCapacity() {
+		return capacity;
+	}
 
-    private String comment;
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
+	}
 
-    private String createUserId;
+	public String getMete() {
+		return mete;
+	}
 
-    private String updateUserId;
+	public void setMete(String mete) {
+		this.mete = mete;
+	}
 
-    private Date createTime;
+	public String getType() {
+		return type;
+	}
 
-    private Date updateTime;
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public Double getAmount() {
+		return amount;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getCorpId() {
-        return corpId;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setCorpId(String corpId) {
-        this.corpId = corpId == null ? null : corpId.trim();
-    }
+	public Date getInDate() {
+		return inDate;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setInDate(Date inDate) {
+		this.inDate = inDate;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public Long getCount() {
+		return count;
+	}
 
-    public String getCapacity() {
-        return capacity;
-    }
+	public void setCount(Long count) {
+		this.count = count;
+	}
 
-    public void setCapacity(String capacity) {
-        this.capacity = capacity == null ? null : capacity.trim();
-    }
+	public Long getRemainCount() {
+		return remainCount;
+	}
 
-    public String getMete() {
-        return mete;
-    }
+	public void setRemainCount(Long remainCount) {
+		this.remainCount = remainCount;
+	}
 
-    public void setMete(String mete) {
-        this.mete = mete == null ? null : mete.trim();
-    }
+	public Date getEndValidity() {
+		return endValidity;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setEndValidity(Date endValidity) {
+		this.endValidity = endValidity;
+	}
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public Date getInDate() {
-        return inDate;
-    }
-
-    public void setInDate(Date inDate) {
-        this.inDate = inDate;
-    }
-
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
-    }
-
-    public Date getEndValidity() {
-        return endValidity;
-    }
-
-    public void setEndValidity(Date endValidity) {
-        this.endValidity = endValidity;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId == null ? null : createUserId.trim();
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId == null ? null : updateUserId.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", corpId=").append(corpId);
-        sb.append(", name=").append(name);
-        sb.append(", capacity=").append(capacity);
-        sb.append(", mete=").append(mete);
-        sb.append(", type=").append(type);
-        sb.append(", amount=").append(amount);
-        sb.append(", status=").append(status);
-        sb.append(", inDate=").append(inDate);
-        sb.append(", count=").append(count);
-        sb.append(", endValidity=").append(endValidity);
-        sb.append(", comment=").append(comment);
-        sb.append(", createUserId=").append(createUserId);
-        sb.append(", updateUserId=").append(updateUserId);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

@@ -52,7 +52,7 @@ CREATE TABLE `DICT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
---   Table structure for `variety` 库存信息variety
+--   Table structure for `variety` 物品信息
 --  -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 DROP TABLE IF EXISTS `variety`;
 CREATE TABLE `variety` (
@@ -77,6 +77,7 @@ DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock` (
   `ID` varchar(32) COLLATE utf8_bin NOT NULL,
   `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `VARIETY_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,-- 物品ID
   `NAME` varchar(512) COLLATE utf8_bin DEFAULT NULL,-- 名称
   `CAPACITY` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 容量
   `METE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 计量
@@ -102,6 +103,7 @@ DROP TABLE IF EXISTS `stock_use`;
 CREATE TABLE `stock_use` (
   `ID` varchar(32) COLLATE utf8_bin NOT NULL,
   `STOCK_ID` varchar(32) COLLATE utf8_bin NOT NULL,
+  `VARIETY_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,-- 物品ID
   `CORP_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,
   `OUT_USER_ID` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 使用人ID
   `OUT_COUNT` DECIMAL(17,0) DEFAULT NULL,-- 出库数量
@@ -139,7 +141,8 @@ DROP TABLE IF EXISTS `formula_details`;
 CREATE TABLE `formula_details` (
   `ID` varchar(32) COLLATE utf8_bin NOT NULL,
   `FORMULA_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,-- 方案主键
-  `PRODUCT_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,-- 产品主键
+  `STOCK_ID` varchar(32) COLLATE utf8_bin NOT NULL,-- 库存ID
+  `VARIETY_ID` varchar(32) COLLATE utf8_bin DEFAULT NULL,-- 物品ID
   `STEP` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 步骤
   `CAPACITY` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 容量
   `METE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 计量

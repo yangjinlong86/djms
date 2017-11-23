@@ -1,12 +1,19 @@
 package org.dj.bms.model;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DictEnum;
 import org.dj.bms.utils.DateUtils;
 import org.dj.bms.utils.ECacheUtils;
 
-import java.util.Date;
-
+/**
+ * 顾客信息
+ * 
+ * @ClassName: Customer
+ * @author pufangfei@163.com
+ * @date 2017年11月23日 下午9:50:24
+ */
 public class Customer extends Bms {
 
 	/**
@@ -14,13 +21,21 @@ public class Customer extends Bms {
 	 */
 
 	private static final long serialVersionUID = -1016554063470827766L;
-
+	/**
+	 * 单位 id
+	 */
 	private String corpId;
-
+	/**
+	 * 客户编号 有生成规则
+	 */
 	private String num;
-
+	/**
+	 * 名称
+	 */
 	private String name;
-
+	/**
+	 * 区划 单值代码
+	 */
 	private String region;
 
 	private String address;
