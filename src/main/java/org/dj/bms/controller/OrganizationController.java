@@ -28,6 +28,12 @@ public class OrganizationController {
         return JsonUtils.obj2json(organizationService.selectOrganizations(null));
     }
 
+    @RequestMapping(value = "/getOrganizationCache")
+    @ResponseBody
+    public String findOrganizationCache() {
+        return JsonUtils.obj2json(organizationService.getOrganizationsCache());
+    }
+
     @RequestMapping(value="/findOrganization/{id}")
     @ResponseBody
     public String findOrganizationById(@PathVariable String id){
@@ -44,6 +50,7 @@ public class OrganizationController {
             return ResponseEnum.FAILED.getStatus();
         }
         if(organizationService.saveOrUpdate(organization) >= DBEnum.OPERATION_SUCCESS.getValue()) {
+            organizationService.initOranizations();
             return ResponseEnum.SUCCESS.getStatus();
         }
         return ResponseEnum.FAILED.getStatus();
