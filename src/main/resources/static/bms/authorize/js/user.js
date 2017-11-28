@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    initCorp();
+    $("#queryBean_corpId").change(function () {
+        initdept();
+    });
+
     $("#btnCloseUserAlert").click(function () {
         $("#alertMsg").html("");
         $("#userAlert").removeClass("alert-success")
@@ -226,8 +231,8 @@ function queryUser(queryBean) {
                     '<td style="text-align: center"><input name="checkbox_user" id="checkbox_' + i + '" type="checkbox" value="' + users[i].id + '"></td>' +
                     '<td style="text-align: center">' + users[i].name + '</td>' + // 用户名
                     '<td style="text-align: center">' + users[i].realName + '</td>' + // 昵称
-                    '<td>' + users[i].corpName + '</td>' + // 单位
-                    '<td>' + users[i].deptName + '</td>' + // 部门
+                    '<td style="text-align: center">' + users[i].corpName + '</td>' + // 单位
+                    '<td style="text-align: center">' + users[i].deptName + '</td>' + // 部门
                     '</tr>'
                 );
             }
@@ -453,6 +458,38 @@ function initRoleList() {
                     );
                 }
             }
+        }
+    });
+}
+
+function initCorp() {
+    $.ajax({
+        type: "post",
+        url: "findOrganization/1",
+        async: false,
+        success: function (data) {
+            var options = "";
+            var organizations = JSON.parse(data);
+            for (var i = 0; i < organizations.length; i++) {
+                options += "<option value='" + organizations[i].id + "'>" + organizations[i].name + "</option>";
+            }
+            $("#queryBean_corpId").html("<option value=''>请选择单位</option>" + options);
+        }
+    });
+}
+
+function initdept() {
+    $.ajax({
+        type: "post",
+        url: "findOrganizationsByPId/" + $("#queryBean_corpId").val(),
+        async: false,
+        success: function (data) {
+            var options = "";
+            var organizations = JSON.parse(data);
+            for (var i = 0; i < organizations.length; i++) {
+                options += "<option value='" + organizations[i].id + "'>" + organizations[i].name + "</option>";
+            }
+            $("#queryBean_deptId").html("<option value=''>请选择部门</option>" + options);
         }
     });
 }

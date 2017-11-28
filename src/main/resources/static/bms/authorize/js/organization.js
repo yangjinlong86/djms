@@ -18,7 +18,7 @@ function getOrganizationInfo(orgId) {
     $.ajax({
         type: "post",
         async: false,
-        url: "/findOrganization/" + orgId,
+        url: "/findOrganizationById/" + orgId,
         success: function (res) {
             var currentOrganization = JSON.parse(res);
             $("#OrganizationForm").autofill(currentOrganization);

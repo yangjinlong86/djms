@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author jason
  * @date 17/11/22.
@@ -22,10 +25,12 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
-    @RequestMapping(value="/findOrganization")
+    @RequestMapping(value = "/findOrganization/{type}")
     @ResponseBody
-    public String findOrganizations(){
-        return JsonUtils.obj2json(organizationService.selectOrganizations(null));
+    public String findOrganizations(@PathVariable String type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        return JsonUtils.obj2json(organizationService.selectOrganizations(map));
     }
 
     @RequestMapping(value = "/getOrganizationCache")
@@ -34,13 +39,21 @@ public class OrganizationController {
         return JsonUtils.obj2json(organizationService.getOrganizationsCache());
     }
 
-    @RequestMapping(value="/findOrganization/{id}")
+    @RequestMapping(value = "/findOrganizationById/{id}")
     @ResponseBody
     public String findOrganizationById(@PathVariable String id){
         if(StringUtils.isBlank(id)){
             return null;
         }
         return JsonUtils.obj2json(organizationService.selectOrganizationById(id));
+    }
+
+    @RequestMapping(value = "/findOrganizationsByPId/{pId}")
+    @ResponseBody
+    public String findOrganizationsByPId(@PathVariable String pId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("pId", pId);
+        return JsonUtils.obj2json(organizationService.selectOrganizations(map));
     }
 
     @RequestMapping(value="/saveOrganization")

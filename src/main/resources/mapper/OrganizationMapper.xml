@@ -33,6 +33,10 @@
             <if test="pId != null">
                 AND P_ID = #{pId,jdbcType=VARCHAR}
             </if>
+
+            <if test="type != null">
+                AND TYPE = #{type,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

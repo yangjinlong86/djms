@@ -66,7 +66,7 @@ public class OrganizationServiceImpl extends BaseService implements Organization
     @PostConstruct
     public void initOranizations() {
         logger.info("开始加载组织机构...");
-        List<Organization> organizationList = organizationMapper.selectOrganizations(null);
+        organizationList = organizationMapper.selectOrganizations(null);
         for (Organization organization : organizationList) {
             organizationMap.put(organization.getId(), organization);
         }
