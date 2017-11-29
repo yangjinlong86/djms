@@ -11,10 +11,10 @@
         <div class="row">
             <div role="form">
                 <div class="col-lg-4">
-                    <label>角色名称</label><input id="queryBean_roleName" name="roleName" class="form-control"/>
+                    <label>顾客姓名/电话</label><input id="queryBean_roleName" name="roleName" class="form-control"/>
                 </div>
                 <div class="col-lg-4">
-                    <label>角色描述</label><input id="queryBean_roleDesc" name="roleDesc" class="form-control"/>
+                    <label>美容师</label><input id="queryBean_roleDesc" name="roleDesc" class="form-control"/>
                 </div>
                 <div class="col-lg-4">
                     <button id="btnSelect" type="button" class="btn btn-outline btn-success" style="margin-top:1.7em;">查
@@ -40,7 +40,7 @@
                                     &times;
                                 </button>
                                 <h4 class="modal-title" id="roleModalLabel">
-                                    新增角色
+                                    新增消费记录
                                 </h4>
                             </div>
                             <form id="saveRoleForm" role="form" action="" method="post">
@@ -81,20 +81,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <button type="button" id="addRoleBtn" class="btn btn-outline btn-primary" data-toggle="modal"
-                                data-target="#roleModal"><i class="fa fa-plus"></i>新增角色
+                                data-target="#roleModal"><i class="fa fa-plus"></i>新增消费记录
                         </button>
-                        &nbsp;&nbsp;
-                        <button type="button" id="editRoleBtn" class="btn btn-outline btn-warning"><i
-                                class="fa fa-pencil"></i>编辑角色
-                        </button>
-                        &nbsp;&nbsp;
-                        <button type="button" id="setRoleResourceBtn" class="btn btn-outline btn-info"><i
-                                class="fa fa-gear"></i>设置角色权限
-                        </button>
-                        &nbsp;&nbsp;
-                        <button type="button" id="delRoleBtn" class="btn btn-outline btn-danger"><i
-                                class="fa fa-times"></i>删除角色
-                        </button>
+
                     </div>
                     <div class="panel-body">
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-role">
@@ -102,8 +91,14 @@
                             <tr>
                                 <th width="5%;"></th>
                                 <th class="hidden">ID</th>
-                                <th width="">角色名称</th>
-                                <th width="">角色描述</th>
+                                <th width="">顾客</th>
+                                <th width="">门店</th>
+                                <th width="">美容师</th>
+                                <th width="">美容方案</th>
+                                <th width="">消费产品</th>
+                                <th width="">消费方式</th>
+                                <th width="">金额</th>
+                                <th width="">操作</th>
                             </tr>
                             </thead>
                             <tbody id="role-list">
