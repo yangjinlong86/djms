@@ -40,9 +40,6 @@
   			<if test="corpId != null and corpId != ''">
   				and corp_id = #{corpId,jdbcType=VARCHAR}
   			</if>
-  			<if test="type != null and type != ''">
-  				and type = #{type,jdbcType=VARCHAR}
-  			</if>
   		</where>
   </select>
   <delete id="deleteByIds">
