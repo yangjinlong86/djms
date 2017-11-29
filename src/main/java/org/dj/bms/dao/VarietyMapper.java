@@ -2,10 +2,12 @@ package org.dj.bms.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.Variety;
 import org.dj.bms.query.IQueryInfo;
 
+@Mapper
 public interface VarietyMapper {
 	int deleteByPrimaryKey(String id);
 

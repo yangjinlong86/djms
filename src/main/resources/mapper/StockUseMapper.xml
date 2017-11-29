@@ -31,9 +31,6 @@
   			<if test="corpId != null and corpId != ''">
   				and corp_id = #{corpId,jdbcType=VARCHAR}
   			</if>
-  			<if test="outUserId != null and outUserId != ''">
-  				and OUT_USER_ID = #{userId,jdbcType=VARCHAR}
-  			</if>
   		</where>
   </select>
   <delete id="deleteByIds">

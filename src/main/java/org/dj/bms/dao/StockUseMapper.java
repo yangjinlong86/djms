@@ -1,7 +1,11 @@
 package org.dj.bms.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.dj.bms.model.StockUse;
+import org.dj.bms.query.IQueryInfo;
 
 @Mapper
 public interface StockUseMapper {
@@ -16,4 +20,8 @@ public interface StockUseMapper {
 	int updateByPrimaryKeySelective(StockUse record);
 
 	int updateByPrimaryKey(StockUse record);
+
+	int deleteByIds(@Param("ids") String[] idArr);
+
+	List<StockUse> select(IQueryInfo qb);
 }

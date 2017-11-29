@@ -22,6 +22,8 @@ public class QueryInfo implements IQueryInfo {
 	private String deptId;
 	// 用户ID 默认当前登录用的id
 	private String userId;
+	// 名称
+	private String name;
 
 	/**
 	 * QueryInfo
@@ -90,6 +92,14 @@ public class QueryInfo implements IQueryInfo {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
