@@ -168,7 +168,9 @@ CREATE TABLE `order` (
   `TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 订单类型
   `USE_TYPE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 使用类型
   `END_VALIDITY` date COLLATE utf8_bin DEFAULT NULL,-- 有效期
-  `order_serive` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 服务类型
+  `ORDER_SERIVE` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 服务类型
+  `ORDER_COUNT` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 服务次数
+  `REMAIN_COUNT` varchar(64) COLLATE utf8_bin DEFAULT NULL,-- 剩余服务次数
   `AMOUNT` DECIMAL(17,2) COLLATE utf8_bin DEFAULT NULL,-- 金额
   `COMMENT` varchar(2048) DEFAULT NULL,
   `CREATE_USER_ID` varchar(32) DEFAULT NULL,

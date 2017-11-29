@@ -5,41 +5,28 @@ import java.util.Date;
 public class Order extends Bms {
 
 	/**
-	 * @Fields serialVersionUID : TODO
-	 */
+	*/
 
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 单位id
-	 */
+
 	private String corpId;
-	/**
-	 * 顾客id
-	 */
+
 	private String customerId;
-	/**
-	 * 美容师ID
-	 */
+
 	private String userId;
-	/**
-	 * 类型 单值代码
-	 */
+
 	private String type;
-	/**
-	 * 使用方式
-	 */
+
 	private String useType;
-	/**
-	 * 有效期
-	 */
+
 	private Date endValidity;
-	/**
-	 * 订单服务
-	 */
+
 	private String orderSerive;
-	/**
-	 * 消费金额
-	 */
+
+	private String orderCount;
+
+	private String remainCount;
+
 	private Double amount;
 
 	public String getCorpId() {
@@ -96,6 +83,22 @@ public class Order extends Bms {
 
 	public void setOrderSerive(String orderSerive) {
 		this.orderSerive = orderSerive;
+	}
+
+	public String getOrderCount() {
+		return orderCount;
+	}
+
+	public void setOrderCount(String orderCount) {
+		this.orderCount = orderCount;
+	}
+
+	public String getRemainCount() {
+		return remainCount;
+	}
+
+	public void setRemainCount(String remainCount) {
+		this.remainCount = remainCount;
 	}
 
 	public Double getAmount() {
