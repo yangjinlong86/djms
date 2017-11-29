@@ -8,11 +8,13 @@ import org.apache.shiro.util.ByteSource;
 import org.dj.bms.dao.UserMapper;
 import org.dj.bms.dao.UserRoleMapper;
 import org.dj.bms.enumeration.DBEnum;
+import org.dj.bms.model.Organization;
 import org.dj.bms.model.Role;
 import org.dj.bms.model.User;
 import org.dj.bms.model.UserRole;
 import org.dj.bms.query.UserQueryBean;
 import org.dj.bms.service.BaseService;
+import org.dj.bms.service.OrganizationService;
 import org.dj.bms.service.UserService;
 import org.dj.bms.utils.BeanUtils;
 import org.dj.bms.utils.EncryptUtil;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Created by jason on 17/10/29.
@@ -36,6 +39,9 @@ public class UserServiceImpl extends BaseService implements UserService{
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     /**
      * @param user
@@ -105,8 +111,13 @@ public class UserServiceImpl extends BaseService implements UserService{
     @Override
     public PageInfo<User> selectUsers(UserQueryBean userQueryBean) {
         PageHelper.startPage(userQueryBean.getPageNum(), userQueryBean.getLimitNum()).setOrderBy("CREATE_TIME DESC");
-        List<User> list = userMapper.selectUsers(BeanUtils.convertBean2Map(userQueryBean));
-        PageInfo<User> pageInfo = new PageInfo<User>(list);
+        List<User> userList = userMapper.selectUsers(BeanUtils.convertBean2Map(userQueryBean));
+        Map<String, Organization> organizationMap = organizationService.getOrganizationsCacheMap();
+        for (User user : userList) {
+            user.setCorpName(organizationMap.get(user.getCorpId()).getName());
+            user.setDeptName(organizationMap.get(user.getDeptId()).getName());
+        }
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
         return pageInfo;
     }
 

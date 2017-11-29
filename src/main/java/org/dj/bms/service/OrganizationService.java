@@ -18,4 +18,10 @@ public interface OrganizationService {
 
     List<Organization> selectOrganizations(Map<String, String> paramsMap);
 
+    void initOranizations();
+
+    List<Organization> getOrganizationsCache();
+
+    Map<String, Organization> getOrganizationsCacheMap();
+
 }

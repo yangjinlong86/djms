@@ -34,6 +34,10 @@ public class User implements Serializable {
 
     private List<Role> roleList;
 
+    private String corpName;
+
+    private String deptName;
+
     public String getRoleValues() {
         return roleValues;
     }
@@ -138,6 +142,22 @@ public class User implements Serializable {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getCorpName() {
+        return corpName;
+    }
+
+    public void setCorpName(String corpName) {
+        this.corpName = corpName;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     @Override
