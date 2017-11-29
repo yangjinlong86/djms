@@ -4,9 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.model.Consume;
 import org.dj.bms.query.CustQueryInfo;
 import org.dj.bms.service.ConsumeService;
+import org.dj.bms.utils.JsonUtils;
 import org.dj.bms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @author pufangfei@163.com
  * @date 2017年11月19日 下午6:16:39
  */
-@RestController
-@RequestMapping("/consume")
-public class ConsumeController extends BaseController {
-	@Autowired
+@Controller
+@RequestMapping("/consumption")
+public class ConsumptionController extends BaseController {
+    @Autowired
 	@Qualifier("consumeService")
 	private ConsumeService consumeService;
+
+    @RequestMapping("")
+    public String toConsumption(Model model) {
+        return "consumption/consumption";
+    }
 
 	@RequestMapping(path = "saveOrUpdate", method = RequestMethod.POST)
 	public ResponseMsg saveOrUpdateCust(@ModelAttribute Consume consume) {
