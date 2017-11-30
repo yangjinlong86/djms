@@ -2,6 +2,7 @@ package org.dj.bms.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.dj.bms.enumeration.DBEnum;
+import org.dj.bms.enumeration.OrganizationEnum;
 import org.dj.bms.enumeration.ResponseEnum;
 import org.dj.bms.model.User;
 import org.dj.bms.query.UserQueryBean;
@@ -60,8 +61,11 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/userList")
 	@ResponseBody
 	public PageInfo<User> selectAllUsers(UserQueryBean queryBean) {
-		return userService.selectUsers(queryBean);
-	}
+        if (!OrganizationEnum.CORP.val().equals(UserUtils.getCurrentUser().getCorpId())) {
+            queryBean.setCorpId(UserUtils.getCurrentUser().getCorpId());
+        }
+        return userService.selectUsers(queryBean);
+    }
 
     /**
      * 单个,批量删除用户

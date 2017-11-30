@@ -76,13 +76,13 @@ public class ShiroConfiguration {
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         //自定义加载权限资源关系
         List<Resource> resourceList = resourceService.findResources();
-        for (Resource resource : resourceList) {
-
+        resourceList.forEach(resource -> {
             if (StringUtils.isNotEmpty(resource.getUrl())) {
                 String permission = "perms[" + resource.getUrl() + "]";
                 filterChainDefinitionMap.put(resource.getUrl(), permission);
             }
-        }
+        });
+
         filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

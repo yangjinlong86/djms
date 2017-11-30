@@ -331,7 +331,8 @@ function deleteByIds(){
                 $("#delModal").modal('hide');
                 queryUser(initQueryBean());
             } else {
-                alert("delete failed");
+                $("#alertMsg").html("无法删除该用户!");
+                $("#userAlert").removeClass("hidden").addClass("alert-warning").show();
             }
         }
     });

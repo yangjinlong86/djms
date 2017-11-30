@@ -1,4 +1,4 @@
-<html xmlns="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"/> /*/-->
     <link rel="stylesheet" th:href="@{vendor/ztree//css/zTreeStyle/zTreeStyle.css}" type="text/css"/>
@@ -34,10 +34,12 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label"></label>
                                         <div class="col-lg-8">
+                                            <shiro:hasPermission name="add-organization">
                                             <button type="button" id="addChildOrganBtn"
                                                     class="btn btn-outline btn-primary"><i
                                                     class="fa fa-plus"></i>新增下级机构
                                             </button>
+                                            </shiro:hasPermission>
                                         </div>
                                     </div>
                                     <div class="form-group">
