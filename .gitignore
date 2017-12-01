@@ -6,4 +6,3 @@ pom.xml
 .project
 .settings
 .classpath
-src/main/resources/application.properties

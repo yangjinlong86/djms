@@ -1,6 +1,7 @@
 package org.dj.bms.controller;
 
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.dj.bms.enumeration.DBEnum;
 import org.dj.bms.enumeration.OrganizationEnum;
 import org.dj.bms.enumeration.ResponseEnum;
@@ -76,6 +77,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/deleteUser/{id}")
 	@ResponseBody
 	public String deleteUser(@PathVariable String id) {
+        // id为空或者id包含当前用户,返回删除失败
+        if (StringUtils.isBlank(id) || id.contains(UserUtils.getCurrentUser().getId())) {
+            return ResponseEnum.FAILED.getStatus();
+        }
         // 批量删除
         String separator = ",";
         if (id.contains(separator)) {
