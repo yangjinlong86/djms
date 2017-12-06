@@ -89,6 +89,10 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: '请填写角色名称'
+                    }, stringLength: {
+                        min: 3,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
                     }
                 }
             }

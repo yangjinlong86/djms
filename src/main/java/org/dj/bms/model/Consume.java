@@ -1,5 +1,10 @@
 package org.dj.bms.model;
 
+/**
+ * 消费记录
+ *
+ * @author jason
+ */
 public class Consume extends Bms {
 	private static final long serialVersionUID = 1L;
 	private String formulaId;
