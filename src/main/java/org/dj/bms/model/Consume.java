@@ -17,9 +17,31 @@ public class Consume extends Bms {
 
 	private String consumeType;
 
-	public String getFormulaId() {
-		return formulaId;
-	}
+    private String amount;
+
+    private String comment;
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String getComment() {
+        return comment;
+    }
+
+    @Override
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getFormulaId() {
+        return formulaId;
+    }
 
 	public void setFormulaId(String formulaId) {
 		this.formulaId = formulaId;

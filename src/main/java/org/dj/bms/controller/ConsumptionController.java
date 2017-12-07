@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @ClassName: FormulaController
@@ -46,9 +47,10 @@ public class ConsumptionController extends BaseController {
 		return resData;
 	}
 
-	@RequestMapping(value = "/consumeList")
-	public ResponseMsg selectconsume(CustQueryInfo qb) {
-		ResponseMsg resData = getRes(true);
+    @RequestMapping(path = "consumeList")
+    @ResponseBody
+    public ResponseMsg selectconsume(CustQueryInfo qb) {
+        ResponseMsg resData = getRes(true);
 		resData.setData(consumeService.select(qb));
 		return resData;
 	}
