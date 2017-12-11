@@ -21,6 +21,34 @@ public class Consume extends Bms {
 
     private String comment;
 
+    private String customerName;
+    private String userName;
+    private String corpName;
+
+    public String getCorpName() {
+        return corpName;
+    }
+
+    public void setCorpName(String corpName) {
+        this.corpName = corpName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getAmount() {
         return amount;
     }
@@ -79,4 +107,20 @@ public class Consume extends Bms {
 		this.consumeType = consumeType;
 	}
 
+
+    @Override
+    public String toString() {
+        return "Consume{" +
+                "formulaId='" + formulaId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", corpId='" + corpId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", consumeType='" + consumeType + '\'' +
+                ", amount='" + amount + '\'' +
+                ", comment='" + comment + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", corpName='" + corpName + '\'' +
+                '}';
+    }
 }

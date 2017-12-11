@@ -51,9 +51,9 @@ public class ConsumptionController extends BaseController {
     @ResponseBody
     public ResponseMsg selectconsume(CustQueryInfo qb) {
         ResponseMsg resData = getRes(true);
-		resData.setData(consumeService.select(qb));
-		return resData;
-	}
+        resData.setData(consumeService.selectConsumptions(qb));
+        return resData;
+    }
 
 	@RequestMapping(path = "delete", method = RequestMethod.POST)
 	public ResponseMsg deleteByconsumeId(String ids) {

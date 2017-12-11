@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    $("#addOrEditConsumption").hide();
     $("#consumptionTable").show();
 
     $("#addConsumptionBtn").click(function () {
@@ -105,11 +104,9 @@ function queryConsumer(queryBean) {
                     $("#consumer-list").append(
                         '<tr>' +
                         '<td style="text-align: center"><input name="checkbox_consumer" id="checkbox_' + i + '" type="checkbox" value="' + consumers[i].id + '"></td>' +
-                        '<td style="text-align: center">' + consumers[i].customerId + '</td>' + //
-                        '<td style="text-align: center">' + consumers[i].corpId + '</td>' + //
-                        '<td style="text-align: center">' + consumers[i].userId + '</td>' + //
-                        '<td style="text-align: center">' + consumers[i].formulaId + '</td>' + //
-                        '<td style="text-align: center"></td>' + //
+                        '<td style="text-align: center">' + consumers[i].customerName + '</td>' + //
+                        '<td style="text-align: center">' + consumers[i].corpName + '</td>' + //
+                        '<td style="text-align: center">' + consumers[i].userName + '</td>' + //
                         '<td style="text-align: center">' + consumers[i].amount + '</td>' + //
                         '<td style="text-align: center"></td>' + //
                         '</tr>'

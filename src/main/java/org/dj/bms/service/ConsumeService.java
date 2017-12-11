@@ -37,6 +37,14 @@ public interface ConsumeService {
 	* @throws
 	 */
 	PageInfo<Consume> select(IQueryInfo qb);
-	
-	boolean deleteByIds(String ids);
+
+    PageInfo<Consume> selectConsumptions(IQueryInfo qb);
+
+    /**
+     * deleteByIds
+     *
+     * @param ids
+     * @return
+     */
+    boolean deleteByIds(String ids);
 }
