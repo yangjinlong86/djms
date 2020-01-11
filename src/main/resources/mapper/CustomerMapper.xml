@@ -1,239 +1,239 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.CustomerMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Customer" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="CORP_ID" property="corpId" jdbcType="VARCHAR" />
-    <result column="NUM" property="num" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="REGION" property="region" jdbcType="VARCHAR" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
-    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" javaType="java.util.Date"/>
-    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
-    <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
-    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
-    <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`, 
-    CREATE_USER_ID, UPDATE_USER_ID, CREATE_TIME, UPDATE_TIME
-  </sql>
-  <sql id="Column_List" >
-    ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`
-  </sql>
-  <select id="selectCustomer" resultMap="BaseResultMap" parameterType="org.dj.bms.query.CustQueryInfo">
-  		select 
-  			<include refid="Column_List"/>
-  		from
-  			customer
-  		<where>
-  			<if test="name !=null and name != ''">
-  				and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
-  			</if>
-  			<if test="corpId != null and corpId != ''">
-  				and corp_id = #{corpId,jdbcType=VARCHAR}
-  			</if>
-  		</where>
-  </select>
-  <select id="selectCustomerCount" resultType="int" parameterType="org.dj.bms.query.QueryBean">
-  		select 
-  			count(1)
-  		from
-  			customer
-  		<where>
-  			<if test="name !=null and name != ''">
-  				and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
-  			</if>
-  			<if test="corpId != null and corpId != ''">
-  				and corpId = #{corpId,jdbcType=VARCHAR}
-  			</if>
-  		</where>
-  </select>
-  
-  <delete id="deleteByIds">
-  	  delete from customer where id in
-        <foreach collection="ids" item="id" index="index"  
-            open="(" close=")" separator=",">  
-            #{id}  
-        </foreach>  
-  </delete>
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from customer
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from customer
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Customer" >
-    insert into customer (ID, CORP_ID, NUM, 
-      `NAME`, REGION, ADDRESS, 
-      CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, 
-      `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID, 
-      CREATE_TIME, UPDATE_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{corpId,jdbcType=VARCHAR}, #{num,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{customerType,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Customer" >
-    insert into customer
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="corpId != null" >
-        CORP_ID,
-      </if>
-      <if test="num != null" >
-        NUM,
-      </if>
-      <if test="name != null" >
-        `NAME`,
-      </if>
-      <if test="region != null" >
-        REGION,
-      </if>
-      <if test="address != null" >
-        ADDRESS,
-      </if>
-      <if test="customerType != null" >
-        CUSTOMER_TYPE,
-      </if>
-      <if test="birthday != null" >
-        BIRTHDAY,
-      </if>
-      <if test="telephone != null" >
-        TELEPHONE,
-      </if>
-      <if test="comment != null" >
-        `COMMENT`,
-      </if>
-      <if test="createUserId != null" >
-        CREATE_USER_ID,
-      </if>
-      <if test="updateUserId != null" >
-        UPDATE_USER_ID,
-      </if>
-      <if test="createTime != null" >
-        CREATE_TIME,
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="corpId != null" >
-        #{corpId,jdbcType=VARCHAR},
-      </if>
-      <if test="num != null" >
-        #{num,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="region != null" >
-        #{region,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="customerType != null" >
-        #{customerType,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="telephone != null" >
-        #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null" >
-        #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null" >
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="updateUserId != null" >
-        #{updateUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Customer" >
-    update customer
-    <set >
-      <if test="corpId != null" >
-        CORP_ID = #{corpId,jdbcType=VARCHAR},
-      </if>
-      <if test="num != null" >
+<mapper namespace="org.nocoder.djms.repository.CustomerMapper" >
+    <resultMap id="BaseResultMap" type="org.nocoder.djms.model.Customer" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CORP_ID" property="corpId" jdbcType="VARCHAR" />
+        <result column="NUM" property="num" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="REGION" property="region" jdbcType="VARCHAR" />
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+        <result column="BIRTHDAY" property="birthday" jdbcType="DATE" javaType="java.util.Date"/>
+        <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+        <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+        <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`,
+        CREATE_USER_ID, UPDATE_USER_ID, CREATE_TIME, UPDATE_TIME
+    </sql>
+    <sql id="Column_List" >
+        ID, CORP_ID, NUM, `NAME`, REGION, ADDRESS, CUSTOMER_TYPE, BIRTHDAY, TELEPHONE, `COMMENT`
+    </sql>
+    <select id="selectCustomer" resultMap="BaseResultMap" parameterType="org.nocoder.djms.query.CustQueryInfo">
+        select
+        <include refid="Column_List"/>
+        from
+        customer
+        <where>
+            <if test="name !=null and name != ''">
+                and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
+            </if>
+            <if test="corpId != null and corpId != ''">
+                and corp_id = #{corpId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectCustomerCount" resultType="int" parameterType="org.nocoder.djms.query.QueryBean">
+        select
+        count(1)
+        from
+        customer
+        <where>
+            <if test="name !=null and name != ''">
+                and (name like CONCAT('%', #{name}, '%') or telephone like CONCAT('%', #{name}, '%'))
+            </if>
+            <if test="corpId != null and corpId != ''">
+                and corpId = #{corpId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByIds">
+        delete from customer where id in
+        <foreach collection="ids" item="id" index="index"
+                 open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from customer
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from customer
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="org.nocoder.djms.model.Customer" >
+        insert into customer (ID, CORP_ID, NUM,
+        `NAME`, REGION, ADDRESS,
+        CUSTOMER_TYPE, BIRTHDAY, TELEPHONE,
+        `COMMENT`, CREATE_USER_ID, UPDATE_USER_ID,
+        CREATE_TIME, UPDATE_TIME)
+        values (#{id,jdbcType=VARCHAR}, #{corpId,jdbcType=VARCHAR}, #{num,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+        #{customerType,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR},
+        #{comment,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="org.nocoder.djms.model.Customer" >
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="corpId != null" >
+                CORP_ID,
+            </if>
+            <if test="num != null" >
+                NUM,
+            </if>
+            <if test="name != null" >
+                `NAME`,
+            </if>
+            <if test="region != null" >
+                REGION,
+            </if>
+            <if test="address != null" >
+                ADDRESS,
+            </if>
+            <if test="customerType != null" >
+                CUSTOMER_TYPE,
+            </if>
+            <if test="birthday != null" >
+                BIRTHDAY,
+            </if>
+            <if test="telephone != null" >
+                TELEPHONE,
+            </if>
+            <if test="comment != null" >
+                `COMMENT`,
+            </if>
+            <if test="createUserId != null" >
+                CREATE_USER_ID,
+            </if>
+            <if test="updateUserId != null" >
+                UPDATE_USER_ID,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="corpId != null" >
+                #{corpId,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null" >
+                #{num,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="customerType != null" >
+                #{customerType,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="telephone != null" >
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null" >
+                #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null" >
+                #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.nocoder.djms.model.Customer" >
+        update customer
+        <set >
+            <if test="corpId != null" >
+                CORP_ID = #{corpId,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null" >
+                NUM = #{num,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                `NAME` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null" >
+                REGION = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="customerType != null" >
+                CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                BIRTHDAY = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="telephone != null" >
+                TELEPHONE = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null" >
+                `COMMENT` = #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null" >
+                CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUserId != null" >
+                UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.nocoder.djms.model.Customer" >
+        update customer
+        set CORP_ID = #{corpId,jdbcType=VARCHAR},
         NUM = #{num,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
         `NAME` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="region != null" >
         REGION = #{region,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
         ADDRESS = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="customerType != null" >
         CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
         BIRTHDAY = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="telephone != null" >
         TELEPHONE = #{telephone,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null" >
         `COMMENT` = #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null" >
         CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="updateUserId != null" >
         UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Customer" >
-    update customer
-    set CORP_ID = #{corpId,jdbcType=VARCHAR},
-      NUM = #{num,jdbcType=VARCHAR},
-      `NAME` = #{name,jdbcType=VARCHAR},
-      REGION = #{region,jdbcType=VARCHAR},
-      ADDRESS = #{address,jdbcType=VARCHAR},
-      CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
-      BIRTHDAY = #{birthday,jdbcType=DATE},
-      TELEPHONE = #{telephone,jdbcType=VARCHAR},
-      `COMMENT` = #{comment,jdbcType=VARCHAR},
-      CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
-      UPDATE_USER_ID = #{updateUserId,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

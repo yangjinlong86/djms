@@ -1,10 +1,10 @@
-package org.dj.bms.controller;
+package org.nocoder.djms.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dj.bms.model.Customer;
-import org.dj.bms.query.CustQueryInfo;
-import org.dj.bms.service.CustomerService;
-import org.dj.bms.utils.ResponseMsg;
+import org.nocoder.djms.model.Customer;
+import org.nocoder.djms.query.CustQueryInfo;
+import org.nocoder.djms.service.CustomerService;
+import org.nocoder.djms.utils.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
