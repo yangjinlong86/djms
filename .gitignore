@@ -6,3 +6,4 @@ pom.xml
 .project
 .settings
 .classpath
+.mvn/
