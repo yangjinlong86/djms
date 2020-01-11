@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * @author pufangfei@163.com
  * @ClassName: CustomerController
  * @Description: 顾客控制层
- * @author pufangfei@163.com
  * @date 2017年11月11日 上午9:58:45
  */
 @Controller
@@ -30,7 +30,7 @@ public class CustomerController extends BaseController {
 	public String customer() {
 		return "customer/customer";
 	}
-	
+
 	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
 	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
 		boolean status = false;

@@ -8,9 +8,9 @@ package org.nocoder.djms.query;
  */
 
 public interface IQueryInfo {
-    public int getPageNum();
+    int getPageNum();
 
-    public int getPageSize();
+    int getPageSize();
 
-    public String getOrderBy();
+    String getOrderBy();
 }

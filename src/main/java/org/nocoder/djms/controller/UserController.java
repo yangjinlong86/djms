@@ -109,9 +109,7 @@ public class UserController extends BaseController {
         if (userService.validatePassword(user)) {
             user.setPassword(user.getNewPassword());
             EncryptUtil.encryptPassword(user);
-            if (userService.saveOrUpdate(user) > 0) {
-                return true;
-            }
+            return userService.saveOrUpdate(user) > 0;
         }
         return false;
     }

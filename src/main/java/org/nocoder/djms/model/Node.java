@@ -151,10 +151,7 @@ public class Node implements java.io.Serializable {
         if (id != other.id) {
             return false;
         }
-        if (parentId != other.parentId) {
-            return false;
-        }
-        return true;
+        return parentId == other.parentId;
     }
 
     @Override

@@ -24,7 +24,7 @@ public enum ECacheEnum {
      * @param value
      */
 
-    private ECacheEnum(String value) {
+    ECacheEnum(String value) {
         this.value = value;
     }
 

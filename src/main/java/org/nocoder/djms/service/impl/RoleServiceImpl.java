@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,7 +102,7 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             RoleResource rr = null;
             if (roleResource.getResourceId().contains(",")) {
                 String resourceIds = roleResource.getResourceId();
-                List<String> resourceIdList = Arrays.asList(resourceIds.substring(0, resourceIds.length() - 1).split(","));
+                String[] resourceIdList = resourceIds.substring(0, resourceIds.length() - 1).split(",");
                 for (String resourcesId : resourceIdList) {
                     rr = new RoleResource();
                     rr.setRoleId(roleResource.getRoleId());

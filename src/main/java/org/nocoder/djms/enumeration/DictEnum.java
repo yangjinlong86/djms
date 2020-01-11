@@ -18,7 +18,7 @@ public enum DictEnum {
      * @param code
      */
 
-    private DictEnum(String code) {
+    DictEnum(String code) {
         this.code = code;
     }
 
