@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.DictMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Dict" >
+<mapper namespace="org.nocoder.djms.repository.DictMapper" >
+  <resultMap id="BaseResultMap" type="org.nocoder.djms.model.Dict" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="PID" property="parentId" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -21,13 +21,13 @@
     delete from dict
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Dict" >
+  <insert id="insert" parameterType="org.nocoder.djms.model.Dict" >
     insert into dict (ID, PID, `NAME`, 
       CODE, `COMMENT`)
     values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Dict" >
+  <insert id="insertSelective" parameterType="org.nocoder.djms.model.Dict" >
     insert into dict
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Dict" >
+  <update id="updateByPrimaryKeySelective" parameterType="org.nocoder.djms.model.Dict" >
     update dict
     <set >
       <if test="pid != null" >
@@ -82,7 +82,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Dict" >
+  <update id="updateByPrimaryKey" parameterType="org.nocoder.djms.model.Dict" >
     update dict
     set PID = #{pid,jdbcType=VARCHAR},
       `NAME` = #{name,jdbcType=VARCHAR},

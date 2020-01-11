@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.ResourceMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Resource" >
+<mapper namespace="org.nocoder.djms.repository.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="org.nocoder.djms.model.Resource" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="URL" property="url" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
           <include refid="Base_Column_List" />
         from RESOURCE
     </select>
-    <select id="selectUserResources" parameterType="map" resultType="org.dj.bms.model.Resource">
+    <select id="selectUserResources" parameterType="map" resultType="org.nocoder.djms.model.Resource">
         SELECT RE.ID,RE.NAME,RE.PARENT_ID,RE.URL
         FROM RESOURCE RE LEFT JOIN ROLE_RESOURCE RR
         ON RE.ID = RR.RESOURCE_ID
@@ -57,7 +57,7 @@
     delete from RESOURCE
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Resource" >
+  <insert id="insert" parameterType="org.nocoder.djms.model.Resource" >
     insert into RESOURCE (ID, `NAME`, URL, 
       `TYPE`, PARENT_ID, SORT
       )
@@ -65,7 +65,7 @@
       #{type,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Resource" >
+  <insert id="insertSelective" parameterType="org.nocoder.djms.model.Resource" >
     insert into RESOURCE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -108,7 +108,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Resource" >
+  <update id="updateByPrimaryKeySelective" parameterType="org.nocoder.djms.model.Resource" >
     update RESOURCE
     <set >
       <if test="name != null" >
@@ -129,7 +129,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Resource" >
+  <update id="updateByPrimaryKey" parameterType="org.nocoder.djms.model.Resource" >
     update RESOURCE
     set `NAME` = #{name,jdbcType=VARCHAR},
       URL = #{url,jdbcType=VARCHAR},

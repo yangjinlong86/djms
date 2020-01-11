@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.RoleMapper">
-    <resultMap id="BaseResultMap" type="org.dj.bms.model.Role">
+<mapper namespace="org.nocoder.djms.repository.RoleMapper">
+    <resultMap id="BaseResultMap" type="org.nocoder.djms.model.Role">
         <id column="ID" property="id" jdbcType="VARCHAR"/>
         <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR"/>
         <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR"/>
@@ -48,11 +48,11 @@
         </foreach>
     </delete>
 
-    <insert id="insert" parameterType="org.dj.bms.model.Role">
+    <insert id="insert" parameterType="org.nocoder.djms.model.Role">
     insert into ROLE (ID, ROLE_DESC)
     values (#{id,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="org.dj.bms.model.Role">
+    <insert id="insertSelective" parameterType="org.nocoder.djms.model.Role">
         insert into ROLE
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -77,7 +77,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Role">
+    <update id="updateByPrimaryKeySelective" parameterType="org.nocoder.djms.model.Role">
         update ROLE
         <set>
             <if test="roleDesc != null">
@@ -89,7 +89,7 @@
         </set>
         where ID = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Role">
+    <update id="updateByPrimaryKey" parameterType="org.nocoder.djms.model.Role">
     update ROLE
     set ROLE_NAME = #{roleName,jdbcType=VARCHAR}, ROLE_DESC = #{roleDesc,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}

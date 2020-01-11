@@ -1,4 +1,10 @@
-Dave Jason Management System
+DJ Management System
 ====================================
 
-- Spring Boot, Thymleaf
+- Spring Boot
+- MyBatis
+- MySQL
+- Shiro
+- Thymleaf
+- Bootstrap
+

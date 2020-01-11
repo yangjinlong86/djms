@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.OrganizationMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.Organization" >
+<mapper namespace="org.nocoder.djms.repository.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="org.nocoder.djms.model.Organization" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="P_ID" property="pId" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -43,7 +43,7 @@
     delete from ORGANIZATION
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="org.dj.bms.model.Organization" >
+  <insert id="insert" parameterType="org.nocoder.djms.model.Organization" >
     insert into ORGANIZATION (ID, P_ID, `NAME`, 
       `TYPE`, CREATE_TIME, UPDATE_TIME, 
       CREATE_USER, `COMMENT`)
@@ -51,7 +51,7 @@
       #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{createUser,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.Organization" >
+  <insert id="insertSelective" parameterType="org.nocoder.djms.model.Organization" >
     insert into ORGANIZATION
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -106,7 +106,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.dj.bms.model.Organization" >
+  <update id="updateByPrimaryKeySelective" parameterType="org.nocoder.djms.model.Organization" >
     update ORGANIZATION
     <set >
       <if test="pId != null" >
@@ -133,7 +133,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.dj.bms.model.Organization" >
+  <update id="updateByPrimaryKey" parameterType="org.nocoder.djms.model.Organization" >
     update ORGANIZATION
     set P_ID = #{pId,jdbcType=VARCHAR},
       `NAME` = #{name,jdbcType=VARCHAR},

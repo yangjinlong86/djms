@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.dj.bms.dao.RoleResourceMapper" >
-  <resultMap id="BaseResultMap" type="org.dj.bms.model.RoleResource" >
+<mapper namespace="org.nocoder.djms.repository.RoleResourceMapper" >
+  <resultMap id="BaseResultMap" type="org.nocoder.djms.model.RoleResource" >
     <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR" />
   </resultMap>
@@ -12,7 +12,7 @@
             (#{item.roleId}, #{item.resourceId})
         </foreach>
   </insert>
-  <insert id="insertSelective" parameterType="org.dj.bms.model.RoleResource" >
+  <insert id="insertSelective" parameterType="org.nocoder.djms.model.RoleResource" >
     insert into ROLE_RESOURCE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >

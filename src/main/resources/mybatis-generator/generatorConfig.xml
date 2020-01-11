@@ -33,7 +33,7 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="org.dj.bms.model" targetProject="${project}" >
+        <javaModelGenerator targetPackage="org.nocoder.djms.model" targetProject="${project}" >
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -42,7 +42,7 @@
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
         <!-- 生成mapxml对应client，也就是接口dao -->
-        <javaClientGenerator targetPackage="org.dj.bms.dao" targetProject="${project}" type="XMLMAPPER" >
+        <javaClientGenerator targetPackage="org.nocoder.djms.dao" targetProject="${project}" type="XMLMAPPER" >
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
