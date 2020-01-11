@@ -14,7 +14,7 @@ import java.util.Date;
  * @ClassName: Customer
  * @date 2017年11月23日 下午9:50:24
  */
-public class Customer extends Bms {
+public class Customer extends BaseModel {
 
     /**
      * @Fields serialVersionUID : TODO

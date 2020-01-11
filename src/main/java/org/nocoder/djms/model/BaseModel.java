@@ -10,7 +10,7 @@ import java.util.Date;
  * @date 2017年11月8日 下午11:21:00
  */
 
-public class Bms implements Serializable {
+public class BaseModel implements Serializable {
 
     /**
      * @Fields serialVersionUID : TODO

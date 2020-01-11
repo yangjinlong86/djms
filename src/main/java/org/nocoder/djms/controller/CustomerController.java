@@ -22,56 +22,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CustomerController extends BaseController {
 
-	@Autowired
-	@Qualifier("customerService")
-	private CustomerService customerService;
+    @Autowired
+    @Qualifier("customerService")
+    private CustomerService customerService;
 
-	@RequestMapping("/customer")
-	public String customer() {
-		return "customer/customer";
-	}
+    @RequestMapping("/customer")
+    public String customer() {
+        return "customer/customer";
+    }
 
-	@RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
-	public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
-		boolean status = false;
-		ResponseMsg resData = getRes(status);
-		try {
-			status = customerService.saveOrUpdate(cust);
-			resData.setMsg("操作成功");
-		} catch (Exception e) {
-			logger.error(e + "");
-			resData.setMsg(e.getMessage());
-		}
-		resData.setStatus(status);
-		return resData;
-	}
+    @RequestMapping(path = "saveOrUpdateCust", method = RequestMethod.POST)
+    public ResponseMsg saveOrUpdateCust(@ModelAttribute Customer cust) {
+        boolean status = false;
+        ResponseMsg resData = getRes(status);
+        try {
+            status = customerService.saveOrUpdate(cust);
+            resData.setMsg("操作成功");
+        } catch (Exception e) {
+            logger.error(e + "");
+            resData.setMsg(e.getMessage());
+        }
+        resData.setStatus(status);
+        return resData;
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/custList")
-	public ResponseMsg selectCustomer(CustQueryInfo qb) {
-		ResponseMsg resData = getRes(true);
-		resData.setData(customerService.selectCustomer(qb));
-		return resData;
-	}
+    @ResponseBody
+    @RequestMapping(value = "/custList")
+    public ResponseMsg selectCustomer(CustQueryInfo qb) {
+        ResponseMsg resData = getRes(true);
+        resData.setData(customerService.selectCustomer(qb));
+        return resData;
+    }
 
-	@ResponseBody
-	@RequestMapping(path = "delete", method = RequestMethod.POST)
-	public ResponseMsg deleteByCustomerId(String ids) {
-		boolean status = false;
-		ResponseMsg resData = getRes(status);
-		try {
-			if (StringUtils.isNotBlank(ids)) {
-				status = customerService.deleteByIds(ids);
-			} else {
-				resData.setStatus(false);
-				resData.setMsg("参数为空");
-			}
-		} catch (Exception e) {
-			logger.error(e + "");
-			resData.setMsg(e.getMessage());
-		}
-		resData.setStatus(status);
-		return resData;
-	}
+    @ResponseBody
+    @RequestMapping(path = "delete", method = RequestMethod.POST)
+    public ResponseMsg deleteByCustomerId(String ids) {
+        boolean status = false;
+        ResponseMsg resData = getRes(status);
+        try {
+            if (StringUtils.isNotBlank(ids)) {
+                status = customerService.deleteByIds(ids);
+            } else {
+                resData.setStatus(false);
+                resData.setMsg("参数为空");
+            }
+        } catch (Exception e) {
+            logger.error(e + "");
+            resData.setMsg(e.getMessage());
+        }
+        resData.setStatus(status);
+        return resData;
+    }
 
 }
